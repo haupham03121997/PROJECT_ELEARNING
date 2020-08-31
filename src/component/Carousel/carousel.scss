@@ -1,0 +1,42 @@
+.section-carousel {
+    position: relative;
+    img {
+        filter: brightness(50%);
+    }
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        transform: translateY(-50%);
+        p:nth-child(1) {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        h1 {
+            margin-top: 40px;
+            color: white;
+            letter-spacing: 2px;
+        }
+        p:nth-child(3) {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .button {
+            margin-top: 30px;
+            &__courses {
+                margin-right: 20px;
+                padding: 10px 40px;
+                border: none;
+                border-radius: 18px;
+                background-color: #F05123;
+                color: white;
+                font-weight: 500;
+            }
+            &__join {
+                @extend .button__courses;
+            }
+        }
+    }
+}

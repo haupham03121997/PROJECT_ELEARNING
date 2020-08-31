@@ -1,0 +1,15 @@
+.SignIn {
+    .password {
+        position: relative;
+        .show-pass {
+            position: absolute;
+            top: 58%;
+            cursor: pointer;
+            // transform: translateY(-50%);
+            right: 5px;
+            &:hover {
+                color: $colorYellow;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@mixin Text($fontSize, $color, $fontWeight) {
+    font-size: $fontSize;
+    color: $color;
+    font-weight: $fontWeight;
+}
+
+@mixin Button($bg, $color, $fontSize, $padding, $border) {
+    background-color: $bg;
+    color: $color;
+    font-size: $fontSize;
+    padding: $padding;
+    border: $border;
+}

@@ -1,0 +1,17 @@
+.signup {
+    color: red;
+    .password {
+        position: relative;
+        .show-pass {
+            cursor: pointer;
+            color: $colorDark;
+            position: absolute;
+            top: 55%;
+            right: 10px;
+            transition: all 0.3s;
+            &:hover {
+                color: $colorYellow;
+            }
+        }
+    }
+}

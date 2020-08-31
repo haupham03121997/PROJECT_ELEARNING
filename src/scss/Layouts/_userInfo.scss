@@ -1,0 +1,13 @@
+.user-info {
+    // .nav-tabs--custom {}
+    .user-info__left {
+        img {
+            border-radius: 50%;
+            width: 180px;
+        }
+        &__title {
+            color: $colorYellow;
+            text-align: left;
+        }
+    }
+}

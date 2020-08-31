@@ -1,0 +1,110 @@
+.section-content-main {
+    .carousel-slick-background {
+        h1 {
+            @include Text($fs-1, $colorDark, $fw-2);
+            padding-top: 40px;
+        }
+        background-color: rgba(231, 226, 226, 0.589);
+        .carousel-slick--custom {
+            width: 80%;
+            margin: auto;
+            .slick-next:before,
+            .slick-prev:before {
+                color: $colorYellow !important;
+            }
+            // .slick-prev:before {
+            //     content: ''!important;
+            // }
+            // .slick-next:before {
+            //     content: ''!important;
+            // }
+        }
+    }
+    .nav-tabs--custom {
+        border-bottom: 1px solid $colorGrey-Light;
+        .nav-link {
+            position: relative;
+            @include Text($fs-6, $colorDark, $fw-2);
+            &:hover {
+                transition: all 1s;
+                // border: none;
+                border-color: transparent;
+                &::after {
+                    width: 100%;
+                }
+            }
+            &.active {
+                border: 1px solid transparent;
+                margin-bottom: 0;
+                &::after {
+                    width: 100%;
+                }
+            }
+            &::after {
+                content: "";
+                display: block;
+                height: 4px;
+                width: 0;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                background: linear-gradient(to right, $colorYellow, #fbbd61);
+                ;
+                transition: all 0.5s;
+            }
+        }
+    }
+    &__detail {
+        .card--custom {
+            position: relative;
+            &:hover {
+                .card__overlay {
+                    display: block;
+                }
+            }
+            .card__overlay {
+                display: none;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                background: linear-gradient(to top, $colorDark, transparent);
+                opacity: 0.2;
+                z-index: 2;
+            }
+            cursor: pointer;
+            box-shadow: 0 0 10px -2px;
+            img {
+                width: 95%;
+                height: 180px;
+                margin: auto;
+            }
+            .card-title {
+                height: 43px;
+                width: 100%;
+                @include Text($fs-4, $colorDark, $fw-1);
+                display: block;
+            }
+            .rate-start {
+                @include Text($fs-6, $colorYellow, $fw-4);
+                span {
+                    @include Text($fs-6, $colorGrey-Light, $fw-4);
+                }
+            }
+            .view {
+                @include Text($fs-6, $colorDark, $fw-4);
+            }
+            .btn-content-signin {
+                z-index: 3;
+                display: block;
+                @include Button ($colorYellow, $colorWhite, $fs-6, 8px 20px, 4px);
+                font-weight: $fw-2 !important;
+                letter-spacing: 1px;
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}

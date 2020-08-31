@@ -1,0 +1,25 @@
+.search-courses {
+    cursor: pointer;
+    margin-top: 30px;
+    h3 {
+        @include Text($fs-1, $colorDark, $fw-2)
+    }
+    .row--custom {
+        border-top: 1px dotted $colorDark;
+        border-bottom: 1px dotted $colorDark;
+        background-color: rgb(236, 235, 235);
+        h4 {
+            margin-top: 20px;
+            @include Text($fs-3, $colorYellow, $fw-3)
+        }
+        .description {
+            @include Text($fs-5, $colorGrey-Light, $fw-4)
+        }
+        .start {
+            color: $colorYellow;
+        }
+        .btn {
+            @include Text($fs-6, $colorDark, $fw-1)
+        }
+    }
+}

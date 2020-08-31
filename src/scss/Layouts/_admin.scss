@@ -1,0 +1,59 @@
+.admin {
+    .slideBar {
+        height: 100vh;
+        background-color: #2F3944;
+        &__title {
+            width: 100%;
+            margin: 10px 0;
+            padding-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgb(214, 211, 211);
+            border-right: 1px solid rgb(214, 211, 211);
+            h1 {
+                @include Text($fs-2, $colorWhite, $fw-5)
+            }
+        }
+        ul {
+            text-align: center;
+            li {
+                padding: 10px 20px;
+                border-bottom: 1px solid rgb(214, 211, 211);
+                a {
+                    @include Text($fs-4, $colorWhite, $fw-5)
+                }
+            }
+        }
+    }
+    .slideBar-right {
+        width: 100%;
+        height: 69px;
+        // line-height: 69px;
+        // background-color: #2F3944;
+        color: #2F3944 !important;
+        border-bottom: 1px solid #2F3944;
+        box-shadow: 1px 1px 10px 2px $colorDark;
+        .profile {
+            height: 100%;
+            @include Text($fs-5, $colorDark, $fw-4);
+            p {
+                padding-right: 70px;
+                margin-top: 20px;
+                position: relative;
+                .profile--logout {
+                    position: absolute;
+                    top: 150%;
+                    right: 10px;
+                    width: 15%;
+                    background-color: #2F3944;
+                    text-align: center;
+                    ul {
+                        li {
+                            list-style: none;
+                            padding: 10px 20px
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

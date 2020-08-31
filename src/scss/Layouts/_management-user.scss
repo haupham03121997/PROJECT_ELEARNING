@@ -1,0 +1,17 @@
+.management-user {
+    .input-group--cusstom {
+        width: 90%;
+        height: 35px;
+        background-color: #fff;
+        .form-control {
+            border: none;
+            &:focus {
+                box-shadow: none;
+            }
+            &::placeholder {
+                margin-top: 10px !important;
+            }
+            .input-group-append {}
+        }
+    }
+}
