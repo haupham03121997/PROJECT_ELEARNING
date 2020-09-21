@@ -1,9 +1,11 @@
 .management-user {
     .input-group--cusstom {
+        position: relative;
         width: 90%;
-        height: 35px;
+        height: 40px;
         background-color: #fff;
         .form-control {
+            height: 100%;
             border: none;
             &:focus {
                 box-shadow: none;
@@ -11,7 +13,19 @@
             &::placeholder {
                 margin-top: 10px !important;
             }
-            .input-group-append {}
+        }
+        .result-search {
+            position: absolute;
+            top: 90%;
+            left: 0%;
+            z-index: 10;
+            ul {
+                background-color: #fff;
+                width: 520px;
+                li {
+                    list-style: none;
+                }
+            }
         }
     }
 }

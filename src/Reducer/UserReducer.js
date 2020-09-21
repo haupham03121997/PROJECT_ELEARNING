@@ -6,7 +6,7 @@ const innitialValue = {
     credential: userLogin ? JSON.parse(userLogin)  : null,
     loading: false,
     err: false,
-    userInfomation : []
+    userInfomation : [],
 }
 export const UserReducer = (state = innitialValue, action) => {
     switch (action.type) {
@@ -28,7 +28,8 @@ export const UserReducer = (state = innitialValue, action) => {
 
         case Type.LOGOUT : {
             return {
-                ...state ,credential : null , loading : false, error : false
+                ...state ,credential : null , loading : false, error : false ,
+                
             }
         }
 

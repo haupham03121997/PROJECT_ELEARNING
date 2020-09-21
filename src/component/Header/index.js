@@ -2,24 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { getCategoryAction } from "../../Action/danhMucKhoaHocAction";
 import { LOGOUTACTION } from "../../Action/User";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { timKiemKhoaHoc } from "../../Action/timKiemKhoaHoc";
 import { UserReducer } from "../../Reducer/UserReducer";
 import Model from "../Model";
+import swal from "sweetalert"
 function useOutSideClick(ref, callback, when) {
-  // Hàm Scroll
-  const [isScrolled, setIsScroll] = useState(false);
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      const isTop = window.scrollY < 100;
-      if (!isTop) {
-        setIsScroll(!isScrolled);
-      }
-    });
-  }, [isScrolled]);
-  // console.log("isScrolled" , isScrolled);
-
-  //
   const savedCallback = useRef(callback);
   useEffect(() => {
     savedCallback.current = callback;
@@ -38,9 +26,25 @@ function useOutSideClick(ref, callback, when) {
   }, [when]);
 }
 export default function Header() {
+  // Hàm Scroll
+  const [isScrolled, setIsScroll] = useState(false);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      const isTop = window.scrollY < 100;
+      if (!isTop) {
+        setIsScroll(!isScrolled);
+      } else {
+        setIsScroll(isScrolled);
+      }
+    });
+  }, []);
+  const [isClicked, setIsClicked] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
+  const [isSearched , setIsSearched] = useState(false);
+  console.log(isSearched);
   const history = useHistory();
   const dropDownMenuRef = useRef();
+  const dropDownMenuRef1 = useRef();
   const [searchItem, setSearch] = useState({
     idCourses: "",
   });
@@ -52,7 +56,7 @@ export default function Header() {
       ...searchItem,
       [name]: value,
     });
-    // console.log(name, value);
+    console.log(name, value);
   };
   // console.log('history', history);
   const dispatch = useDispatch();
@@ -81,23 +85,48 @@ export default function Header() {
 
   const handleSubmit = (e) => {
     history.push(`/TimKiemKhoaHoc/${searchItem.idCourses.trim()}`);
-    // dispatch(timKiemKhoaHoc(searchItem))
+    dispatch(timKiemKhoaHoc(searchItem))
   };
 
   // const logout = localStorage.getItem("userLogin");
   const Logout = () => {
-    localStorage.removeItem("userLogin");
-    dispatch(LOGOUTACTION());
-    history.push("./DangNhap");
-    setTimeout(() => {
-      if (credential === null) {
-        alert("Logout");
+   
+    swal({
+      title: "Bạn muốn đăng xuất?",
+      // text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        localStorage.removeItem("userLogin");
+        dispatch(LOGOUTACTION());
+      
+        swal("Đăng xuất thành công!", {
+          
+          icon: "success",
+        });
+        history.push("./DangNhap");
+        
+      } else {
+       
       }
-    }, 200);
+    });
+   
   };
 
+  const location = useLocation();
+
+
   return (
-    <div className="section-header ">
+    <div
+      className={
+        isScrolled || location.pathname === "/DangNhap"
+          ? "section-header scroll"
+          : "section-header  mt-4"
+      }
+    >
       <div className="container-fluid">
         <nav className="navbar navbar--custom navbar-expand-sm ">
           <Link to="/" className="navbar-brand mr-5" href="#">
@@ -116,17 +145,23 @@ export default function Header() {
           </button>
           <div className="collapse navbar-collapse" id="collapsibleNavId">
             <ul className="navbar-nav ml-5 mr-auto mt-2 mt-lg-0">
-              {/* <li  className="nav-item"><a >TRANG CHỦ</a></li>
-              <li
-                onClick={() => setIsFocus(!isFocus)}
-                className="nav-item ml-4 mr-2 "
-              >
-                <div ref={dropDownMenuRef} className="nav-link px-2" href="#">
-                  <i className="fa fa-th mr-2" />
-                  Danh mục khóa học <i className="fa fa-caret-down ml-1" />
-                </div>
-                {isFocus ? (
-                  <div className="category">
+              <li className="nav-item line active">
+                <a
+                  className="nav-link active"
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                 
+                >
+                  TRANG CHỦ
+                </a>
+              </li>
+              <li  className="nav-item line nav-item--custom">
+                <a className="nav-link" >
+                  KHÓA HỌC <i className="fa fa-caret-down" />
+                </a>
+               
+                  <div    className="category">
                     <ul>
                       {categoriesCourses.map((khoahoc, index) => {
                         // console.log(khoahoc);
@@ -141,132 +176,78 @@ export default function Header() {
                             >
                               {khoahoc.tenDanhMuc}
                             </a>
-                         
                           </li>
                         );
                       })}
                     </ul>
                   </div>
-                ) : (
-                  ""
-                )}
-              </li> */}
-              {/* <li className="nav-item ml-5">
-                <div className="form-inline my-2 my-lg-0">
-                  <input
-                    name="idCourses"
-                    className="form-control"
-                    type="text"
-                    value={searchItem.idCourses}
-                    placeholder="Search tên khóa học...."
-                    onChange={handleChange}
-                  />
-                  <button
-                    // to='/TimKiemKhoaHoc'
-                    onClick={handleSubmit}
-                    className=" btn--form"
-                    type="button"
-                  >
-                    <i className="fa fa-search" />
-                  </button>
-                </div>
+                
               </li>
-              <li className="nav-item ml-5  ">
-                <a href="" className="nav-link">
-                  <div className="social">
-                    <div> */}
-              {/* <i className="fab fa-facebook-f" />
-                      <i className="fab fa-gofore" />
-                      <i className="fab fa-github" />
-                      <i className="fab fa-twitter" /> */}
-              {/* </div>
-                  </div>
-                </a>
-              </li> */}
-              {/* 
-              {credential ? (
-                <li className="nav-item nav-item-user  ">
-                  <span className="nav-link">
-                    <i className="fa fa-user" />
-                    Welcom, {credential.taiKhoan}
-                  </span>
-                  <div className="logout">
-                    <p
-                      className="m-0"
-                      onClick={() => {
-                        history.push(`/ThongTinTaiKhoan`);
-                      }}
-                    >
-                      Thông tin học viên
-                    </p>
-                    <p
-                      onClick={() => {
-                        Logout();
-                      }}
-                      className="m-0"
-                    >
-                      Đăng xuất
-                    </p>
-                  </div>
-                </li>
-              ) : (
-                <>
-                  <li className="nav-item  ">
-                    <a
-                      href=""
-                      className="nav-link"
-                      onClick={() => {
-                        history.push(`/DangKy`);
-                      }}
-                    >
-                      <button className="btn--signup">Đăng Ký</button>
-                    </a>
-                  </li>
-                  <li className="nav-item ml-2 ">
-                    <Link to="/DangNhap" href="" className="nav-link">
-                      <button
-                        onClick={() => {
-                          history.push("/DangNhap");
-                        }}
-                        className="btn--signin"
-                      >
-                        Đăng Nhập
-                      </button>
-                    </Link>
-                  </li> */}
-              {/* </> */}
-              {/* )} */}
-
-              <li className="nav-item">
-                <a className="nav-link" onClick={()=>{history.push("/")}}>
-                  TRANG CHỦ
-                </a>
-              </li>
-              <li className="nav-item">
+              <li className="nav-item line">
                 <a className="nav-link" href="#">
-                  KHÓA HỌC <i className="fa fa-caret-down" />
+                  LIÊN HỆ
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  TẠO CV VIỆC LÀM
+              <li className="nav-item nav-item--search line">
+                <a className="nav-link " href="#">
+                      TÌM KIẾM KHÓA HỌC
+                       <i className="fa fa-search" onClick={()=> setIsSearched(!isSearched) }></i>
                 </a>
+               { isSearched ? <div className="search__word">
+                  <form onSubmit={handleSubmit}>
+                      <input    name="idCourses"    value={searchItem.idCourses}
+                    onChange={handleChange} type="text" placeholder="Tìm kiếm ở đây..."/>
+                  </form>
+                </div> : ""}
               </li>
             </ul>
             <div className="signin-signup text-right">
               {credential ? (
                 <div className="name-user">
                   <div className="name">
-                    <a>
-                      <i className="fa fa-user mr-2" />
+                    <div className="avatar">
+                      <img src="/img/avatar.png" alt="avatar" />
+                    </div>
+                    <a className="pl-2">
+                      {/* <i className="fa fa-user mr-2" /> */}
+
                       {credential.taiKhoan}
                     </a>
                   </div>
                   <div className="notification ml-3">
                     <i className="fa fa-bell" />
                   </div>
-                  <div className="logout-setting ml-3">
-                    <i className="fa fa-caret-down" />
+                  <div onClick={() => setIsFocus(!isFocus)} className="logout-setting ml-3">
+                    <i
+                     ref={dropDownMenuRef}
+                      className="fa fa-caret-down"
+                    />
+                    {isFocus ? (
+                      <div  className="logout text-left">
+                        <ul>
+                          <li onClick={()=>{
+                            history.push("/caidat/taikhoan")
+                          }}>
+                            <a className="mx-4">
+                              <i className="fa fa-cog mr-3" />
+                              Cài đặt
+                            </a>
+                          </li>
+                          <li
+                            onClick={() => {
+                              Logout();
+                            }}
+                          >
+                            <a className="mx-4">
+                              <i className="fa fa-sign-language mr-3" />
+                              Đăng xuất
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               ) : (

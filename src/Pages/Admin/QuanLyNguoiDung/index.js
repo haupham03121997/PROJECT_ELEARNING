@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { layDanhSachNguoiDungAction } from "../../../Action/layDanhSachNguoiDungAction";
 import { xoaNguoiDung } from "../../../Action/xoaNguoiDungAction";
 import Pagination from "../../../component/Pagination";
+import "./quanlynguoidung.scss"
 import swal from "sweetalert";
 export default function QuanLyNguoiDung(props) {
   const { match } = props;
@@ -13,14 +14,17 @@ export default function QuanLyNguoiDung(props) {
     searchTxt: "",
   });
   const handleChange = (evt) => {
+    
     const { name, value } = evt.target;
-    // console.log("Tìm Kiếm Người Dùng" , e);
+    
     setSeaarch({
       ...search,
       [name]: value,
     });
     console.log(name, value);
   };
+
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleted, setDeleted] = useState(false);
@@ -29,12 +33,12 @@ export default function QuanLyNguoiDung(props) {
     console.log(pages);
     // setCurrentPage(0)
   };
-  console.log("setDeleted", setDeleted);
+  // console.log("isDeleted", isDeleted);
   // console.log("currentPage", currentPage);
   useEffect(() => {
     dispatch(layDanhSachNguoiDungAction(currentPage));
-  }, [isDeleted, currentPage]);
-
+  }, [currentPage , isDeleted]);
+ 
   const { userList } = useSelector((state) => state.getUserList);
   // const { userList } = useSelector((state) => state.getUserList);
   // console.log("userList" , userList.currentPage);
@@ -89,15 +93,16 @@ export default function QuanLyNguoiDung(props) {
             </div>
             <div className="col-4"></div>
             <div className="col-6">
-              <form className="form-inline ml-3">
+              <form  className="form-inline ml-3">
                 <div className="input-group input-group--cusstom input-group-sm">
                   <input
+                  
                     name="searchTxt"
                     value={search.searchTxt}
                     onChange={handleChange}
                     className="form-control form-control-navbar"
                     type="search"
-                    placeholder="Tìm người dùng"
+                    placeholder="Nhập tên người dùng...."
                     aria-label="Search"
                   />
                   <div className="input-group-append">
@@ -106,17 +111,28 @@ export default function QuanLyNguoiDung(props) {
                       className="btn btn-navbar"
                       type="submit"
                     >
-                      <i className="fas fa-search" />
+                 <i className="fa fa-search" />
+
                     </button>
                   </div>
+                  {/* <div className="result-search">
+                    <ul>
+                      <li>1</li>
+                      <li>2</li>
+                      <li>3</li>
+                      <li>3</li>
+                    </ul>
+                  </div> */}
                 </div>
               </form>
             </div>
           </div>
           {/* /.row */}
           <div className="row mt-5 border rounded">
+        
+
             <div className="col-12">
-              <table class="table">
+              <table className="table">
                 <thead>
                   <tr>
                     <th>STT</th>
@@ -125,41 +141,63 @@ export default function QuanLyNguoiDung(props) {
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-                    <th>Thao tác</th>
+                    <th className="text-center">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   {userList?.items?.map((item, index) => {
                     return (
-                      <tr
-                        key={index}
-                        onClick={() => {
-                          history.push(
-                            `/admin/user-management/capnhatnguoidung/taikhoan:${item.taiKhoan}`
-                          );
-                        }}
-                        style={{ cursor: "pointer" }}
-                      >
+                      <tr key={index} style={{ cursor: "pointer" }}>
                         <td>{(currentPage - 1) * 10 + index + 1}</td>
                         <td>{item.taiKhoan}</td>
                         <td>{item.hoTen}</td>
                         <td>{item.email}</td>
                         <td>{item.soDT}</td>
                         <td>
-                          <button className="btn btn-success mr-3">
+                          <button className="btn btn-success mr-3" 
+                            onClick={()=>{
+                                history.push("/admin/user-management/ghidanh")
+                            }}
+                          >
                             Ghi danh
                           </button>
-                          <button className="btn btn-warning mr-3">Sửa</button>
+                          <button
+                            onClick={() => {
+                              history.push(
+                                `/admin/user-management/capnhatnguoidung/taikhoan/${item.taiKhoan}`
+                              );
+                            }}
+                            className="btn btn-warning mr-3"
+                          >
+                            Cập nhật
+                          </button>
                           {item.maLoaiNguoiDung === "GV" ? (
                             <button disabled className="btn btn-danger">
-                              Không thể xóa
+                             Xóa
                             </button>
                           ) : (
                             <button
                               className="btn btn-danger"
                               onClick={() => {
-                                setDeleted(!isDeleted);
-                                dispatch(xoaNguoiDung(item.taiKhoan));
+                                swal({
+                                  title: "Bạn có chắc muôn xóa?",
+                                  text: "",
+                                  icon: "warning",
+                                  buttons: true,
+                                  dangerMode: true,
+                                }).then((willDelete) => {
+                                  if (willDelete) {
+                                    dispatch(xoaNguoiDung(item.taiKhoan));
+                                    setDeleted(!isDeleted);
+                                    swal("Xóa thành công!", {
+                                      icon: "success",
+                                    });
+                                    
+                                
+                                  } else {
+                                    swal("");
+                                  }
+                                });
                               }}
                             >
                               Xóa
@@ -178,15 +216,17 @@ export default function QuanLyNguoiDung(props) {
       </div>
 
       {/* /.content */}
-      <Pagination
-        currentPage={currentPage}
-        pageSize={10}
-        totalCount={250}
-        onChange={
-          // dispatch(NextPagesAtion(pages))
-          onChange
-        }
-      />
+      <div className="text-right">
+        <Pagination
+          currentPage={currentPage}
+          pageSize={10}
+          totalCount={250}
+          onChange={
+            // dispatch(NextPagesAtion(pages))
+            onChange
+          }
+        />
+      </div>
     </div>
   );
 }

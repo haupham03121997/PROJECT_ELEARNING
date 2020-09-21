@@ -1,13 +1,14 @@
-import React , {useEffect}from "react";
-import {useDispatch , useSelector} from "react-redux";
+import React from "react";
+import { useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import "./menuAdmin.scss";
 export default function MenuAdmin() {
 
   const {credential } = useSelector(state => state.UserReducer);
   const histoty = useHistory();
   return (
     <div>
-      <aside className="main-sidebar sidebar-dark-primary elevation-4">
+      <aside className="main-sidebar main-sidebar--custom sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
         <a href="" className="brand-link">
           <img
@@ -44,7 +45,9 @@ export default function MenuAdmin() {
               data-accordion="false"
             >
              
-              <li className="nav-item">
+              <li className="nav-item" onClick={() => { 
+                histoty.push("/admin/courses-management")
+              }}>
                 <a href="#" className="nav-link">
                   <p>Quản Lý Khóa Học</p>
                 </a>

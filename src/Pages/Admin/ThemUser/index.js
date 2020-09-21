@@ -143,8 +143,8 @@ export default function ThemUser() {
                   <div className="form-group">
                     <label htmlFor="">Mã loại người dùng</label>
                     <select name="maLoaiNguoiDung" className="form-control">
-                      <option value="">HV</option>
-                      <option value="">GV</option>
+                      <option value="HV">HV</option>
+                      <option value="GV">GV</option>
                     </select>
                   </div>
                   <div className="form-group">

@@ -1,5 +1,15 @@
-.page-item {
-    .active {
-        background-color: blue;
+.page--custom {
+    position: relative;
+    height: 40px;
+    .pagination {
+        position: absolute;
+        top: 0;
+        right: 8%;
+        width: 15%;
+        .page-item {
+            .active {
+                background-color: blue;
+            }
+        }
     }
 }

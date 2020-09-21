@@ -9,8 +9,6 @@ export const Login = (value) => {
     axios
       .post("/QuanLyNguoiDung/DangNhap", value)
       .then((result) => {
-        console.log("RESULT ", result);
-
         dispatch({
           type: type.SIGNIN_SUCCESS,
           payload: {
@@ -35,9 +33,28 @@ export const Login = (value) => {
 
 export const LOGOUTACTION = () => {
   return (dispatch) => {
+    // swal({
+    //   title: "Bạn muốn đăng xuất tài khoản?",
+    //   // text: "Once deleted, you will not be able to recover this imaginary file!",
+    //   // icon: "warning",
+    //   buttons: true,
+    //   dangerMode: true,
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+       
+    //     swal("Đã đăng xuất!", {
+    //       icon: "success",
+    //     });
+    //   } else {
+    //     swal("Ở lại!");
+    //   }
+    // });
     dispatch({
       type: type.LOGOUT,
+      
     });
+    // localStorage.clear("userLogin");
     swal("Đã Đăng Xuất!");
   };
 };

@@ -8,6 +8,7 @@ import Loading from "../../component/Loading";
 import Slider from "react-slick";
 import { Button } from "reactstrap";
 import ModelTest from "../../component/Modeltest";
+import FeedBack from "../../component/FeedBack";
 export default function HomeScreen(props) {
   const { buttonLabel, className } = props;
 
@@ -27,21 +28,21 @@ export default function HomeScreen(props) {
     // console.log("Mã danh mục", maDanhMuc);
     dispatch(layDanhMucKhoaHocAction(maDanhMuc));
   }, [match.params.maDanhMucKhoaHoc]);
-  useEffect(() => {}, []);
 
   const { coursesList, loading, error } = useSelector(
     (state) => state.getCoursesList
   );
+
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
-  console.log("coursesList", coursesList);
+  // console.log("coursesList", coursesList);
 
   var settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplaySpeed: 1000,
   };
@@ -55,57 +56,79 @@ export default function HomeScreen(props) {
       <Carousel />
       <div className="section-content-main">
         <div className="container-fluid carousel-slick-background">
-          <h1 className="display-4 text-center">Khóa Học Nổi Bật</h1>
-          <div className="carousel-slick--custom pb-5">
-            {/* <Slider {...settings}>
-              {coursesList.map((item, index) => {
-                return (
-                  <div
-                    className="col-12 mt-5 section-content-main__detail "
-                    key={index}
-                  >
+          {/* <h1 className="display-4 text-center">Khóa Học Nổi Bật</h1> */}
+        </div>
+        <div className="container-fluid">
+          <div className="container--custom">
+            <div className="carousel-slick--custom ">
+              <h3 className="mt-5 text-center">KHÓA HỌC NỔI BẬT</h3>
+              <p className="text-center">
+                {/* Những khóa học có số lượng học viên theo học nhiều nhất và có */}
+                {/* phản hồi tích cực nhất */}
+              </p>
+              <p className="item-prev">
+                <i className="fa fa-angle-left" />
+              </p>
+              <p className="item-next">
+                <i className="fa fa-angle-right" />
+              </p>
+              <Slider {...settings}>
+                {coursesList.map((item, index) => {
+                  return (
                     <div
-                      onClick={() => {
-                        history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
-                      }}
-                      className="card card--custom mb-3"
+                      className="col-12 mt-5 section-content-main__detail "
+                      key={index}
                     >
-                      <img className="card-img-top" src={item.hinhAnh} alt />
-                      <div className="card-body">
-                        <h4 className="card-title">{item.tenKhoaHoc}</h4>
-                        <div className="rate-start">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-half-alt"></i>
-                          <span>4.5(1.234)</span>
+                      <div
+                        onClick={() => {
+                          history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
+                        }}
+                        className="card card--custom mb-3"
+                      >
+                        <div className="card--img">
+                          <img
+                            className="card-img-top"
+                            src={item.hinhAnh}
+                            alt
+                          />
+                          <div className="card__overlay"></div>
                         </div>
-                        <p className="view my-3">
-                          Lượt xem <i class="fa fa-eye"></i> {item.luotXem}
-                        </p>
-                        <div className="text-right mt-4">
-                          <button className="btn btn-content-signin">
-                            Chi Tiết Khóa Học
-                          </button>
+                        <div className="card-body">
+                          <h4 className="card-title">{item.tenKhoaHoc}</h4>
+                          <div className="rate-start">
+                            <div>
+                              <i className="fa fa-star" />
+                              <i className="fa fa-star" />
+                              <i className="fa fa-star" />
+                              <i className="fa fa-star" />
+                              <i className="fa fa-star-half-alt" />
+                            </div>
+
+                            <span>4.5(1.234)</span>
+                          </div>
+                          <p className="view my-3">
+                            Lượt xem <i class="fa fa-eye"></i> {item.luotXem}
+                          </p>
+                          <p>Người tạo : {item.nguoiTao.hoTen}</p>
+                          <div className="text-right mt-4">
+                            <button className="btn btn-content-signin">
+                              Chi Tiết Khóa Học
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <div className="card__overlay"></div>
                     </div>
-                  </div>
-                );
-              })}
-            </Slider> */}
+                  );
+                })}
+              </Slider>
+            </div>
           </div>
-        </div>
-        <div className="container">
-          <h3 className="my-5">Danh Sách Khóa Học</h3>
-          <Button color="danger" onClick={toggle}>
+          {/* <Button color="danger" onClick={toggle}>
             {buttonLabel} hih
-          </Button>
-          <ModelTest className={className} isOpen={modal} toggle={toggle} />
+          </Button> */}
+          {/* <ModelTest className={className} isOpen={modal} toggle={toggle} /> */}
           <div>
-            <ul
+            {/* <ul
               className="nav nav-tabs nav-tabs--custom"
               id="myTab"
               role="tablist"
@@ -147,7 +170,7 @@ export default function HomeScreen(props) {
                   </li>
                 );
               })}
-            </ul>
+            </ul> */}
             <div className="tab-content" id="myTabContent">
               <div
                 className="tab-pane fade show active"
@@ -155,7 +178,7 @@ export default function HomeScreen(props) {
                 role="tabpanel"
                 aria-labelledby="home-tab"
               >
-                <div className="row mb-5">
+                {/* <div className="row mb-5">
                   {coursesList.map((item, index) => {
                     return (
                       <div
@@ -201,54 +224,57 @@ export default function HomeScreen(props) {
                       </div>
                     );
                   })}
-                </div>
+                </div> */}
               </div>
 
               {categoriesCourses.map((item, index) => {
                 // console.log(coursesList, item);
-
                 // {item.filter(item => {
                 // console.log("item nè " , item);
                 // })}
-                return (
-                  <div
-                    className="tab-pane"
-                    id={`#${item.maDanhMuc}`}
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                    key={index}
-                  >
-                    <div className="col-3 mt-4 section-content-main__detail ">
-                      <div className="card card--custom">
-                        <img className="card-img-top" src={item.hinhAnh} alt={item.biDanh} />
-                        <div className="card-body">
-                          <h4 className="card-title">{item.tenKhoaHoc}</h4>
-                          <div className="rate-start">
-                            <div>
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star-half-alt" />
-                            </div>
-
-                            <span>4.5(1.234)</span>
-                          </div>
-                          <div className="text-right mt-4">
-                            <button className="btn btn-content-signin">
-                              ĐĂNG KÝ
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
+                // return (
+                //   <div
+                //     className="tab-pane"
+                //     id={`#${item.maDanhMuc}`}
+                //     role="tabpanel"
+                //     aria-labelledby="profile-tab"
+                //     key={index}
+                //   >
+                //     <div className="col-3 mt-4 section-content-main__detail ">
+                //       <div className="card card--custom">
+                //         <img
+                //           className="card-img-top"
+                //           src={item.hinhAnh}
+                //           alt={item.biDanh}
+                //         />
+                //         <div className="card-body">
+                //           <h4 className="card-title">{item.tenKhoaHoc}</h4>
+                //           <div className="rate-start">
+                //             <div>
+                //               <i className="fa fa-star" />
+                //               <i className="fa fa-star" />
+                //               <i className="fa fa-star" />
+                //               <i className="fa fa-star" />
+                //               <i className="fa fa-star-half-alt" />
+                //             </div>
+                //             <span>4.5(1.234)</span>
+                //           </div>
+                //           <div className="text-right mt-4">
+                //             <button className="btn btn-content-signin">
+                //               ĐĂNG KÝ
+                //             </button>
+                //           </div>
+                //         </div>
+                //       </div>
+                //     </div>
+                //   </div>
+                // );
               })}
             </div>
           </div>
         </div>
       </div>
+      <FeedBack />
     </div>
   );
 }

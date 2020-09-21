@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+// import { useSelector, useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom';
-import { UserReducer } from "../../Reducer/UserReducer";
-import { GetUserInfoAction } from "../../Action/User";
 export default function ThongTinTaiKhoan() {
   const history =useHistory();
-  const dispatch = useDispatch();
-  const { credential } = useSelector((state) => state.UserReducer);
+  // const dispatch = useDispatch();
+  // const { credential } = useSelector((state) => state.UserReducer);
 
   return (
     <div className="container user-info">

@@ -3,14 +3,14 @@ import React from "react";
 export default function FooterAdmin() {
   return (
     <div>
-      <footer className="main-footer">
+      <footer className="main-footer text-center m-4">
         <strong>
-          Copyright © 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.
+           © Bản quyền CyberSoft 2017 - 2019
         </strong>
-        All rights reserved.
+        {/* All rights reserved.
         <div className="float-right d-none d-sm-inline-block">
           <b>Version</b> 3.0.5
-        </div>
+        </div> */}
       </footer>
     </div>  
   );

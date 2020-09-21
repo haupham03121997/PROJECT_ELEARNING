@@ -7,7 +7,7 @@ export const layDanhMucKhoaHocAction = (maDanhMuc) => {
             type: TypeAction.GET_CATEGORY_COURSES_DETAIL_REQUEST,
         })
 
-        axios.get(`QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}`)
+        axios.get(`/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?=${maDanhMuc}&MaNhom=GP02`)
             .then((result) => {
                 dispatch({
                     type: TypeAction.GET_CATEGORY_COURSES_DETAIL_SUCCESS,

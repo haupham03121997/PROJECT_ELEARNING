@@ -1,83 +1,65 @@
-import React from 'react'
+import React from "react";
 // import styles from './styles.module.scss'
 export default function Footer() {
-    return (
-        <div className='section-footer'>
-            <div className="container">
-                <div className="row pt-5">
-                    <div className="col-4 footer__title ">
-                        <h2 className='text-left'>
-                            NHẬN TIN SỰ KIỆN & KHUYẾN MÃI
-                        </h2>
-                        <p className='text-left'>
-                            CyberSoft sẽ gởi các khóa học trực tuyến & các chương trình
-                            CyberLive hoàn toàn MIỄN PHÍ và các chương trình KHUYẾN
-                            MÃI hấp dẫn đến các bạn.
-                        </p>
-                        <div className="row ">
-                            <div className="col-8 pr-1">
-                                <div className="form-group ">
-                                    <input type="text" className='form-control' placeholder='you.address@email.com' />
-
-                                </div>
-                            </div>
-                            <div className="col-4 p-0 text-left">
-                                <button className='btn btn--signin btn-warning'>ĐĂNG KÝ</button>
-                            </div>
-                        </div>
+  return (
+    <div className="section-footer">
+      <div className="container-fluid">
+        <div className="footer-content">
+          <div className="row">
+            <div className="col-3">
+              <h3>LIÊN HỆ</h3>
+              <p><i className="fa fa-location-arrow mr-1"></i> Trụ sở: 112 Cao Thắng, Quận 3 – HCM</p>
+          
+              <p><i className="fa fa-mobile mr-3"></i>Hotline: 096.105.1014 – 077.886.1911</p>
+              <p><i className="fa fa-envelope mr-2"></i>Email: cybersoft@gmail.com</p>
+            </div>
+            <div className="col-2">
+              <h3>CYBERSOFT</h3>
+              <p>Giới thiệu</p>
+              <p>Câu hỏi thường gặp</p>
+              <p>Liên hệ</p>
+            </div>
+            <div className="col-3">
+              <h3>KHÓA HỌC</h3>
+              <div className="row">
+                <div className="col-6">
+                  <p>Lập trình Front End</p>
+                  <p> Lập trình React JS </p>
+                  <p> Lập trình React</p>
+                  <p> Lập trình tư duy </p>
+                </div>
+                <div className="col-6">
+                    <p> Lập trình NodeJS</p>
+                    <p> Lập trình Java Web</p>
+                    <p> Lập trình Java Spring – Java Boot</p>
+                    {/* <p> Tôi Đi Code Dạo</p> */}
+                </div>
+              </div>
+            </div>
+            <div className="col-4">
+                <h3>LIÊN HỆ VỚI CHÚNG TÔI</h3>
+                <div className="row mb-4">
+                    <div className="col-6 ">
+                        <input type="text" placeholder="Name"/>
                     </div>
-                    <div className="col-4 footer-middle" >
-                        <h2 className='text-left'>ĐĂNG KÝ TƯ VẤN</h2>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder='Họ và tên*' />
-                        </div>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder='Email liên hệ*' />
-                        </div>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder='Địa chỉ Liên Hệ' />
-                        </div>
-                        <div className='text-left'>
-                            <button className='btn btn-warning  btn--signin'>ĐĂNG KÝ TƯ VẤN</button>
-                        </div>
-                    </div>
-                    <div className="col-4 footer-right">
-                        <div className="fanpages">
-                            <img src="/img/img-footer.jpg" className='w-100 d-block' alt="" />
-                        </div>
-                        <div className="fanpages1">
-                            <img src="/img/img-footer2.png" className='w-100 d-block' alt="" />
-                        </div>
+                    <div className="col-6">
+                        <input type="text" placeholder="Email"/>
                     </div>
                 </div>
-                <div className="row pt-3 ">
-                    <div className="col-4 text-left ">
-                        <div>
-                            <p className='mb-1'><i className="fa fa-map-marker mr-1" /> <span>Cơ sở 1: 376 Võ Văn Tần – Quận 3</span></p>
-                            <p className='mb-1'><i className="fa fa-map-marker mr-1" /> <span>Cơ sở 2: 459 Sư Vạn Hạnh – Quận 10</span></p>
-                            <p className='mb-1'><i className="fa fa-map-marker mr-1" /> <span>Cơ sở 3: 82 Ung Văn Khiêm – Bình Thạnh</span></p>
-                            <p className='mb-1'><i className="fa fa-map-marker mr-1" /> <span> Cơ sở 4: 110 Đường số 10 nội bộ khu CityLand Phan Văn Trị – Gò Vấp</span></p>
-                            <p className='mb-1'><i className="fa fa-phone-volume mr-1" /><span>096.105.1014 – 077.886.1911</span></p>
-                        </div>
-
+                <div className="row">
+                    <div className="col-12">
+                        <textarea  placeholder="Message" cols="50" rows="5"></textarea>
                     </div>
-                    <div className="col-4 text-left ">
-                        <p style={{color: 'white'}}>
-                            <a className='mr-2' href="" >Lập trình Front End   </a>
-                            <a href="" className='mr-2' >Lập trình React JS     </a>
-                            <a href="" className='mr-2' > Lập trình React Angular  </a>
-                            <a href="" className='mr-2' > Lập trình tư duy    </a>
-                            <a href="" className='mr-2' >Lập trình NodeJS   </a>
-                            <a href="" className='mr-2' >    Lập trình Backend  </a>
-                            <a href="" className='mr-2' > Lập trình Java Web   </a>
-                            <a href="" className='mr-2' >Lập trình Java Spring – Java Boot         </a>
-                            <a href="" className='mr-2' > Tôi Đi Code Dạo   </a>
-                            <a href="" className='mr-2' >  Học SEO Hà Nội ở Vietmoz    </a>
-                            <a href="" className='mr-2' >Học lập trình trực tuyến </a>
-                        </p>
+                </div>
+                <div class="row">
+                    <div className="col-12">
+                        <button>Submit</button>
                     </div>
                 </div>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

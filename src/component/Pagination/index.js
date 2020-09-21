@@ -29,25 +29,27 @@ export default function Pagination({
 
   
   };
-  const handleSelectPage = (page) => {
-    if (page !== currentPage) {
-      onChange(page);
-    }
-  };
+  // const handleSelectPage = (page) => {
+  //   if (page !== currentPage) {
+  //     onChange(page);
+  //   }
+  // };
   console.log("currentPage" ,currentPage);
   // console.log("onChange" , onChange);
 
   return (
-    <nav aria-label="Page navigation">
-      <ul class="pagination">
-        <li class="page-item disabled">
-          <a class="page-link">{`<`}</a>
+   
+      <nav aria-label="Page navigation" className="page--custom">
+      <ul className="pagination ">
+        <li className="page-item disabled">
+          <a className="page-link">{`<`}</a>
         </li>
         {generatePage()}
-        <li class="page-item active">
-          <a class="page-link">{`>`}</a>
+        <li className="page-item active">
+          <a className="page-link">{`>`}</a>
         </li>
       </ul>
     </nav>
+  
   );
 }

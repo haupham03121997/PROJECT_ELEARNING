@@ -6,7 +6,7 @@ export const getCoursesAction = () => {
         dispatch({
             type: typeAction.GET_COURSES_LIST_REQUEST
         })
-        axios.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc")
+        axios.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01")
             .then((result) => {
                 dispatch({
                     type: typeAction.GET_COURSES_LIST_SUCCESS,
@@ -36,19 +36,20 @@ export const getCoursesDetailAction = (maKhoaHoc) => {
         dispatch({
             type : typeAction.GET_COURSES_DETAIL_REQUEST,
         })
-        axios.get(`QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`)
+        axios.get(`/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`)
         .then((result)=>{
             dispatch({
                 type: typeAction.GET_COURSES_DETAIL_SUCCESS,
                 payload :{ 
                     data : result.data
-                }
+                }   
             })
         })
         .catch((err) =>{
             dispatch({
                 type: typeAction.GET_COURSES_DETAIL_ERR
             })
+            console.log("Loi" , err);
         })
     }
 }

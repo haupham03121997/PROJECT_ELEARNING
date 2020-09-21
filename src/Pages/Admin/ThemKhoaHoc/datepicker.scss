@@ -1,0 +1,19 @@
+.react-datepicker-wrapper {
+    display: block;
+    .react-datepicker__input-container {
+        input {
+            border: 1px solid #ced4da;
+            padding: 0 10px;
+            // width: 60%;
+            height: 49px;
+            color: #495057;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                border: 1px solid #d4b032;
+            }
+            border-radius: 2px;
+        }
+    }
+}

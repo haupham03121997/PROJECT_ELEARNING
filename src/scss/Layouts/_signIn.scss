@@ -1,12 +1,70 @@
 .SignIn {
+    .logo {
+        img {
+            padding: 30px 0;
+        }
+        text-align: center;
+        // border-bottom: 1px solid;
+        box-shadow: 0 1px 5px -1px rgba(51, 62, 73, 0.14),
+        0 4px 10px 0 rgba(51, 62, 73, 0.08);
+    }
+    h1 {
+        @include Text($fs-2, $colorDark, $fw-3);
+    }
+    p {
+        @include Text($fs-5, $colorGrey, $fw-4);
+    }
+    .signin-form {
+        box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+    }
+    .form-group {
+        height: 117px !important;
+        position: relative;
+        .errMessage {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .errInput {
+            position: absolute;
+            top: 45%;
+            right: 5%;
+            font-size: 14px;
+            color: red;
+        }
+        .btn-signup {
+            margin-left: 5%;
+            width: 90%;
+            padding: 10px 0;
+            text-transform: uppercase;
+            color: white;
+            font-weight: 500;
+        }
+        .form-control {
+            height: 50px;
+            &::placeholder {
+                font-size: 13px;
+                color: #b3b3b3;
+            }
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+            &:hover {
+                border: 1px solid #d4b032;
+            }
+        }
+    }
     .password {
         position: relative;
         .show-pass {
-            position: absolute;
-            top: 58%;
             cursor: pointer;
-            // transform: translateY(-50%);
-            right: 5px;
+            color: $colorDark;
+            position: absolute;
+            top: 37%;
+            right: 10px;
+            transition: all 0.3s;
+            font-size: 20px;
             &:hover {
                 color: $colorYellow;
             }
