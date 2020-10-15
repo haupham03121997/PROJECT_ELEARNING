@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const axiosClient = Axios.create({
-    baseURL: "http://elearning0706.cybersoft.edu.vn/api/",
+    baseURL: "https://elearning0706.cybersoft.edu.vn/api/",
 });
 axiosClient.interceptors.request.use((config) => {
     const userInfo =

@@ -1,15 +1,16 @@
 import React from "react";
 import "./Pagination.scss"
 export default function Pagination({
-  currentPage, // Page hiện tại mình đang xem
-  pageSize, //Số phần tử trong 1 pages , cái này FE tự quyết định
-  totalCount, //Tổng ố phần tử
+  currentPage, // Page hiện tại mình đang xem 1
+  pageSize, //Số phần tử trong 1 pages , cái này FE tự quyết định 10
+  totalCount, //Tổng số phần tử 20
   onChange,
 }) {
+
   const generatePage = () => {
     const detal = 2;
-    const totalPage = Math.ceil(totalCount / pageSize);
-    const firstPage = Math.max(1, currentPage - detal);
+    const totalPage = Math.ceil(totalCount / pageSize); 
+    const firstPage = Math.max(1, currentPage - detal); 
     const lastPage = Math.min(totalPage, currentPage + detal);
     const pages = [];
 
@@ -26,16 +27,9 @@ export default function Pagination({
       );
     }
     return pages;
-
-  
   };
-  // const handleSelectPage = (page) => {
-  //   if (page !== currentPage) {
-  //     onChange(page);
-  //   }
-  // };
-  console.log("currentPage" ,currentPage);
-  // console.log("onChange" , onChange);
+
+    // console.log("current Pages" , currentPage);
 
   return (
    
@@ -45,7 +39,7 @@ export default function Pagination({
           <a className="page-link">{`<`}</a>
         </li>
         {generatePage()}
-        <li className="page-item active">
+        <li className="page-item ">
           <a className="page-link">{`>`}</a>
         </li>
       </ul>

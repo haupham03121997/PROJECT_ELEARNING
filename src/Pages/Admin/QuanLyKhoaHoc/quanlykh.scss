@@ -1,0 +1,110 @@
+.btn-add {
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid #238BAA;
+    color: #238BAA;
+    &:hover {
+        background-color: #238BAA;
+        color: white;
+    }
+}
+
+.input-group--cusstom {
+    height: 20px;
+}
+
+.modal-content--custom {
+    .modal-header {
+        position: relative;
+        height: 40px !important;
+        .modal-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 0;
+        }
+    }
+    .modal-body {
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            color: #238BAA;
+        }
+        .form-group {
+            .form-control {
+                height: 35px !important;
+            }
+            .ant-select-single {
+                width: 355px !important;
+                height: 35px !important;
+                .ant-select-selector {
+                    height: 35px !important;
+                }
+            }
+        }
+    }
+}
+
+.table-custom {
+    text-align: center;
+    thead {
+        tr {
+            &:nth-child(1) {
+                background-color: #238BAA;
+                color: white;
+            }
+            th {
+                font-size: 13px;
+            }
+        }
+    }
+    tbody {
+        td {
+            padding: 0.5rem;
+            .btn-accept {
+                background-color: #238BAA;
+                color: white;
+                padding: 7px 15px;
+                border-radius: 4px;
+                margin-right: 10px;
+                transition: all 0.2s;
+                border: 1px solid #238BAA;
+                font-size: 13px;
+                cursor: pointer;
+                &:hover {
+                    background-color: white;
+                    color: #238BAA;
+                    border: 1px solid #238BAA;
+                }
+            }
+            .btn-cancel {
+                @extend .btn-accept;
+                background-color: rgba(196, 14, 14, 0.76);
+                border: 1px solid rgba(196, 14, 14, 0.76);
+                &:hover {
+                    color: rgba(196, 14, 14, 0.76);
+                    border: 1px solid rgba(196, 14, 14, 0.76);
+                }
+            }
+            .btn-update {
+                @extend .btn-accept;
+                background-color: rgb(209, 144, 23);
+                border: 1px solid rgb(209, 144, 23);
+                &:hover {
+                    color: rgb(209, 144, 23);
+                    border: 1px solid rgb(209, 144, 23);
+                }
+            }
+        }
+    }
+}
+
+.modal-content--custom {
+    // background-color: #238BAA !important;
+    .modal-title {
+        background-color: transparent;
+        color: #238BAA;
+        width: 50%;
+    }
+}

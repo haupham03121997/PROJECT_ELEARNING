@@ -9,10 +9,11 @@ export const dangKyKhoaHocAction = (values) => {
     axios
       .post("/QuanLyKhoaHoc/DangKyKhoaHoc", values)
       .then((result) => {
+        console.log(result);
         dispatch({
           type: Type.GHI_DANH_KHOA_HOC_SUCCESS,
           payload: {
-            data: result.data,
+            data: result.config.data,
           },
         });
         swal(
@@ -20,6 +21,7 @@ export const dangKyKhoaHocAction = (values) => {
           "Đăng ký khóa học thành công! Bạn vui lòng đợi xét duyệt",
           "success"
         );
+        localStorage.setItem(values.maKhoaHoc, JSON.stringify(result.data));
       })
       .catch((err) => {
         // console.log(err.response);

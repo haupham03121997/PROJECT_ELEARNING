@@ -14,6 +14,7 @@ export const timKiemNguoiDungAction = (tuKhoa) =>{
                     data : res.data,
                 }
             })
+            console.log("res" , res);
         })
         .catch((err)=>{
             dispatch({

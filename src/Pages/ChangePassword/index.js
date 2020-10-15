@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DoiMatKhauAction } from "../../Action/doiMatKhauAction";
@@ -22,8 +22,7 @@ export default function DoimatKhau(props) {
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
         swal("Thay đổi mật khẩu thành công!", {
           icon: "success",
@@ -33,7 +32,6 @@ export default function DoimatKhau(props) {
         swal("Your imaginary file is safe!");
       }
     });
-    
   };
 
   const user = JSON.parse(localStorage.getItem("userLogin"));
@@ -96,10 +94,10 @@ export default function DoimatKhau(props) {
           </button>
         </div>
       </div>
-      <div className="taikhoan__content mt-5">
+      <div className="taikhoan__content mt-md-5 mt-sm-0">
         <div className="container">
           <div className="row">
-            <div className="col-3 ml-auto">
+            <div className="col-md-3 col-sm-0 ml-auto">
               <div className="avatar">
                 <img src="/img/avatar.png" alt="" />
               </div>
@@ -113,7 +111,7 @@ export default function DoimatKhau(props) {
                 <p className="">===</p>
               </div>
             </div>
-            <div className="col-9 taikhoan-right">
+            <div className="col-md-9 col-sm-12 taikhoan-right">
               <div className="taikhoan-right__title">
                 <h3>Đổi mật khẩu </h3>
                 <p>
@@ -160,7 +158,7 @@ export default function DoimatKhau(props) {
                           render={({ field, form: { isSubmitting } }) => (
                             <input
                               {...field}
-                              disabled
+                              // disabled
                               type="email"
                               placeholder="VD 123@gmail.com"
                               className="form-control"
@@ -251,6 +249,25 @@ export default function DoimatKhau(props) {
                     </Form>
                   )}
                 />
+                <p>
+                  <a
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                    className="mr-1"
+                  >
+                    Trang chủ{" "}
+                  </a>
+                  <i className="fa fa-angle-right"></i>
+                  <a
+                    onClick={() => {
+                      history.push("/caidat/taikhoan");
+                    }}
+                    className="ml-1"
+                  >
+                    Tài khoản
+                  </a>
+                </p>
               </div>
             </div>
           </div>

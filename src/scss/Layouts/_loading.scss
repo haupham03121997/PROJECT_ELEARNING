@@ -1,25 +1,29 @@
 .main-loading {
     width: 100%;
-    height: 500px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: sans-serif;
+    // position: fixed;
+    background-color: #fff;
+    position: fixed;
+    z-index: 9999;
     .loading {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        border-top: 10px solid #D4B032;
+        border-top: 10px solid #248BAA;
         position: relative;
         animation: a1 2s linear infinite;
         box-sizing: border-box;
         span {
             position: absolute;
-            width: 100px;
-            height: 100px;
-            color: #D4B032;
+            width: 50px;
+            height: 50px;
+            color: #248BAA;
             text-align: center;
-            line-height: 100px;
+            line-height: 50px;
             // line-height: 200px;
             animation: a2 2s linear infinite;
         }
@@ -30,6 +34,18 @@
     to {
         transform: rotate(360deg);
     }
+    // 0% {
+    //     transform: rotate(0deg);
+    // }
+    // 50% {
+    //     transform: rotate(90deg);
+    // }
+    // 75% {
+    //     transform: rotate(180deg);
+    // }
+    // 100% {
+    //     transform: rotate(360deg);
+    // }
 }
 
 @keyframes a2 {

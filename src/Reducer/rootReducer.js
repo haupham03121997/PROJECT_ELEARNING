@@ -5,7 +5,11 @@ import {UserReducer} from './UserReducer';
 import {getUserList} from './listUser';
 import {ghiDanhKHReducer} from "./ghiDanhKHReducer";
 import {listUserAll} from "./listUserAll";
-import {hvChoXetDuyetTheoMaKH} from "./hvChoXetDuyetTheoMaKH"
+import {dsGhiDanhTheoKH} from "./dsGhiDanhTheoKH";
+import {dsGhiDanhKhReducer} from "./dsGhiDanhKhUser";
+import {TimKiemNguoiDungReDucer} from "./timKiemNguoiDung";
+import {ThemKhoaHocReducer} from "./themKhoaHoc"
+import {DsUserDaGhiDanh} from "./UserGhiDanh";
 export const rootReducer = combineReducers({
     getCoursesList,
     getCategoriesCourses,
@@ -13,6 +17,9 @@ export const rootReducer = combineReducers({
     getUserList,
     ghiDanhKHReducer,
     listUserAll,
-    hvChoXetDuyetTheoMaKH
-   
+    dsGhiDanhTheoKH,
+    dsGhiDanhKhReducer,
+    TimKiemNguoiDungReDucer,
+    
+    // DsUserDaGhiDanh
 })

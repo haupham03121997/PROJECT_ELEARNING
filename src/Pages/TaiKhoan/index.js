@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./taikhoan.scss";
@@ -28,12 +28,14 @@ export default function TaiKhoan() {
           </button>
         </div>
       </div>
-      <div className="taikhoan__content mt-5">
+      <div className="taikhoan__content mt-md-5 mt-sm-0">
         <div className="container">
           <div className="row">
-            <div className="col-3 ml-auto">
+            <div className="col-md-3 col-sm-0 ml-auto">
               <div className="avatar">
-                <img src="/img/avatar.png" alt="" />
+                <img onClick={()=>{
+                  history.push("/")
+                }} src="/img/avatar.png" alt="" />
               </div>
               <div className="name">
                 <p className="my-2">
@@ -45,7 +47,7 @@ export default function TaiKhoan() {
                 <p className="">===</p>
               </div>
             </div>
-            <div className="col-9 taikhoan-right">
+            <div className="col-md-9 col-sm-12 taikhoan-right">
               <div className="taikhoan-right__title">
                 <h3>Tài khoản</h3>
                 <p>
@@ -90,7 +92,7 @@ export default function TaiKhoan() {
                   <div className="name-persional">
                     <div>
                       <h4>Tên người dùng</h4>
-                      <p>Phạm Xuân Hậu</p>
+                      <p>{credential.hoTen}</p>
                     </div>
                     <span>
                       <i className="fa fa-angle-right"></i>
@@ -99,7 +101,7 @@ export default function TaiKhoan() {
                   <div className="email-persional">
                     <div>
                       <h4>Email người dùng</h4>
-                      <p>xuanhau031297@gmail.com</p>
+                      <p>{credential.email}</p>
                     </div>
                     <span>
                       <i className="fa fa-angle-right"></i>
@@ -108,7 +110,7 @@ export default function TaiKhoan() {
                   <div className="phone-persional">
                     <div>
                       <h4>Số điện thoại</h4>
-                      <p>0371273812</p>
+                      <p>{credential.soDT}</p>
                     </div>
                     <span>
                       <i className="fa fa-angle-right"></i>

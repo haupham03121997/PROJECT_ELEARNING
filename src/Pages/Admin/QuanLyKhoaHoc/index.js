@@ -1,16 +1,59 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getCoursesAction } from "../../../Action/danhSachKhoaHocAtion";
+import { getCoursesPaginationAction } from "../../../Action/danhSachKhoaHocAtion";
+import { xoaKhoaHocAction } from "../../../Action/xoaKhoaHocAction";
+import Pagination  from "../../../component/Pagination"
+import { layDanhMucKhoaHocAction } from "../../../Action/layDanhMucKhoaHocAction";
+import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
+// import  Loading from "../../../component/Loading";
+import ThemKhoaHoc from "./ThemKhoaHoc";
+import SuaKhoaHoc from "./CapNhatKhoaHoc.js";
+import "./quanlykh.scss";
+import swal from "sweetalert";
 export default function QuanLyKhoaHoc() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [currentPage, setCurrentPage] = useState(1);
+ 
+  const onChanges = (pages) => {
+    // console.log("pages", pages);
+    setCurrentPage(pages);
+  };
+  const [isDeleted, setDeleted] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [search, setSearch] = useState({
+    searchText: "",
+  });
+  const [isParams , setIsParams] = useState("")
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setSearch({
+      ...search,
+      [name]: value,
+    });
+    // console.log(name , value);
+  };
 
+  const handleSubmit = () => {
+    // history.push(
+    //   `/admin/user-management/timkhoahoc/khoahoc/${search.searchText}`
+    // );
+  };
+  // }
+  const OnChecked = (value) => {
+    // console.log("value" ,value);
+    setIsChecked(value);
+  };
+  // console.log("iss" , isDeleted);
   useEffect(() => {
-    dispatch(getCoursesAction());
-  }, []);
-  const { coursesList } = useSelector((state) => state.getCoursesList);
-  console.log(coursesList);
+    dispatch(getCoursesPaginationAction(currentPage));
+    // dispatch(getCoursesDetailAction())
+  }, [isDeleted, isChecked , currentPage]);
+
+  const { coursesListPagination, loading } = useSelector((state) => state.getCoursesList);
+  const { coursesDetail } = useSelector((state) => state.getCoursesList);
+
   return (
     <div className="content-wrapper management-user">
       {/* Content Header (Page header) */}
@@ -41,26 +84,37 @@ export default function QuanLyKhoaHoc() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-2 ">
-              <button onClick={()=>{
+              {/* <button onClick={()=>{
                   history.push("/admin/courses-management/themkhoahoc")
-              }} className="ml-3 btn btn-success">Thêm khóa học</button>
+              }} className=" btn btn-add">Thêm khóa học</button> */}
+              <button
+                type="button"
+                className=" btn btn-add"
+                data-toggle="modal"
+                data-target="#themKhoaHoc"
+              >
+                Thêm khóa học
+              </button>
             </div>
             <div className="col-4"></div>
-            <div className="col-6">
-              <form className="form-inline ml-3">
-                <div className="input-group input-group--cusstom input-group-sm">
-                  {/* <input
-                  
-                    name="searchTxt"
-                    value={search.searchTxt}
+            <div className="col-6 ">
+              <form className="form-inline  ml-3">
+                <div className="input-group  input-group--cusstom input-group-sm">
+                  <input
+                    name="searchText"
+                    value={search.searchText}
                     onChange={handleChange}
                     className="form-control form-control-navbar"
                     type="search"
-                    placeholder="Nhập tên người dùng...."
+                    placeholder="Nhập tên khóa học...."
                     aria-label="Search"
-                  /> */}
+                  />
                   <div className="input-group-append">
-                    <button className="btn btn-navbar" type="submit">
+                    <button
+                      className="btn btn-navbar"
+                      onClick={handleSubmit}
+                      type="submit"
+                    >
                       <i className="fa fa-search" />
                     </button>
                   </div>
@@ -77,8 +131,8 @@ export default function QuanLyKhoaHoc() {
             </div>
           </div>
           {/* /.row */}
-          <div className="row mt-5 border rounded">
-            <table class="table">
+          <div className="row px-3 mt-2  ">
+            <table class="table table-bordered table-custom">
               <thead>
                 <tr>
                   <th>Mã khóa học</th>
@@ -90,7 +144,7 @@ export default function QuanLyKhoaHoc() {
                 </tr>
               </thead>
               <tbody>
-                {coursesList.map((item, index) => {
+                {coursesListPagination?.items?.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td>{item.maKhoaHoc}</td>
@@ -104,40 +158,78 @@ export default function QuanLyKhoaHoc() {
                       <td>{item.tenKhoaHoc}</td>
                       <td>{item.nguoiTao.hoTen}</td>
                       <td>{item.ngayTao}</td>
-                      <td> <button className="btn btn-success mr-3" 
-                            
-                          >
-                            Cập nhập khóa học
+                      <td>
+                        <button
+                          className="btn-accept mr-2"
+                          onClick={() => {
+                            history.push(
+                              `/admin/courses-management/ghidanh/makhoahoc=${item.maKhoaHoc}`
+                            );
+                          }}
+                        >
+                          <i className="fa fa-check mr-1"></i>Ghi danh
+                        </button>
+                        <button onClick={()=>{
+                           history.push(`/admin/courses-management/capnhatkhoahoc/maKhoahoc=${item.maKhoaHoc}`)
+                         }} className="btn-update mr-2">
+                         <i className="fa fa-share mr-1"></i> Cập nhập 
                           </button>
-
-                          <button className="btn btn-danger mr-3" 
-                            
-                          >
-                            Xóa khóa học
-                          </button>
-                          </td>
+                        {/* <button
+                          type="button"
+                          className="btn-update mr-2"
+                          data-toggle="modal"
+                          data-target="#suakhoahoc"
+                          onClick={()=>{
+                            setIsParams(item.maKhoaHoc)
+                          }}
+                        >
+                          <i className="fa fa-share mr-1"></i> Cập nhập
+                        </button> */}
+                        <button
+                          className="btn-cancel mr-3"
+                          onClick={() => {
+                            swal({
+                              title: "Bạn có chắc muôn xóa?",
+                              text: "",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
+                            }).then((willDelete) => {
+                              if (willDelete) {
+                                dispatch(xoaKhoaHocAction(item.maKhoaHoc));
+                                swal("Xóa thành công!", {
+                                  icon: "success",
+                                });
+                                setDeleted(!isDeleted);
+                              } else {
+                                swal("");
+                              }
+                            });
+                          }}
+                        >
+                          <i className="fa fa-trash"></i> Xóa
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+            
           </div>
         </div>
+        <div className="pagination">
+              <Pagination
+                currentPage={currentPage}
+                pageSize={2}
+                totalCount={7}
+                onChange={onChanges}
+              />
+            </div>
         {/* /.container-fluid */}
       </div>
-
-      {/* /.content */}
-      {/* <div className="text-right">
-        <Pagination
-          currentPage={currentPage}
-          pageSize={10}
-          totalCount={250}
-          onChange={
-            // dispatch(NextPagesAtion(pages))
-            onChange
-          }
-        />
-      </div> */}
+      <ThemKhoaHoc OnChecked={OnChecked} />
+      <SuaKhoaHoc isParams={isParams} isUpDate={!isChecked} />
     </div>
   );
 }

@@ -1,0 +1,19 @@
+.backToTop {
+    position: absolute;
+    bottom: -600%;
+    right: 20px;
+    // height: 100vh;
+    button {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background-color: #72D5CD;
+        border: 1px solid #72D5CD;
+        &:focus {
+            outline: none;
+        }
+        i {
+            color: #fff;
+        }
+    }
+}

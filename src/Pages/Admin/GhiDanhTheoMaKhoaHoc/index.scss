@@ -1,0 +1,49 @@
+.content-top {
+    border: 1px solid #eeee;
+    h4 {
+        font-size: 25px;
+        i {
+            font-size: 20px;
+        }
+    }
+    .table-custom {
+        text-align: center;
+        thead {
+            tr {
+                &:nth-child(1) {
+                    background-color: #238BAA;
+                    color: white;
+                }
+            }
+        }
+        tbody {
+            td {
+                padding: 0.5rem;
+                .btn-accept {
+                    background-color: #238BAA;
+                    color: white;
+                    padding: 7px 15px;
+                    border-radius: 4px;
+                    margin-right: 10px;
+                    transition: all 0.2s;
+                    border: 1px solid #238BAA;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: white;
+                        color: #238BAA;
+                        border: 1px solid #238BAA;
+                    }
+                }
+                .btn-cancel {
+                    @extend .btn-accept;
+                    background-color: rgba(196, 14, 14, 0.76);
+                    border: 1px solid rgba(196, 14, 14, 0.76);
+                    &:hover {
+                        color: rgba(196, 14, 14, 0.76);
+                        border: 1px solid rgba(196, 14, 14, 0.76);
+                    }
+                }
+            }
+        }
+    }
+}

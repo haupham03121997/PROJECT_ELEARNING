@@ -4,6 +4,7 @@ import { useHistory, Redirect, useLocation, Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { Login } from "../../Action/User";
+import { Checkbox } from 'antd';
 export default function Signin() {
   // const history = useHistory();
   const { credential, err } = useSelector((state) => state.UserReducer);
@@ -12,7 +13,6 @@ export default function Signin() {
     // dispatch(LOGIN(value))
     // console.log("value", value);
     dispatch(Login(value));
-
   };
   const location = useLocation();
 
@@ -41,8 +41,8 @@ export default function Signin() {
       <div className="backgroung-login">
         <div className="container">
           <div className="row">
-            <div className="col-4"></div>
-            <div className="col-4 my-5 border rounded signin-form">
+            <div className="col-lg-3 col-md-0"></div>
+            <div className="col-md-6 col-sm-12 my-md-2 my-sm-1 border rounded signin-form">
               <h1 className="text-center display-4 my-4">Đăng Nhập</h1>
               <p className="px-1 text-center">
                 Đào tạo Chuyên Gia Lập Trình theo dự án doanh nghiệp. * Học theo
@@ -59,7 +59,9 @@ export default function Signin() {
                 render={(formiProps) => (
                   <Form>
                     <div className="form-group">
-                      <label htmlFor="">Tài Khoản</label>
+                      <label htmlFor="">
+                        Tài Khoản <span style={{ color: "red" }}>*</span>
+                      </label>
                       <Field
                         type="text"
                         name="taiKhoan"
@@ -80,23 +82,30 @@ export default function Signin() {
                         )}
                       </ErrorMessage>
                     </div>
-                    <div className="form-group password">
-                      <label htmlFor="">Mật Khẩu</label>
-                      <Field
-                        name="matKhau"
-                        type={isShowPass ? "text" : "password"}
-                        className="form-control "
-                        onChange={formiProps.handleChange}
-                        placeholder="Nhập mật khẩu"
-                      />
-                      <div className="show-pass">
+                    <div className="form-group ">
+                      <label htmlFor="">
+                        Mật Khẩu <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div className="password-input">
+                        <Field
+                          name="matKhau"
+                          type={isShowPass ? "text" : "password"}
+                          className="form-control "
+                          onChange={formiProps.handleChange}
+                          placeholder="Nhập mật khẩu"
+                        />
+                        <span className="eye-show">
                         <i
                           onClick={() => {
                             setIsShowPass(!isShowPass);
                           }}
                           className="fa fa-eye-slash"
                         ></i>
+                        </span>
                       </div>
+                      {/* <div className="show-pass">
+                       
+                      </div> */}
                       <ErrorMessage name="matKhau">
                         {(msg) => (
                           <div className="errMessage">
@@ -117,12 +126,10 @@ export default function Signin() {
                     ) : (
                       ""
                     )}
-                    <div className="mb-5 text-center">
+                    <Checkbox >Nhớ mật khẩu</Checkbox>
+                    <div className="my-2 text-center">
                       <div className="form-group">
-                        <button
-                          type="submit"
-                          className="btn btn-signup btn-warning "
-                        >
+                        <button type="submit" className="btn-signin">
                           Đăng nhập
                         </button>
                       </div>
@@ -135,11 +142,13 @@ export default function Signin() {
                     </div>
                     <div>
                       <div>
-                        <p className="text-center">
-                         Bạn chưa có tài khoản?
+                        <p className="text-center mb-0">
+                          Bạn chưa có tài khoản?
                         </p>
                         <p className="text-center">
-                            <Link to="/Dangky">Đăng kí để trãi nghiệm</Link>
+                          <Link className="signupTo" to="/Dangky">
+                            Đăng kí để trãi nghiệm
+                          </Link>
                         </p>
                       </div>
                     </div>
@@ -147,7 +156,7 @@ export default function Signin() {
                 )}
               />
             </div>
-            <div className="col-4"></div>
+            <div className="col-lg-3 col-md-0"></div>
           </div>
         </div>
       </div>

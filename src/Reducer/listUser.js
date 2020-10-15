@@ -4,8 +4,6 @@ const initialState = {
     infoUser : null,
     loading : false,
     err : false,
-   
-  
 }
 export const getUserList = (state = initialState, action ) => {
     switch (action.type) {
@@ -47,6 +45,4 @@ export const getUserList = (state = initialState, action ) => {
             } 
         
     }
-
-   
 }

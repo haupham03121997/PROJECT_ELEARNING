@@ -1,7 +1,11 @@
 .signup {
     .logo {
         img {
-            padding: 30px 0;
+            padding: 10px 0;
+            @include Mediaquery($xs) {
+                width: 160px;
+                padding: 10px 0;
+            }
         }
         text-align: center;
         // border-bottom: 1px solid;
@@ -10,35 +14,70 @@
     }
     // color: red;
     .signup__form {
+        @include Mediaquery($xs) {
+            width: 100%;
+            h1 {
+                font-size: 18px !important;
+            }
+            p {
+                font-size: 14px !important;
+            }
+        }
         margin-top: 40px;
-        width: 50%;
+        width: 80%;
         margin: auto;
         box-shadow: 0 2px 5px 0 rgba(51, 62, 73, .1);
         h1 {
             @include Text($fs-2, $colorDark, $fw-3);
-        }
-        p {
-            @include Text($fs-4, $colorGrey, $fw-4);
-        }
-        .password {
+            text-transform: uppercase;
             position: relative;
-            .show-pass {
-                cursor: pointer;
-                color: $colorDark;
-                position: absolute;
-                top: 35%;
-                right: 49px;
-                transition: all 0.3s;
-                font-size: 20px;
-                &:hover {
-                    color: $colorYellow;
+            &::after {
+                @include Mediaquery($xs) {
+                    left: 40%;
                 }
+                position: absolute;
+                bottom: -5px;
+                left: 43%;
+                content: "";
+                width: 80px;
+                height: 3px;
+                background-color: #72D5CD;
             }
         }
+        p {
+            @include Text($fs-6, #9999, $fw-4);
+        }
         .form-group {
-            position: relative;
+            margin-bottom: 0 !important;
+            .password-input {
+                position: relative;
+                .show-pass {
+                    @include Mediaquery($xs) {
+                        right: 10px;
+                        font-size: 16px;
+                        top: 50%;
+                    }
+                    position: absolute;
+                    top: 50%;
+                    right: 49px;
+                    cursor: pointer;
+                    color: $colorDark;
+                    transition: all 0.3s;
+                    font-size: 20px;
+                    &:hover {
+                        color: $colorYellow;
+                    }
+                }
+            }
+            // position: relative;
             padding: 5px 20px;
-            height: 117px !important;
+            // height: 117px !important;
+            @include Mediaquery($xs) {
+                padding: 0 5px;
+                span {
+                    font-size: 14px !important;
+                }
+            }
             span {
                 color: #333333;
                 font-weight: 500;
@@ -56,16 +95,38 @@
                 font-size: 14px;
                 color: red;
             }
+            .password-input {
+                position: relative;
+                .eye-show {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    transform: translateY(-50%);
+                    color: #248BAA;
+                    cursor: pointer;
+                }
+            }
             .btn-signup {
-                margin-left: 5%;
-                width: 90%;
-                padding: 10px 0;
+                @include Mediaquery($xs) {
+                    width: 100%;
+                    margin-left: 0;
+                    margin-top: 20px;
+                }
+                // display: block;
+                // margin-left: 5%;
+                // text-align: right;
+                width: 20%;
+                padding: 10px 40px;
                 text-transform: uppercase;
                 color: white;
+                background-color: #00AACF;
                 font-weight: 500;
             }
             .form-control {
-                height: 50px;
+                @include Mediaquery($xs) {
+                    height: 40px;
+                }
+                height: 45px;
                 &::placeholder {
                     font-size: 13px;
                     color: #b3b3b3;
@@ -75,27 +136,42 @@
                     box-shadow: none;
                 }
                 &:hover {
-                    border: 1px solid #D4B032;
+                    border: 1px solid #00AACF;
                 }
             }
         }
     }
     .signin {
+        margin-top: 10px;
         a {
             cursor: pointer;
-            color: #D4B032;
+            color: #72D5CD;
             &:hover {
                 text-decoration: solid;
-                color: #D4B032;
+                color: #00AACF;
             }
         }
     }
     .goHome {
-        margin-bottom: 100px;
+        margin-bottom: 40px;
+        @include Mediaquery($xs) {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 50px;
+            span {
+                border: 1px solid #00AACF;
+                font-size: 14px;
+                padding: 7px 12px;
+                border-radius: 4px;
+            }
+        }
         span {
+            padding: 10px 15px;
+            background-color: #00AACF;
+            color: #fff;
             cursor: pointer;
             &:hover {
-                color: #D4B032;
+                // color: #00AACF;
             }
         }
     }

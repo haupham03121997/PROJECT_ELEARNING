@@ -13,6 +13,7 @@ export const CapNhatNguoiDungAction = (value) => {
         dispatch({
           type: Type.UPDATE_USER_SUCCESS,
         });
+        console.log("result"  , result);
       })
       .catch((err) => {
         dispatch({

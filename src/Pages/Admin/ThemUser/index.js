@@ -2,13 +2,13 @@ import React from "react";
 // import style from "../../../scss/Layouts/_signup.scss"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import {themNguoiDungAction} from "../../../Action/themNguoiDungAction"
-import {useDispatch, useSelector} from "react-redux"
+import { themNguoiDungAction } from "../../../Action/themNguoiDungAction";
+import { useDispatch, useSelector } from "react-redux";
 export default function ThemUser() {
-    const dispatch = useDispatch();
-      const _handleSubmit = (values) => {
-    // console.log("values", values);
+  const dispatch = useDispatch();
+  const _handleSubmit = (values) => {
     dispatch(themNguoiDungAction(values));
+    console.log("values" , values);
   };
 
   const lowcaseRegex = /(?=.*[a-z])/;
@@ -53,10 +53,7 @@ export default function ThemUser() {
             {/* /.col */}
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
-                {/* <li className="breadcrumb-item">
-                    <a href="#">Home</a>
-                  </li> */}
-                {/* <li className="breadcrumb-item active">Dashboard v3</li> */}
+              
               </ol>
             </div>
             {/* /.col */}
@@ -142,7 +139,7 @@ export default function ThemUser() {
                   </div>
                   <div className="form-group">
                     <label htmlFor="">Mã loại người dùng</label>
-                    <select name="maLoaiNguoiDung" className="form-control">
+                    <select name="maLoaiNguoiDung" onChange={formikProps.handleChange} className="form-control">
                       <option value="HV">HV</option>
                       <option value="GV">GV</option>
                     </select>

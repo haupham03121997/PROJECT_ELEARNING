@@ -4,11 +4,22 @@
     .pagination {
         position: absolute;
         top: 0;
-        right: 8%;
+        right: 10%;
         width: 15%;
-        .page-item {
-            .active {
-                background-color: blue;
+        // .page-item {
+        //     .active {
+        //         background-color: #28a745 !important;
+        //     }
+        // }
+        .page-item.active .page-link {
+            background-color: #28a745 !important;
+            // border: 1px solid #28a745;
+            border: none;
+        }
+        .page-link {
+            transition: all 0.5s;
+            &:hover {
+                background-color: #28a745 !important;
             }
         }
     }

@@ -2,6 +2,7 @@ import * as Typecontants from "../Contanst/Courses"
 
 const initialState = {
     coursesList: [],
+    coursesListPagination: [],
     coursesDetail: {},
     searchCourses: [],
     loading: false,
@@ -18,7 +19,7 @@ export const getCoursesList = (state = initialState, action) => {
         }
         case Typecontants.GET_COURSES_LIST_SUCCESS: {
             return {
-                ...state, coursesList: action.payload.data, loading: true, error: false
+                ...state, coursesList: action.payload.data, loading: false, error: false
             }
         }
         case Typecontants.GET_COURSES_LIST_ERR: {
@@ -27,6 +28,22 @@ export const getCoursesList = (state = initialState, action) => {
             }
 
         }
+        case Typecontants.GET_COURSES_LIST_PAGIN_REQUEST : {
+            return {
+                ...state, loading: true, error: false
+            }
+        }
+        case Typecontants.GET_COURSES_LIST_PAGIN_SUCCESS : {
+            return {
+                ...state, coursesListPagination : action.payload.data , loading: false, error: false
+            }
+        }
+        case Typecontants.GET_COURSES_LIST_PAGIN_ERR : {
+            return {
+                ...state, loading: false, error: true
+            }
+        }
+
         case 'OFF_LOADING':
             return {
                 ...state, loading: false

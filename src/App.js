@@ -11,27 +11,29 @@ import TimKiemKhoaHoc from "./Pages/TimKiemKhoaHoc";
 import CoursesDetail from "./Pages/CoursesDetail";
 import Signup from "./Pages/Signup";
 import Signin from "./Pages/Signin";
+import Lienhe from "./Pages/LienHe";
+import KhoaHoc from "./Pages/KhoaHoc"
 
 import ThongTinTaiKhoan from "./Pages/ThongTinTaiKhoan";
 import AdminRouter from "./component/AdminRouter";
 import QuanLyNguoiDung from "./Pages/Admin/QuanLyNguoiDung";
 // import DoiMatKhau from "./Pages/DoimatKhau";
-import NguoiDungChuaGhiDanh from "./Pages/Admin/NguoiDungChuaGhiDanh";
+import GhiDanh from "./Pages/Admin/GhiDanhTheoMaKhoaHoc";
 import ThemNguoiDung from "./Pages/Admin/ThemUser";
-import TimKiemNguoiDung from "./Pages/Admin/TimKiemNguoiDung";
-import CapNhatNguoiDung from "./Pages/Admin/CapnhatNguoiDung";
-
+import TimKiemNguoiDung from "./Pages/Admin/QuanLyNguoiDung/TimKiemNguoiDung";
+import TimKiemKhoaHocAdmin from "./Pages/Admin/TimKiemKhoaHoc/TimKhoaHocAdmin";
+// import CapNhatNguoiDung from "./Pages/Admin/CapnhatNguoiDung";
+// import CApNhatKhoaHoc from "./Pages/Admin/CapnhatKhoaHoc";
 import CustomRouter from "./component/CustomRoter";
 import RouterTaiKhoan from "./component/RouterTaiKhoan";
-// import ChiTietKhoaHoc from "./Pages/ChiTietKhoaHoc";
-import NguoiDungTest from "./Pages/Admin/NguoiDungChuaGhiDanhTest";
 import TaiKhoan from "./Pages/TaiKhoan";
 import DoimatKhau from "./Pages/ChangePassword";
 import QuanLyKhoaHoc from "./Pages/Admin/QuanLyKhoaHoc";
 import ThemKhoaHoc from "./Pages/Admin/ThemKhoaHoc";
-// import GhiDanhKhocHocTheoMaKH from "./Pages/Admin/ghiDanhTheoMa";
-// import DanhSachHocVienChoXetDuyet from "./Pages/Admin/DanhSachHocVienChoXetDuyet";
+import ThemKhoaHocTest from "./Pages/Admin/ThemKhoaHocTest";
 
+import GhiDanhTheoKhoaHoc from "./Pages/Admin/GhiDanhTheoMaKhoaHoc";
+import GhiDanhTheoTaiKhoan from "./Pages/Admin/GhiDanhTheoTaiKhoan";
 function App() {
   // const dispatch = useDispatch();
   // const getCredentialFromLocal = () => {
@@ -49,25 +51,28 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <AdminRouter
+        {/* <AdminRouter
           exact
           path="/admin/user-management/nguoidung/:seacrh"
           component={TimKiemNguoiDung}
-        />
+        /> */}
+{/* 
         <AdminRouter
-          path="/admin/user-management/ghidanh"
-          component={NguoiDungChuaGhiDanh}
-        />
-        <AdminRouter
-          path="/admin/user-management/hihihi/:maKhoaHoc"
-          component={NguoiDungTest}
-        />
-        <AdminRouter
+          path="/admin/user-management/ghidanh/taiKhoan/:taiKhoan"
+          component={GhiDanh}
+        /> */}
+        <AdminRouter path="/admin/courses-management/ghidanh/makhoahoc=:maKhoaHoc" component={GhiDanhTheoKhoaHoc} />  
+        <AdminRouter path="/admin/user-management/ghidanh/taikhoan/:taiKhoan" component={GhiDanhTheoTaiKhoan} />
+        {/* <AdminRouter
           exact
-          path="/admin/user-management/capnhatnguoidung/taikhoan/:taiKhoan"
+          path="/admin/user-management/capnhatnguoidung/taikhoan/:obj"
           component={CapNhatNguoiDung}
+        /> */}
+        {/* <AdminRouter path="/admin/courses-management/capnhatkhoahoc/maKhoahoc=:maKhoaHoc"  component={CApNhatKhoaHoc}/> */}
+        <AdminRouter
+          path="/admin/user-management/timkhoahoc/khoahoc/:makh"
+          component={TimKiemKhoaHocAdmin}
         />
-
         <AdminRouter
           path="/admin/user-management"
           component={QuanLyNguoiDung}
@@ -80,13 +85,13 @@ function App() {
         />
         <AdminRouter
           path="/admin/courses-management/themkhoahoc"
-          component={ThemKhoaHoc}
+          component={ThemKhoaHocTest}
         />
         <AdminRouter
           path="/admin/courses-management"
           component={QuanLyKhoaHoc}
         />
-        <CustomRouter
+        <UserRouter
           path="/DanhMucKhoaHoc/:maDanhMucKhoaHoc"
           component={DanhMucKhoaHoc}
         />
@@ -104,7 +109,8 @@ function App() {
         <CustomRouter path="/DangNhap" component={Signin} />
         <UserRouter path="/ThongTinTaiKhoan" component={ThongTinTaiKhoan} />
         {/* <UserRouter path="/TaiKhoan/DoiMatKhau" component={DoiMatKhau} /> */}
-
+        <UserRouter path="/lienhe" component={Lienhe} />
+        <UserRouter path="/khoahoc" component={KhoaHoc} />
         <UserRouter
           path="/ChiTietKhoaHoc/:maKhoaHoc"
           component={CoursesDetail}

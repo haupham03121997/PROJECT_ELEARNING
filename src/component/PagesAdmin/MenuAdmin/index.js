@@ -10,7 +10,7 @@ export default function MenuAdmin() {
     <div>
       <aside className="main-sidebar main-sidebar--custom sidebar-dark-primary elevation-4">
         {/* Brand Logo */}
-        <a href="" className="brand-link">
+        <a className="brand-link">
           <img
             src="/dist/img/AdminLTELogo.png"
             alt="AdminLTE Logo"

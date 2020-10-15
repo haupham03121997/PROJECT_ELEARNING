@@ -8,7 +8,7 @@ export const layDanhSachNguoiDungAction = (currentPage) => {
     });
     axios
       .get(
-        `/QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang?MaNhom=GP01&page=${currentPage}&pageSize=10`
+        `/QuanLyNguoiDung/LayDanhSachNguoiDung_PhanTrang?MaNhom=GP01&page=${currentPage}&pageSize=8`
       )
       .then((result) => {
         dispatch({

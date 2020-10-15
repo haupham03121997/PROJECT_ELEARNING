@@ -41,7 +41,7 @@ export default function DoiMatKhau() {
     <div className="container user-info">
       <h3>Thông tin tài khoản</h3>
       <div className="row">
-        <div className="col-3 user-info__left text-center">
+        <div className="col-md-3 col-sm-0 user-info__left text-center">
           <img src="/img/username.jpg" alt="" />
           <p className="text-center">Học Viên</p>
           <div className="user-info__left__btn">
@@ -60,7 +60,7 @@ export default function DoiMatKhau() {
             </p>
           </div>
         </div>
-        <div className="col-9">
+        <div className="col-md-9 col-sm-12">
           <Formik
             initialValues={{
               taiKhoan: "",

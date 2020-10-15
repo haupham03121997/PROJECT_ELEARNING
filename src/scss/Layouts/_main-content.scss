@@ -1,12 +1,6 @@
 .section-content-main {
-    // .carousel-slick-background {
-    //     h1 {
-    //         @include Text($fs-1, $colorDark, $fw-2);
-    //         padding-top: 40px;
-    //     }
-    //     background-color: rgba(231, 226, 226, 0.589);
-    // }
-    margin-top: 15%;
+    // display: none;
+    margin-top: 5%;
     position: relative;
     .carousel-slick--custom {
         width: 90% !important;
@@ -14,8 +8,39 @@
         position: relative;
         h3 {
             letter-spacing: 2px;
+            @include Mediaquery($xs) {
+                font-size: 18px;
+            }
+            font-size: 32px;
+            font-weight: 700;
+            color: #424242;
+        }
+        &__title1 {
+            font-size: 20px;
+            position: relative;
+            @include Mediaquery($xs) {
+                font-size: 14px;
+            }
+            &::after {
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                content: "";
+                // display: block;
+                width: 100px;
+                height: 2px;
+                background-color: #72D5CD;
+                z-index: 10;
+            }
         }
         .item-prev {
+            @include Mediaquery($xs) {
+                top: 30px;
+                color: #72D5CD;
+                font-size: 25px;
+                display: none;
+            }
             cursor: pointer;
             position: absolute;
             top: 2px;
@@ -30,6 +55,12 @@
             font-weight: 700 !important;
         }
         .item-next {
+            @include Mediaquery($xs) {
+                top: 30px;
+                color: #72D5CD;
+                font-size: 25px;
+                display: none;
+            }
             cursor: pointer;
             position: absolute;
             top: 2px;
@@ -42,9 +73,18 @@
             font-size: 20px;
         }
         .slick-prev {
+            @include Mediaquery($xs) {
+                top: 3%;
+                width: 35px;
+                height: 35px;
+                background-color: transparent;
+            }
+            @include Mediaquery($sm) {
+                background-color: transparent;
+            }
             position: absolute;
-            top: -6%;
-            left: 33%;
+            top: 50%;
+            left: -50px;
             width: 45px;
             height: 45px;
             border-radius: 50%;
@@ -52,9 +92,19 @@
             z-index: 1;
         }
         .slick-next {
+            @include Mediaquery($xs) {
+                top: 3%;
+                width: 35px;
+                height: 35px;
+                background-color: transparent;
+                display: none !important;
+            }
+            @include Mediaquery($sm) {
+                background-color: transparent;
+            }
             position: absolute;
-            top: -6%;
-            right: 33%;
+            top: 50%;
+            right: -50px;
             width: 45px;
             height: 45px;
             border-radius: 50%;
@@ -63,8 +113,11 @@
         }
         .slick-next:before,
         .slick-prev:before {
-            color: #72D5CD !important;
-            font-size: 30px;
+            @include Mediaquery($xs) {
+                display: none !important;
+            }
+            // color: #72D5CD !important;
+            font-size: 50px;
             z-index: 10;
         }
         // .slick-prev:before {
@@ -111,7 +164,7 @@
         .card--custom {
             position: relative;
             cursor: pointer;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
             transition: all 0.5s;
             .card--img {
                 position: relative;
@@ -120,6 +173,7 @@
                 border-bottom: 1px solid #eee;
                 overflow: hidden;
                 transition: all 0.5s;
+                border-bottom: 5px solid #F15224;
                 &:hover {
                     .card__overlay {
                         opacity: 0.4;
@@ -136,35 +190,83 @@
             }
             .card-title {
                 text-transform: uppercase;
-                height: 43px;
+                margin-top: 10px;
+                letter-spacing: 1px;
+                height: 30px;
+                margin-bottom: 10px;
                 width: 100%;
                 @include Text($fs-4, $colorDark, $fw-1);
                 display: block;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 80px;
+                    height: 2px;
+                    background-color: #F15224;
+                }
             }
             .rate-start {
-                @include Text($fs-6, $colorYellow, $fw-4);
+                // @include Text($fs-6, $colorYellow, $fw-4);
+                i {
+                    margin-top: 10px;
+                    font-size: 12px;
+                    color: rgb(219, 219, 13);
+                    margin-right: 10px;
+                }
                 span {
                     @include Text($fs-6, $colorGrey-Light, $fw-4);
                 }
             }
             .view {
-                @include Text($fs-6, $colorDark, $fw-4);
+                @include Text($fs-7, $colorGrey-Light, $fw-4);
             }
-            .btn-content-signin {
-                z-index: 3;
-                display: block;
-                @include Button($colorYellow, $colorWhite, $fs-6, 8px 20px, 4px);
-                font-weight: $fw-2 !important;
-                letter-spacing: 1px;
-                &:focus {
-                    box-shadow: none;
+            .btn-detail {
+                // position: relative;
+                height: 80px !important;
+                .btn-content-signin {
+                    z-index: 3;
+                    // display: block;
+                    position: relative;
+                    // @include Button($colorYellow, $colorWhite, $fs-6, 8px 20px, 4px);
+                    font-weight: $fw-2 !important;
+                    background-color: #72D5CD;
+                    color: white;
+                    margin-top: 10px;
+                    padding: 10px 15px;
+                    letter-spacing: 1px;
+                    transition: all 0.5s;
+                    &:focus {
+                        box-shadow: none;
+                    }
+                    &:hover {
+                        // background-color: #F15224;
+                        // margin-bottom: 40px;
+                        margin-top: 0px;
+                        &::after {
+                            opacity: 1;
+                            top: 120%;
+                        }
+                    }
+                    &::after {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        content: "";
+                        height: 10px;
+                        width: 100%;
+                        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+                        opacity: 0;
+                    }
                 }
             }
             &:hover {
                 // .card__overlay {
                 //     display: block;
                 // }
-                box-shadow: 0 2px 10px 0 rgba(12, 12, 12, 0.541);
+                // box-shadow: 0 2px 10px 0 rgba(12, 12, 12, 0.541);
                 img {
                     transform: scale(1.1);
                     // display: block;

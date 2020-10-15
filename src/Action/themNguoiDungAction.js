@@ -18,9 +18,13 @@ export const themNguoiDungAction = (values) => {
         swal("", "Đăng Ký Thành công!", "success");
       })
       .catch((err) => {
+      
         dispatch({
+ 
           type: Type.ADD_USER_ERR,
         });
+        // console.log('err' ,err);
+        swal("", "Tài khoản hoặc email đã tồn tại", "error");
       });
   };
 };

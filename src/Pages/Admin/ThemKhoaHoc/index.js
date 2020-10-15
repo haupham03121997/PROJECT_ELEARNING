@@ -2,38 +2,68 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
+import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
+import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./datepicker.scss";
+
+// import { DatePicker, Space } from "antd";
+import moment from "moment";
+
+import * as yup from "yup";
 import "./themKhoaHoc.scss";
+import { themNguoiDungAction } from "../../../Action/themNguoiDungAction";
 export default function ThemKhoaHoc() {
+  const [image, setImage] = useState("");
+ 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategoryAction());
+  }, []);
+
+  const { categoriesCourses } = useSelector(
+    (state) => state.getCategoriesCourses
+  );
+  // console.log(categoriesCourses);
   const _handleSubmit = (value) => {
     console.log(value);
+    let frm = new FormData();
+    for (let key in value) {
+      frm.append(key, value[key]);
+      // console.log("tên Khóa học" , frm.get(key));
+    }
+
+    // dispatch(ThemKhoaHocAction(frm))
   };
 
-  const [date, setDate] = useState(new Date());
-  const _handleGetDay = (date) => {
-    setDate(date);
+  const [startDate, setStartDate] = useState();
+  // console.log("date", date);
+ const handleChangeDay = (date)=>{
+
+  const day = date.toLocaleDateString();
+  const getDay =  moment(day).format("DD/MM/YYYY")
+  console.log(getDay);
+  // console.log(getDate.moment().format("DD/MM/YYYY"));
+
+  setStartDate(getDay)
+  // console.log(startDate.);
+
+ }
+  const handleChangeImage = (evt) => {
+    const value = evt.target.files[0];
+    setImage(value);
+    // console.log("date" , date);
   };
-  // console.log("start day", date.toLocaleDateString());
-  const getDate = date.toLocaleDateString();
-  console.log("here" , getDate);
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   //   console.log(taiKhoan.taiKhoan);
   const signupUserSchema = yup.object().shape({
-  
     maKhoaHoc: yup.string().required("*Không được bỏ trống!"),
-    biDanh: yup
-      .string()
-      .required("*Không được bỏ trống!"),
-    tenKhoaHoc: yup
-      .string()
-      .required("*Không được bỏ trống!"),
-    moTa : yup.string().required("*Không được bỏ trống!"),
-    maDanhMucKhoaHoc : yup.string().required("*Không được bỏ trống!")
-   
+    biDanh: yup.string().required("*Không được bỏ trống!"),
+    tenKhoaHoc: yup.string().required("*Không được bỏ trống!"),
+    moTa: yup.string().required("*Không được bỏ trống!"),
+    maDanhMucKhoaHoc: yup.string().required("*Không được bỏ trống!"),
   });
+
   return (
     <div className="content-wrapper management-user">
       {/* Content Header (Page header) */}
@@ -44,7 +74,7 @@ export default function ThemKhoaHoc() {
               <h1 className="m-0 text-dark">
                 Quản lý khóa học{" "}
                 <span>
-                  <i class="fa fa-angle-double-right"></i> Thêm khóa học
+                  <i className="fa fa-angle-double-right"></i> Thêm khóa học
                 </span>
               </h1>
             </div>
@@ -74,13 +104,13 @@ export default function ThemKhoaHoc() {
             moTa: "",
             luotXem: 0,
             danhGia: 0,
-            hinhAnh: "",
+            hinhAnh: image,
             maNhom: "GP01",
-            ngayTao: "",
-            maDanhMucKhoaHoc: "",
+            ngayTao:startDate,
+            maDanhMucKhoaHoc: "BackEnd",
             taiKhoanNguoiTao: taiKhoan.taiKhoan,
           }}
-          validationSchema={signupUserSchema}
+          // validationSchema={signupUserSchema}
           onSubmit={_handleSubmit}
           render={(formikProps) => (
             <Form>
@@ -115,19 +145,20 @@ export default function ThemKhoaHoc() {
                       type="text"
                       className="form-control"
                       placeholder="Eg Backend_01"
+                      onChange={formikProps.handleChange}
                     />
                     <ErrorMessage name="maKhoaHoc">
-                        {(msg) => (
-                          <div className="errMessage">
-                            <span className="errInput animate__animated animate__bounce animate__shakeX">
-                              {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
-                            </span>
-                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
+                      {(msg) => (
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>
+                      )}
+                    </ErrorMessage>
                   </div>
                   <div className="form-group">
                     <label htmlFor="">Tên khóa học</label>
@@ -136,122 +167,137 @@ export default function ThemKhoaHoc() {
                       type="text"
                       className="form-control"
                       placeholder="Eg Khóa học lập trình Nodejs"
+                      onChange={formikProps.handleChange}
                     />
                     <ErrorMessage name="tenKhoaHoc">
-                        {(msg) => (
-                          <div className="errMessage">
-                            <span className="errInput animate__animated animate__bounce animate__shakeX">
-                              {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
-                            </span>
-                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
+                      {(msg) => (
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>
+                      )}
+                    </ErrorMessage>
                   </div>
                   <div className="form-group">
                     <label htmlFor="">Bí danh</label>
-                    <Field name="biDanh" type="text" className="form-control" placeholder=" Eg lap-trinh-golang-2020" />
+                    <Field
+                      name="biDanh"
+                      type="text"
+                      className="form-control"
+                      placeholder=" Eg lap-trinh-golang-2020"
+                      onChange={formikProps.handleChange}
+                    />
                     <ErrorMessage name="biDanh">
-                        {(msg) => (
-                          <div className="errMessage">
-                            <span className="errInput animate__animated animate__bounce animate__shakeX">
-                              {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
-                            </span>
-                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
+                      {(msg) => (
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>  
+                      )}
+                    </ErrorMessage>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="">Mô tả</label>
-                    <Field name="moTa" type="text" className="form-control "  placeholder="Eg Lập trình Golang 2020..."/>
-                    <ErrorMessage name="moTa">
-                        {(msg) => (
-                          <div className="errMessage">
-                            <span className="errInput animate__animated animate__bounce animate__shakeX">
-                              {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
-                            </span>
-                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
-                  </div>
-                  {/* <div className="form-group">
-                    <label htmlFor="">Lượt xem</label>
                     <Field
-                      name="luotXem"
+                      name="moTa"
                       type="text"
-                      className="form-control"
+                      className="form-control "
+                      placeholder="Eg Lập trình Golang 2020..."
+                      onChange={formikProps.handleChange}
                     />
-                    <ErrorMessage name="luotXem">
+                    <ErrorMessage name="moTa">
                       {(msg) => (
-                        <div className="alert alert-warning">{msg}</div>
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>
                       )}
                     </ErrorMessage>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="col-6">
                   <div className="form-group">
-                    <label htmlFor="">Hình ảnh</label>
+                    <label htmlFor="">Hình Ảnh</label>
                     <Field
-                      name="hinhAnh"
-                      type="file"
-                      className="form-control"
+                      render={({ field, form: { isSubmitting } }) => (
+                        <input
+                          type="file"
+                          placeholder="lastName"
+                          name="hinhAnh"
+                          onChange={(event) => {
+                            formikProps.setFieldValue(
+                              "hinhAnh",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                          // onChange={formikProps.handleChange(taiKhoan)}
+                        />
+                      )}
                     />
+                    {/* <Field type="file" name="hinhAnh" onChange={han} /> */}
                     <ErrorMessage name="hinhAnh">
                       {(msg) => (
-                        <div className="alert alert-warning">{msg}</div>
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>
                       )}
                     </ErrorMessage>
                   </div>
                   <div className="form-group">
                     <label htmlFor="">Mã danh mục khóa học</label>
                     <Field
+                      component="select"
+                      className="form-control"
                       name="maDanhMucKhoaHoc"
-                      type="text"
-                      className="form-control"
-                      placeholder="Eg BackEnd"
-                    />
+                      onChange={formikProps.handleChange}
+                    >
+                      {categoriesCourses.map((maDM, index) => {
+                        return (
+                          <option key={index} value={maDM.maDanhMuc}>
+                            {maDM.maDanhMuc}
+                          </option>
+                        );
+                      })}
+                    </Field>
                     <ErrorMessage name="maDanhMucKhoaHoc">
-                        {(msg) => (
-                          <div className="errMessage">
-                            <span className="errInput animate__animated animate__bounce animate__shakeX">
-                              {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
-                            </span>
-                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
-                  </div>
-
-                  {/* <div className="form-group">
-                    <label htmlFor="">Đánh giá</label>
-                    <Field
-                      name="danhGia"
-                      type="text"
-                      className="form-control"
-                    />
-                    <ErrorMessage name="danhGia">
                       {(msg) => (
-                        <div className="alert alert-warning">{msg}</div>
+                        <div className="errMessage">
+                          <span className="errInput animate__animated animate__bounce animate__shakeX">
+                            {" "}
+                            <i className="fa fa-exclamation-triangle"></i>
+                          </span>
+                          {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                          {msg}
+                        </div>
                       )}
                     </ErrorMessage>
-                  </div> */}
+                  </div>
+
                   <div className="form-group">
                     <label htmlFor="">Mã nhóm</label>
                     <Field
                       component="select"
                       className="form-control"
                       name="maNhom"
+                      onChange={formikProps.handleChange}
                     >
                       <option value="GP01">GP01</option>
                       <option value="GP02">GP02</option>
@@ -268,31 +314,17 @@ export default function ThemKhoaHoc() {
                   <div className="form-group">
                     <label htmlFor="">Ngày tạo</label>
 
-                    {/* <Field
-                      name="ngayTao"
-                      type="text"
-                      className="form-control"
-                    /> */}
-                    <DatePicker
-                      value={date}
-                      selected={date}
-                      onChange={_handleGetDay}
-                    />
-                  <span className="">(*mm/dd/yy)</span>
+                   
+
+                    <span className="">(*dd/mm/yyyy)</span>
+                    <DatePicker  dateFormat="dd/MM/yyyy" 
+                    onChange={handleChangeDay} />
                     <ErrorMessage name="ngayTao">
                       {(msg) => (
                         <div className="alert alert-warning">{msg}</div>
                       )}
                     </ErrorMessage>
                   </div>
-
-                  {/* <div className="form-group">
-                    <label htmlFor="">Mã loại người dùng</label>
-                    <select name="maLoaiNguoiDung" className="form-control">
-                      <option value="HV">HV</option>
-                      <option value="GV">GV</option>
-                    </select>
-                  </div> */}
 
                   <div className="form-group  ">
                     <button type="submit" className="btn-themKhoaHoc ">
@@ -305,12 +337,6 @@ export default function ThemKhoaHoc() {
           )}
         />
       </div>
-      {/* /.row */}
-
-      {/* /.content */}
-      {/* <Pagination currentPage={userList.currentPage} pageSize={userList.count} totalCount={userList.totalPages} onChange={(page)=>{
-      console.log("paginnation" , page);
-    }} /> */}
     </div>
   );
 }

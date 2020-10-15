@@ -1,5 +1,5 @@
-import * as Type from '../Contanst/Courses'
-import * as TypeUser from '../Contanst/user'
+import * as Type from '../Contanst/Courses';
+import * as TypeUser from '../Contanst/user';
 const userLogin = localStorage.getItem("userLogin");
 
 const innitialValue = {

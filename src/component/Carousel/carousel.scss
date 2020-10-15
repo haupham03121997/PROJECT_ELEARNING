@@ -1,41 +1,112 @@
+@import "../../scss/Helper/variable";
+@import "../../scss//Helper//mixin";
 .section-carousel {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(92, 91, 91, 0.7)), url(/img/carousel.jpg);
-    // height: 400px;
-    // background-color: black;
+    z-index: 2;
+    // display: none;
+    // background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(92, 91, 91, 0.7));
+    background-image: url("/img/carouse1.jpg");
+    background-position: center;
+    background-size: cover;
     height: 600px;
-    width: 100%;
-    position: relative;
-    img {
-        filter: brightness(50%);
+    width: 100% !important;
+    @include Mediaquery($xs) {
+        height: 400px;
+        // background-size: cover;
+        // display: none;
     }
-    .content {
+    @include Mediaquery($sm) {
+        height: 500px;
+        // width: 100%;
+        // display: none;
+        // background-size: cover;
+        // display: none;
+    }
+    position: relative;
+    filter: brightness(70%);
+    #tsparticles {
+        width: 100% !important;
+        .tsparticles-canvas-el {
+            width: 100% !important;
+        }
+    }
+    .content1 {
+        @include Mediaquery($xs) {
+            top: 20%;
+            left: 50%;
+            z-index: 9999;
+            text-align: center;
+            width: 80%;
+        }
+        @include Mediaquery($sm) {
+            top: 25%;
+            width: 90%;
+        }
+        // height: 60%;
+        // display: none;
         position: absolute;
         top: 40%;
-        left: 5%;
-        // transform: translateY(-50%);
+        left: 50%;
+        transform: translateX(-50%);
         letter-spacing: 2px;
         p:nth-child(1) {
             color: white;
             font-size: 18px;
             font-weight: 500;
+            @include Mediaquery($xs) {
+                display: none;
+            }
+            @include Mediaquery($sm) {
+                display: none;
+            }
         }
         h1 {
             margin-top: 40px;
             color: white;
             letter-spacing: 2px;
+            @include Mediaquery($xs) {
+                font-size: 14px;
+                padding: 0 15px;
+                margin: 20px 0;
+                letter-spacing: 1px;
+            }
         }
         p:nth-child(3) {
             color: white;
             font-size: 20px;
             font-weight: 500;
+            @include Mediaquery($xs) {
+                font-size: 16px;
+                padding: 0 15px;
+                margin: 20px 0;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
         }
         .button {
-            margin-top: 30px;
+            margin: 30px auto;
+            // margin: auto;
+            // text-align: center;
+            @include Mediaquery($xs) {
+                margin-top: 40px !important;
+                // display: flex;
+            }
             &__courses {
+                @include Mediaquery($xs) {
+                    // padding: 10px 20px;
+                    font-size: 14px;
+                    // margin-left: 20px;
+                    font-size: 10px;
+                    // padding: 10px 10px;
+                    width: 160px;
+                    margin: 0 5px !important;
+                    display: block;
+                    // margin-left: 40px !important;
+                    margin: 20px 80px !important;
+                }
                 cursor: pointer;
                 position: relative;
                 display: inline-block;
-                padding: 15px 30px;
+                padding: 15px 10px;
                 text-decoration: none;
                 // border-radius: 18px;
                 // background-color: #F05123;
@@ -137,56 +208,117 @@
             }
         }
     }
-    .index-grid {
-        position: absolute;
-        bottom: -20%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #fff;
-        box-shadow: 0px 25px 50px 0px rgba(0, 0, 0, 0.06);
-        width: 80%;
-        border-radius: 5px;
-        &__col-1 {
-            text-align: center;
-            padding: 30px 0;
-            border-right: 0.1px solid #8d8d8d;
-            img {
-                // display: block;
-                cursor: pointer;
+}
+
+.index-grid {
+    // display: none;
+    // display: none;
+    // position: absolute;
+    // bottom: -20%;
+    // left: 50%;
+    // transform: translateX(-50%);
+    margin-top: 30px;
+    padding: 30px 0;
+    background-color: #fff;
+    box-shadow: 0px 25px 50px 0px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    border-radius: 5px;
+    &__col-1 {
+        text-align: center;
+        // padding: 20px 0;
+        // border-right: 0.1px solid #8d8d8d;
+        img {
+            @include Mediaquery($xs) {
                 width: 50px;
-                transition: all 3s;
-                transform: rotateY(0deg);
-                &:hover {
-                    // animation: Test 5s infinite;
-                    transform: rotateY(360deg);
+            }
+            // display: block;
+            cursor: pointer;
+            width: 70px;
+            transition: all 3s;
+            transform: rotateY(0deg);
+            &:hover {
+                // animation: Test 5s infinite;
+                transform: rotateY(360deg);
+            }
+            // transform: rotateY(360deg);
+        }
+        i {
+            font-size: 50px;
+            color: #238BAA;
+        }
+        .icon {
+            margin-top: 10px;
+            // text-align: center;  
+            .icon-1 {
+                span {
+                    font-size: 40px;
+                    font-weight: 500;
+                    color: #238BAA;
                 }
-                // transform: rotateY(360deg);
+                .icon-2 {
+                    // padding-top: 10px;
+                    font-size: 16px;
+                    padding-left: 0 px;
+                }
             }
-            h3 {
-                // @include Text($fs-3, $colorDark, $fw-4);
-                // transform: rotateY(0deg);
-                font-size: 16px;
+            // .icon-2 {
+            //     // font-size: 20px;
+            //     line-height: 40px !important;
+            //     font-size: 15px;
+            //     color: #333;
+            //     margin-bottom: 20px;
+            // }
+        }
+        h3 {
+            // @include Text($fs-3, $colorDark, $fw-4);
+            // transform: rotateY(0deg);
+            font-size: 16px;
+            // align-items: center;
+            height: 40px;
+            // position: relative;
+            display: flex;
+            text-align: center;
+            margin: auto;
+            align-items: center;
+            min-width: 40% !important;
+            span:nth-child(1) {
+                font-size: 30px;
+                font-weight: 600;
+                color: #238BAA;
+                margin-right: 40px;
+            }
+            span:nth-child(2) {
+                position: absolute;
+                top: 50%;
+                left: 60%;
+                transform: translate(-50%, -60%);
+                // line-height: 36px;
+                margin-bottom: 10px;
+                line-height: 40px !important;
             }
         }
-        @keyframes Test {
-            0% {
-                transform: rotateY(360deg);
-            }
-            25% {
-                transform: rotateY(0deg);
-            }
-            50% {
-                transform: rotateY(360deg);
-            }
-            100% {
-                transform: rotateY(0deg);
-            }
+    }
+    @keyframes Test {
+        0% {
+            transform: rotateY(360deg);
         }
-        &__col-2 {
-            @extend .index-grid__col-1;
+        25% {
+            transform: rotateY(0deg);
         }
-        &__col-3 {
-            @extend .index-grid__col-1;
+        50% {
+            transform: rotateY(360deg);
         }
+        100% {
+            transform: rotateY(0deg);
+        }
+    }
+    &__col-2 {
+        @extend .index-grid__col-1;
+        .fa-users {
+            font-size: 45px;
+        }
+    }
+    &__col-3 {
+        @extend .index-grid__col-1;
     }
 }

@@ -1,12 +1,22 @@
+@import "../../scss/Helper/mixin";
+@import "../../scss/Helper/variable";
 .feedback {
+    background: url("/img/feedback1.jpg") fixed;
+    height: 400px;
     margin-top: 80px;
-    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     &__background {
         position: relative;
+        height: 100%;
         img {
             width: 100%;
             height: 600px;
-            filter: brightness(50%);
+            // filter: brightness(50%);
+            @include Mediaquery($xs) {
+                height: 400px;
+            }
         }
         &__title {
             position: absolute;
@@ -14,8 +24,12 @@
             left: 50%;
             transform: translateX(-50%);
             h1 {
+                @include Mediaquery($xs) {
+                    font-size: 18px;
+                }
+                ;
                 text-align: center;
-                color: #F15224;
+                color: #238BAA;
                 font-size: 30px;
                 // font-weight: 400;
                 text-transform: uppercase;
@@ -23,43 +37,70 @@
             }
         }
         &__content {
+            .slick-dots {
+                button:before {
+                    font-size: 14px !important;
+                    // background-color: #fff;
+                    color: #238BAA !important;
+                    @include Mediaquery($xs) {
+                        font-size: 10px !important;
+                    }
+                }
+            }
+            &__detail {
+                text-align: center;
+                img {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    border: 2px solid #238BAA;
+                    margin: auto;
+                    margin-bottom: 10px;
+                    // z-index: 100;
+                }
+                p:nth-child(1) {
+                    margin-top: 10px;
+                    padding: 20px 40px;
+                    font-weight: 200;
+                }
+                p {
+                    color: #fff;
+                    font-weight: 300;
+                    font-size: 16px;
+                    @include Mediaquery($xs) {
+                        font-size: 12px;
+                    }
+                }
+                .icon-star {
+                    color: #238BAA;
+                    i {
+                        font-size: 14px;
+                        margin-right: 3px;
+                        // border: 1px solid #238BAA;
+                    }
+                }
+                .name {
+                    color: #fff;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+            @include Mediaquery($xs) {
+                width: 90%;
+            }
+            .slick-prev,
+            .slick-next {
+                @include Mediaquery($xs) {
+                    display: none !important;
+                }
+            }
             width: 70%;
             height: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            p:nth-child(1) {
-                position: relative;
-                width: 60%;
-                height: 100px;
-                text-align: center;
-                margin: auto;
-                color: white;
-                font-size: 16px;
-                &::after {
-                    position: absolute;
-                    bottom: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    content: "";
-                    width: 100px;
-                    height: 2px;
-                    background: #fff;
-                    // border: 2px solid #fff;
-                    z-index: 10;
-                }
-            }
-            p:nth-child(2) {
-                color: white;
-                font-size: 16px;
-                font-weight: 600;
-            }
-            p:nth-child(3) {
-                color: white;
-                font-size: 16px;
-                font-weight: 100;
-            }
+            transform: translate(-50%,
+            -50%);
         }
     }
 }

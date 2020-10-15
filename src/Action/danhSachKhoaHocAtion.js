@@ -30,6 +30,36 @@ export const getCoursesAction = () => {
             })
     }
 }
+export const getCoursesPaginationAction = (currentPage) => {
+    return (dispatch) => {
+        dispatch({
+            type: typeAction.GET_COURSES_LIST_PAGIN_REQUEST
+        })
+        axios.get(`/QuanLyKhoaHoc/LayDanhSachKhoaHoc_PhanTrang?page=${currentPage}&pageSize=7&MaNhom=GP01`)
+            .then((result) => {
+                dispatch({
+                    type: typeAction.GET_COURSES_LIST_PAGIN_SUCCESS,
+                    payload: {
+                        data: result.data
+                    }
+                    // console.log;
+                })
+
+            }).catch((err => {
+                dispatch({
+                    type: typeAction.GET_COURSES_LIST_PAGIN_ERR
+                })
+            }))
+            .finally(() => {
+                setTimeout(() => {
+                    dispatch({
+                        type: 'OFF_LOADING'
+                    })
+                }, 0);
+            })
+    }
+}
+
 
 export const getCoursesDetailAction = (maKhoaHoc) => {
     return (dispatch) =>{

@@ -1,7 +1,11 @@
 .SignIn {
     .logo {
         img {
-            padding: 30px 0;
+            padding: 10px 0;
+            @include Mediaquery($xs) {
+                width: 120px;
+                padding: 10px 0;
+            }
         }
         text-align: center;
         // border-bottom: 1px solid;
@@ -10,15 +14,38 @@
     }
     h1 {
         @include Text($fs-2, $colorDark, $fw-3);
+        text-transform: uppercase;
+        position: relative;
+        &::after {
+            @include Mediaquery($xs) {
+                left: 40%;
+            }
+            position: absolute;
+            bottom: -5px;
+            left: 45%;
+            content: "";
+            width: 60px;
+            height: 3px;
+            background-color: #72D5CD;
+        }
     }
     p {
-        @include Text($fs-5, $colorGrey, $fw-4);
+        @include Text($fs-6, #9999, $fw-4);
     }
     .signin-form {
+        @include Mediaquery($xs) {
+            width: 100%;
+            h1 {
+                font-size: 18px !important;
+            }
+            p {
+                font-size: 14px !important;
+            }
+        }
         box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
     }
     .form-group {
-        height: 117px !important;
+        // height: 117px !important;
         position: relative;
         .errMessage {
             color: red;
@@ -32,15 +59,51 @@
             font-size: 14px;
             color: red;
         }
-        .btn-signup {
-            margin-left: 5%;
-            width: 90%;
-            padding: 10px 0;
+        .password-input {
+            position: relative;
+            .eye-show {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                color: #248BAA;
+                cursor: pointer;
+            }
+        }
+        .btn-signin {
+            @include Mediaquery($xs) {
+                width: 100%;
+                margin-left: 0;
+            }
+            // margin-left: 5%; 
+            width: 100%;
+            // padding: 10px 0;
             text-transform: uppercase;
             color: white;
             font-weight: 500;
+            padding: 10px 0;
+            background-color: #72D5CD;
+            border: 1px solid #72D5CD;
+            transition: all 0.5s;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                background-color: #248BAA;
+                border: 1px solid #248BAA;
+            }
+        }
+        .signupTo {
+            color: #72D5CD !important;
+            transition: all 0.5s;
+            &:hover {
+                color: #248BAA;
+            }
         }
         .form-control {
+            @include Mediaquery($xs) {
+                height: 40px;
+            }
             height: 50px;
             &::placeholder {
                 font-size: 13px;
@@ -51,7 +114,7 @@
                 box-shadow: none;
             }
             &:hover {
-                border: 1px solid #d4b032;
+                border: 1px solid #72D5CD;
             }
         }
     }

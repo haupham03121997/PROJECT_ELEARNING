@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { timKiemKhoaHoc } from "../../Action/timKiemKhoaHoc";
 import { UserReducer } from "../../Reducer/UserReducer";
-import Model from "../Model";
-import swal from "sweetalert"
+import Search from "../../component/Search";
+import BackToTop from "../../component/BackToTop"
+import swal from "sweetalert";
 function useOutSideClick(ref, callback, when) {
   const savedCallback = useRef(callback);
   useEffect(() => {
@@ -28,20 +29,31 @@ function useOutSideClick(ref, callback, when) {
 export default function Header() {
   // Hàm Scroll
   const [isScrolled, setIsScroll] = useState(false);
+  const [backToTop, setBackToTop] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      const isTop = window.scrollY < 100;
+      const isTop = window.scrollY < 10;
       if (!isTop) {
         setIsScroll(!isScrolled);
       } else {
         setIsScroll(isScrolled);
       }
     });
+    window.addEventListener("scroll", () => {
+      const isTop = window.scrollY < 100;
+      if (!isTop) {
+        setBackToTop(!backToTop);
+      } else {
+        setBackToTop(backToTop);
+      }
+    });
   }, []);
   const [isClicked, setIsClicked] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const [isSearched , setIsSearched] = useState(false);
-  console.log(isSearched);
+  const [isClickResponsive, setIsClickResponsive] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
+  const [isClickCategory, setIsClickCategory] = useState(false);
+  const [isClickCourses , setIClickCourses] = useState(false);
   const history = useHistory();
   const dropDownMenuRef = useRef();
   const dropDownMenuRef1 = useRef();
@@ -49,7 +61,6 @@ export default function Header() {
     idCourses: "",
   });
   const userLocal = localStorage.getItem("userLogin");
-  // const typingTimeoutRef = useRef(null);
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setSearch({
@@ -58,7 +69,7 @@ export default function Header() {
     });
     console.log(name, value);
   };
-  // console.log('history', history);
+
   const dispatch = useDispatch();
   useEffect(() => {
     //Call api lấy danh mục khóa học
@@ -69,214 +80,425 @@ export default function Header() {
   );
   const { credential } = useSelector((state) => state.UserReducer);
 
-  // console.log("coursesList" ,credential);
-  // console.log("credential", credential);
-  // useEffect(()=>{
-
-  // },[isFocus])
-  // hideDropdown = ()=>{
-  //     setIsFocus(true)
-  // }
-
   const hideDropdown = () => {
     setIsFocus(false);
   };
   useOutSideClick(dropDownMenuRef, hideDropdown, isFocus);
 
   const handleSubmit = (e) => {
-    history.push(`/TimKiemKhoaHoc/${searchItem.idCourses.trim()}`);
-    dispatch(timKiemKhoaHoc(searchItem))
+    dispatch(timKiemKhoaHoc(searchItem));
   };
 
   // const logout = localStorage.getItem("userLogin");
   const Logout = () => {
-   
     swal({
       title: "Bạn muốn đăng xuất?",
       // text: "Once deleted, you will not be able to recover this imaginary file!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    })
-    .then((willDelete) => {
+    }).then((willDelete) => {
       if (willDelete) {
         localStorage.removeItem("userLogin");
         dispatch(LOGOUTACTION());
-      
+
         swal("Đăng xuất thành công!", {
-          
           icon: "success",
         });
         history.push("./DangNhap");
-        
       } else {
-       
       }
     });
-   
   };
 
   const location = useLocation();
-
+  // console.log(isSearched);
 
   return (
-    <div
-      className={
-        isScrolled || location.pathname === "/DangNhap"
-          ? "section-header scroll"
-          : "section-header  mt-4"
-      }
-    >
-      <div className="container-fluid">
-        <nav className="navbar navbar--custom navbar-expand-sm ">
-          <Link to="/" className="navbar-brand mr-5" href="#">
-            <img src="/img/logo.png" alt="" />
-          </Link>
-          <button
-            className="navbar-toggler d-lg-none"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="collapsibleNavId">
-            <ul className="navbar-nav ml-5 mr-auto mt-2 mt-lg-0">
-              <li className="nav-item line active">
-                <a
-                  className="nav-link active"
-                  onClick={() => {
-                    history.push("/");
-                  }}
-                 
+    <>
+      <div
+        className={
+          isScrolled || location.pathname === "/DangNhap"
+            ? "section-header scroll"
+            : "section-header"
+        }
+      >
+        <div className="container-fluid">
+          <nav  className="navbar navbar--custom   navbar-expand-lg  ">
+            <Link to="/" className="navbar-brand mr-5" href="#">
+              <img src="/img/logo.png" alt="" />
+            </Link>
+            <button
+              className="navbar-toggler d-lg-none"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapsibleNavId"
+              aria-controls="collapsibleNavId"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span
+                class="navbar-toggler-icon pt-1"
+                onClick={() => setIsClickResponsive(!isClickResponsive)}
+              >
+                <i class="fa fa-bars"></i>
+              </span>
+            </button>
+            {isClickResponsive ? (
+              <div className="collapse-resposive collapse-resposive-transion">
+                {credential ? (
+                  <div className="name">
+                    <div className="name-res">
+                      <div className="avatar">
+                        <img src="/img/avatar.png" alt="avatar" />
+                      </div>
+                      <a className="pl-2">
+                        {/* <i className="fa fa-user mr-2" /> */}
+
+                        {credential.taiKhoan}
+                      </a>
+                    </div>
+                    <i
+                      onClick={() => setIsClickResponsive(!isClickResponsive)}
+                      className="fa fa-angle-right"
+                    ></i>
+                  </div>
+                ) : (
+                  <div className="responsive-top">
+                    <Link to="/" className="navbar-brand mr-5" href="#">
+                      <img src="/img/logo2.png" alt="" />
+                    </Link>
+                    <i
+                      onClick={() => setIsClickResponsive(!isClickResponsive)}
+                      className="fa fa-angle-right"
+                    ></i>
+                  </div>
+                )}
+
+                <ul className="navbar-nav-res">
+                  <li className="nav-item-res  active">
+                    <a
+                      className="nav-link active"
+                      onClick={() => {
+                        history.push("/");
+                        setIsClickResponsive(!isClickResponsive)
+                      }}
+                    >
+                      <i className="fa fa-home "></i> Trang Chủ
+                    </a>
+                  </li>
+                  <li className="nav-item-res-courses line nav-item--custom" onClick={()=>{
+                    setIClickCourses(!isClickCourses)
+                  }}>
+                    <a className="nav-link">
+                      <span>
+                        <i className="fa fa-book mr-2"></i> Khóa Học
+                      </span>
+                      {/* <i className="fa fa-caret-down ml-2" /> */}
+                    </a>
+                   {isClickCourses ?  <ul className="dropdown-cate-res">
+                    {categoriesCourses.map((khoahoc, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            history.push(
+                              `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
+                            );
+                            setIsClickResponsive(!isClickResponsive)
+                          }}
+                        >
+                         <a className="nav-link-res">
+                         <i className="fa fa-angle-right"></i>{" "}
+                          {khoahoc.tenDanhMuc}
+                         </a>
+                        </li>
+                      );
+                    })}
+                  </ul> : ""}
+                  </li>
+                  <li className="nav-item-res " onClick={()=>{
+                    history.push("/lienhe")
+                  }}>
+                    <a className="nav-link "  onClick={() => {
+                    history.push("/lienhe");
+                    setIsClickResponsive(!isClickResponsive)
+                  }}>
+                      <i className="fa fa-phone-square"></i>Liên hệ 
+                    </a>
+                  </li>
+
+                  <li className="nav-item-res  active">
+                    <a className="nav-link ">
+                      <i className="fa fa-adjust"></i>Giao diện tối
+                    </a>
+                  </li>
+
+                  {credential ? (
+                    <>
+                      <li
+                        onClick={() => {
+                          history.push("/caidat/taikhoan");
+                        }}
+                        className="nav-item-res  active"
+                      >
+                        <a className="nav-link ">
+                          <i className="fa fa-cog"></i>Cài đặt
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          Logout();
+                        }}
+                        className="nav-item-res  active"
+                      >
+                        <a className="nav-link ">
+                          <i className="fa fa-sign-out"></i>Đăng Xuất
+                        </a>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <li className="nav-item-res  active">
+                        <a
+                          className="nav-link "
+                          onClick={() => {
+                            history.push(`/DangKy`);
+                          }}
+                        >
+                          <i className="fa fa-user-plus"></i>Đăng Ký
+                        </a>
+                      </li>
+                      <li className="nav-item-res  active">
+                        <a
+                          className="nav-link "
+                          onClick={() => {
+                            history.push("/DangNhap");
+                          }}
+                        >
+                          <i class="fa fa-sign-in"></i>Đăng Nhập1
+                        </a>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            ) : (
+              ""
+            )}
+
+            <div className="collapse navbar-collapse" id="collapsibleNavId">
+              <ul className="navbar-nav ml-md-5 ml-xs-1  mr-auto mt-2 mt-lg-0">
+                <li className="nav-item line active">
+                  <a
+                    className="nav-link active"
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                  >
+                    <i className="fa fa-home "></i> Trang Chủ
+                  </a>
+                </li>
+                <li className="nav-item line nav-item--custom">
+                  <a className="nav-link">
+                    <i className="fa fa-book "></i> Khóa Học
+                    <i className="fa fa-caret-down ml-2" />
+                  </a>
+                  <ul className="dropdown-cate">
+                    {categoriesCourses.map((khoahoc, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            history.push(
+                              `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
+                            );
+                          }}
+                        >
+                          <i className="fa fa-angle-right"></i>{" "}
+                          {khoahoc.tenDanhMuc}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+                <li
+                  className="nav-item line"
+                 onClick={()=>{
+                   history.push("/lienhe")
+                 }}
                 >
-                  TRANG CHỦ
-                </a>
-              </li>
-              <li  className="nav-item line nav-item--custom">
-                <a className="nav-link" >
-                  KHÓA HỌC <i className="fa fa-caret-down" />
-                </a>
-               
-                  <div    className="category">
-                    <ul>
-                      {categoriesCourses.map((khoahoc, index) => {
-                        // console.log(khoahoc);
-                        return (
-                          <li className="text-center" key={index}>
+                  <a className="nav-link" href="#">
+                    <i className="fa fa-phone-square"></i> Liên Hệ 
+                  </a>
+                </li>
+                <li
+              
+                  className="nav-item nav-item--search line"
+                >
+                  <i className="fa fa-search"></i>
+                  <a     onClick={() => setIsSearched(!isSearched)} className="nav-link " href="#">
+                    Tìm Kiếm Khóa Học
+                  </a>
+                  {isSearched ? (
+                    <div className="search-popup">
+                      <div className="search__dialog"></div>
+                      <div className="search__border">
+                        <div className="search__content">
+                          <div className="search__content__detail animate__animated animate__bounce animate__zoomIn">
+                            <h2>NHẬP TỪ KHÓA TÌM KIẾM</h2>
+                            <form>
+                              <input
+                                name="idCourses"
+                                value={searchItem.idCourses}
+                                onChange={handleChange}
+                                type="text"
+                                placeholder="Tìm kiếm ở đây..."
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsSearched(false);
+                                  history.push(
+                                    `/TimKiemKhoaHoc/${searchItem.idCourses.trim()}`
+                                  );
+                                }}
+                                className="btn-search"
+                              >
+                                Tìm kiếm
+                              </button>
+                            </form>
                             <a
                               onClick={() => {
-                                history.push(
-                                  `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
-                                );
+                                setIsSearched(false);
                               }}
+                              className="close"
                             >
-                              {khoahoc.tenDanhMuc}
+                              <i className="fa fa-times"></i>
                             </a>
-                          </li>
-                        );
-                      })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </li>
+              </ul>
+              <div className="signin-signup text-right">
+                {credential ? (
+                  <div className="setting-resposive">
+                    <ul>
+                      <li
+                        onClick={() => {
+                          history.push("/caidat/taikhoan");
+                        }}
+                      >
+                        <a className="mx-4">
+                          <i className="fa fa-cog mr-3" />
+                          Cài đặt
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          Logout();
+                        }}
+                      >
+                        <a className="mx-4">
+                          <i className="fa fa-sign-language mr-3" />
+                          Đăng xuất
+                        </a>
+                      </li>
                     </ul>
                   </div>
-                
-              </li>
-              <li className="nav-item line">
-                <a className="nav-link" href="#">
-                  LIÊN HỆ
-                </a>
-              </li>
-              <li className="nav-item nav-item--search line">
-                <a className="nav-link " href="#">
-                      TÌM KIẾM KHÓA HỌC
-                       <i className="fa fa-search" onClick={()=> setIsSearched(!isSearched) }></i>
-                </a>
-               { isSearched ? <div className="search__word">
-                  <form onSubmit={handleSubmit}>
-                      <input    name="idCourses"    value={searchItem.idCourses}
-                    onChange={handleChange} type="text" placeholder="Tìm kiếm ở đây..."/>
-                  </form>
-                </div> : ""}
-              </li>
-            </ul>
-            <div className="signin-signup text-right">
-              {credential ? (
-                <div className="name-user">
-                  <div className="name">
-                    <div className="avatar">
-                      <img src="/img/avatar.png" alt="avatar" />
-                    </div>
-                    <a className="pl-2">
-                      {/* <i className="fa fa-user mr-2" /> */}
+                ) : (
+                  ""
+                )}
 
-                      {credential.taiKhoan}
-                    </a>
-                  </div>
-                  <div className="notification ml-3">
-                    <i className="fa fa-bell" />
-                  </div>
-                  <div onClick={() => setIsFocus(!isFocus)} className="logout-setting ml-3">
-                    <i
-                     ref={dropDownMenuRef}
-                      className="fa fa-caret-down"
-                    />
-                    {isFocus ? (
-                      <div  className="logout text-left">
-                        <ul>
-                          <li onClick={()=>{
-                            history.push("/caidat/taikhoan")
-                          }}>
-                            <a className="mx-4">
-                              <i className="fa fa-cog mr-3" />
-                              Cài đặt
-                            </a>
-                          </li>
-                          <li
-                            onClick={() => {
-                              Logout();
-                            }}
-                          >
-                            <a className="mx-4">
-                              <i className="fa fa-sign-language mr-3" />
-                              Đăng xuất
-                            </a>
-                          </li>
-                        </ul>
+                {credential ? (
+                  <div className="name-user">
+                    <div className="name">
+                      <div className="avatar">
+                        <img src="/img/avatar.png" alt="avatar" />
                       </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {" "}
-                  <div className="signin">
-                    <a
-                      onClick={() => {
-                        history.push("/DangNhap");
-                      }}
+                      <a className="pl-2">
+                        {/* <i className="fa fa-user mr-2" /> */}
+
+                        {credential.taiKhoan}
+                      </a>
+                    </div>
+                    <div className="notification ml-3">
+                      <i className="fa fa-bell" />
+                    </div>
+
+                    <div
+                      onClick={() => setIsFocus(!isFocus)}
+                      className="logout-setting ml-3"
                     >
-                      Đăng Nhập
-                    </a>
+                      <i ref={dropDownMenuRef} className="fa fa-caret-down" />
+                      {isFocus ? (
+                        <div className="logout text-left">
+                          <ul>
+                            <li
+                              onClick={() => {
+                                history.push("/caidat/taikhoan");
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-cog mr-3" />
+                                Cài đặt
+                              </a>
+                            </li>
+
+                            <li
+                              onClick={() => {
+                                Logout();
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-sign-language mr-3" />
+                                Đăng xuất
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
-                  <div className="signup">
-                    <a
-                      onClick={() => {
-                        history.push(`/DangKy`);
-                      }}
-                    >
-                      Đăng Ký
-                    </a>
-                  </div>
-                </>
-              )}
+                ) : (
+                  <>
+                    {" "}
+                    <div className="signin">
+                      <a
+                        onClick={() => {
+                          history.push("/DangNhap");
+                        }}
+                      >
+                        <i className="fa fa-sign-in"></i>
+                        Đăng Nhập
+                      </a>
+                    </div>
+                    <div className="signup">
+                      <a
+                        onClick={() => {
+                          history.push(`/DangKy`);
+                        }}
+                      >
+                        <i className="fa fa-user-plus"></i> Đăng Ký
+                      </a>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+           {backToTop ?  <BackToTop /> :""} 
+        </div>
       </div>
-    </div>
+      {/* <div className="navbar-collapse--custom">adasdas</div> */}
+    </>
   );
 }

@@ -82,161 +82,188 @@ export default function Signup() {
             onSubmit={_handleSubmit}
             render={(formikProps) => (
               <Form>
-                <div className="form-group">
-                  <span className="mb-5">Tài khoản</span>
-                  <Field
-                    type="text"
-                    name="taiKhoan"
-                    onChange={formikProps.handleChange}
-                    className="form-control mt-3"
-                    placeholder="Eg Cybersoft"
-                  />
-                  <ErrorMessage name="taiKhoan">
-                    {(msg) => (
-                      <div className="errMessage">
-                        <span className="errInput animate__animated animate__bounce animate__shakeX">
-                          {" "}
-                          <i className="fa fa-exclamation-triangle"></i>
-                        </span>
-                        {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-group password">
-                  <span>Mật khẩu</span>
-                  <Field
-                    type={isShowPass ? "text" : "password"}
-                    name="matKhau"
-                    onChange={formikProps.handleChange}
-                    className="form-control"
-                    placeholder="Nhập mật khẩu"
-                  />
-                  <div className="show-pass">
-                    <i
-                      onClick={() => {
-                        setIsShowPass(!isShowPass);
-                      }}
-                      className="fa fa-eye-slash"
-                    ></i>
+                <div className="row">
+                  <div className="col-md-6 col-sm-12 ">
+                    <div className="form-group">
+                      <label className="mb-0" htmlFor="">
+                        Tài Khoản <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        name="taiKhoan"
+                        onChange={formikProps.handleChange}
+                        className="form-control mt-md-2 mt-sm-1"
+                        placeholder="Eg Cybersoft"
+                      />
+                      <ErrorMessage name="taiKhoan">
+                        {(msg) => (
+                          <div className="errMessage">
+                            <span className="errInput animate__animated animate__bounce animate__shakeX">
+                              {" "}
+                              <i className="fa fa-exclamation-triangle"></i>
+                            </span>
+                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                            {msg}
+                          </div>
+                        )}
+                      </ErrorMessage>
+                    </div>
                   </div>
-                  <ErrorMessage name="matKhau">
-                    {(msg) => (
-                      <div className="errMessage">
-                        <span className="errInput animate__animated animate__bounce animate__shakeX">
-                          {" "}
-                          <i className="fa fa-exclamation-triangle"></i>
+                  <div className="col-md-6 col-sm-12">
+                    <div className="form-group ">
+                      <label htmlFor="">
+                        Mật khâu<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div className="password-input">
+                        <Field
+                          type={isShowPass ? "text" : "password"}
+                          name="matKhau"
+                          onChange={formikProps.handleChange}
+                          className="form-control"
+                          placeholder="Nhập mật khẩu"
+                        />
+
+                        <span className="eye-show">
+                          <i
+                            onClick={() => {
+                              setIsShowPass(!isShowPass);
+                            }}
+                            className="fa fa-eye-slash"
+                          ></i>
                         </span>
-                        {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                        {msg}
                       </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                {/* <div className="form-group">
-                                    <label htmlFor="">Nhập lại mật khẩu:</label>
-                                    <Field type="password" name="matKhau" value={value.nhapLaiMatKhau} onChange={formikProps.handleChange} className='form-control' placeholder='Mật khẩu' />
-                                    <ErrorMessage name="matKhau">
-                                        {(msg) => <div className="alert alert-warning">{msg}</div>}
-                                    </ErrorMessage>
-                                </div> */}
-                <div className="form-group">
-                  <span>Họ và tên</span>
-                  <Field
-                    type="text"
-                    name="hoTen"
-                    onChange={formikProps.handleChange}
-                    className="form-control"
-                    placeholder="Eg Phạm Xuân Hậu"
-                  />
-                  <ErrorMessage name="hoTen">
-                    {(msg) => (
-                      <div className="errMessage">
-                        <span className="errInput animate__animated animate__bounce animate__shakeX">
-                          {" "}
-                          <i className="fa fa-exclamation-triangle"></i>
-                        </span>
-                        {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-group">
-                  <span>Email</span>
-                  <Field
-                    type="text"
-                    name="email"
-                    onChange={formikProps.handleChange}
-                    className="form-control"
-                    placeholder="Eg xuanhau031297@gmail.com"
-                  />
-                  <ErrorMessage name="email">
-                    {(msg) => (
-                      <div className="errMessage">
-                        <span className="errInput animate__animated animate__bounce animate__shakeX">
-                          {" "}
-                          <i className="fa fa-exclamation-triangle"></i>
-                        </span>
-                        {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-group">
-                  <span>Số điện thoại</span>
-                  <Field
-                    type="text"
-                    name="soDT"
-                    onChange={formikProps.handleChange}
-                    className="form-control"
-                    placeholder=" +84 373 331 451"
-                  />
-                  <ErrorMessage name="soDT">
-                    {(msg) => (
-                      <div className="errMessage">
-                        <span className="errInput animate__animated animate__bounce animate__shakeX">
-                          {" "}
-                          <i className="fa fa-exclamation-triangle"></i>
-                        </span>
-                        {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-group">
-                  <span>Mã nhóm</span>
-                  <Field
-                    component="select"
-                    name="maNhom"
-                    onChange={formikProps.handleChange}
-                    className="form-control"
-                  >
-                    <option value="">GP01</option>
-                    <option value="">GP02</option>
-                    <option value="">GP03</option>
-                    <option value="">GP04</option>
-                    <option value="">GP05</option>
-                    <option value="">GP06</option>
-                    <option value="">GP07</option>
-                    <option value="">GP08</option>
-                    <option value="">GP09</option>
-                    <option value="">GP10</option>
-                  </Field>
-                </div>
-                <div className="form-group">
-                  <button type="submit" className="btn btn-signup btn-warning ">
-                    Đăng Ký
-                  </button>
-                </div>
-                <div>
-                  <p className="text-center">
-                    Bằng cách đăng ký, bạn đồng ý với các điều khoản sử dụng của
-                    chúng tôi
-                  </p>
+
+                      <ErrorMessage name="matKhau">
+                        {(msg) => (
+                          <div className="errMessage">
+                            <span className="errInput animate__animated animate__bounce animate__shakeX">
+                              {" "}
+                              {/* <i className="fa fa-exclamation-triangle"></i> */}
+                            </span>
+                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                            {msg}
+                          </div>
+                        )}
+                      </ErrorMessage>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6 col-sm-12">
+                    <div className="form-group">
+                      <label htmlFor="">
+                        Họ và tên <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        name="hoTen"
+                        onChange={formikProps.handleChange}
+                        className="form-control"
+                        placeholder="Eg Phạm Xuân Hậu"
+                      />
+                      <ErrorMessage name="hoTen">
+                        {(msg) => (
+                          <div className="errMessage">
+                            <span className="errInput animate__animated animate__bounce animate__shakeX">
+                              {" "}
+                              <i className="fa fa-exclamation-triangle"></i>
+                            </span>
+                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                            {msg}
+                          </div>
+                        )}
+                      </ErrorMessage>
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-sm-12">
+                    <div className="form-group">
+                      <label htmlFor="">
+                        Email<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        name="email"
+                        onChange={formikProps.handleChange}
+                        className="form-control"
+                        placeholder="Eg xuanhau031297@gmail.com"
+                      />
+                      <ErrorMessage name="email">
+                        {(msg) => (
+                          <div className="errMessage">
+                            <span className="errInput animate__animated animate__bounce animate__shakeX">
+                              {" "}
+                              <i className="fa fa-exclamation-triangle"></i>
+                            </span>
+                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                            {msg}
+                          </div>
+                        )}
+                      </ErrorMessage>
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-sm-12">
+                    <div className="form-group">
+                      <label htmlFor="">
+                        Số điện thoại <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Field
+                        type="text"
+                        name="soDT"
+                        onChange={formikProps.handleChange}
+                        className="form-control"
+                        placeholder=" +84 373 331 451"
+                      />
+                      <ErrorMessage name="soDT">
+                        {(msg) => (
+                          <div className="errMessage">
+                            <span className="errInput animate__animated animate__bounce animate__shakeX">
+                              {" "}
+                              <i className="fa fa-exclamation-triangle"></i>
+                            </span>
+                            {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
+                            {msg}
+                          </div>
+                        )}
+                      </ErrorMessage>
+                    </div>
+                  </div>
+                  <div className="col-md-6 col-sm-12">
+                    <div className="form-group">
+                      <label htmlFor="">
+                        Mã nhóm<span style={{ color: "red" }}>*</span>
+                      </label>
+                      <Field
+                        component="select"
+                        name="maNhom"
+                        onChange={formikProps.handleChange}
+                        className="form-control"
+                      >
+                        <option value="">GP01</option>
+                        <option value="">GP02</option>
+                        <option value="">GP03</option>
+                        <option value="">GP04</option>
+                        <option value="">GP05</option>
+                        <option value="">GP06</option>
+                        <option value="">GP07</option>
+                        <option value="">GP08</option>
+                        <option value="">GP09</option>
+                        <option value="">GP10</option>
+                      </Field>
+                    </div>
+                  </div>
+                  <div className="col-12  mt-sm-3">
+                    <div className="form-group text-right">
+                      <button type="submit" className="btn btn-signup">
+                        Đăng Ký
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-4"></div>
+                  <div className="col-md-4 col-sm-12 p-sm-3">
+                    <p className="text-center">
+                      Bằng cách đăng ký, bạn đồng ý với các điều khoản sử dụng
+                      của chúng tôi
+                    </p>
+                  </div>
                 </div>
               </Form>
             )}
@@ -253,7 +280,11 @@ export default function Signup() {
           </a>
         </div>
         <div className="goHome">
-          <span>
+          <span
+            onClick={() => {
+              history.push("/");
+            }}
+          >
             <i className="fa fa-angle-double-left mr-1"></i>Về trang chủ
           </span>
         </div>

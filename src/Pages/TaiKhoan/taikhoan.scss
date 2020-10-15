@@ -1,16 +1,21 @@
+@import "../../scss//Helper/mixin";
+@import "../../scss/Helper/variable";
 .taikhoan {
     &__header {
-        background-color: #72d5cd;
+        // display: none !important;
+        // background-color: #72d5cd;
         height: 100px;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
+        box-shadow: 0 1px 5px -1px rgba(51, 62, 73, 0.14), 0 4px 10px 0 rgba(51, 62, 73, 0.08);
         img {
             width: 200px;
             margin-top: 20px;
             margin-left: 100px;
         }
         .goback {
+            display: none;
             // line-height: 100px;
             margin: 30px 40px;
             button {
@@ -29,6 +34,9 @@
     &__content {
         text-align: center;
         .avatar {
+            @include Mediaquery($xs) {
+                display: none;
+            }
             margin: auto;
             // margin-left: 30px;
             display: flex;
@@ -46,6 +54,9 @@
             }
         }
         .name {
+            @include Mediaquery($xs) {
+                display: none;
+            }
             font-size: 20px;
             color: #72d5cd;
             font-weight: 800;
@@ -62,26 +73,43 @@
                     text-align: center;
                     font-size: 40px;
                     margin-top: 20px;
+                    @include Mediaquery($xs) {
+                        font-size: 20px;
+                    }
                 }
                 p {
                     text-align: center;
                     font-size: 20px;
+                    @include Mediaquery($xs) {
+                        font-size: 12px !important;
+                    }
                     color: rgb(179, 177, 177);
                 }
             }
             &__content {
                 margin-top: 40px;
+                @include Mediaquery($xs) {
+                    width: 100%;
+                }
                 .info-login {
                     h3 {
-                        font-size: 18px;
+                        font-size: 20px;
                         color: rgb(95, 93, 93);
                     }
                     .username {
                         padding: 20px 10px;
                         cursor: pointer;
+                        @include Mediaquery($xs) {
+                            padding: 4px 10px;
+                            // margin-top: 5px;.
+                        }
                         h4 {
                             font-size: 25px;
                             color: rgb(97, 96, 96);
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                margin-top: 15px;
+                            }
                         }
                         p {
                             color: #72d5cd;
@@ -92,6 +120,10 @@
                             font-size: 25px;
                             color: #72d5cd;
                             font-weight: 900;
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                // margin-top: 15px;
+                            }
                         }
                         display: flex;
                         justify-content: space-between;
@@ -105,7 +137,15 @@
                     .password {
                         padding: 20px 10px;
                         cursor: pointer;
+                        @include Mediaquery($xs) {
+                            padding: 4px 10px;
+                            // margin-top: 5px;.
+                        }
                         h4 {
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                margin-top: 15px;
+                            }
                             font-size: 25px;
                             color: rgb(97, 96, 96);
                         }
@@ -118,6 +158,10 @@
                             font-size: 25px;
                             color: #72d5cd;
                             font-weight: 900;
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                // margin-top: 15px;
+                            }
                         }
                         display: flex;
                         justify-content: space-between;
@@ -133,19 +177,37 @@
                     h3 {
                         font-size: 18px;
                         color: rgb(95, 93, 93);
+                        @include Mediaquery($xs) {
+                            font-size: 20px;
+                        }
                     }
                     .name-persional {
                         padding: 20px 10px;
                         cursor: pointer;
+                        @include Mediaquery($xs) {
+                            padding: 4px 10px;
+                            // margin-top: 5px;.
+                        }
                         h4 {
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                margin-top: 15px;
+                            }
                             font-size: 25px;
                             color: rgb(97, 96, 96);
                         }
                         p {
                             color: #72d5cd;
                             font-weight: 900;
+                            @include Mediaquery($xs) {
+                                text-align: start !important;
+                            }
                         }
                         span {
+                            @include Mediaquery($xs) {
+                                font-size: 18px;
+                                // margin-top: 15px;
+                            }
                             line-height: 77px;
                             font-size: 25px;
                             color: #72d5cd;
@@ -162,6 +224,13 @@
                     }
                     .email-persional {
                         @extend .name-persional;
+                        h4 {
+                            @include Mediaquery($xs) {
+                                padding: 0;
+                                text-align: start !important;
+                                // margin-top: 15px;
+                            }
+                        }
                     }
                     .phone-persional {
                         @extend .name-persional;
