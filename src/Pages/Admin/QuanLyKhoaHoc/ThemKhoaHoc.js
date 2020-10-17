@@ -3,12 +3,12 @@ import { Select, DatePicker, Input, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
-
 import ShowToast from "../../Admin/Showtoast";
 import moment from "moment";
 
 export default function ThemKhoaHoc(props) {
   // console.log("props" , props);
+  const {OnChecked}  =props;
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -19,7 +19,7 @@ export default function ThemKhoaHoc(props) {
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
-  const [isSubmit, setIsSubmit] = useState(false);
+
   const [values, setValue] = useState({
     maKhoaHoc: "",
     biDanh: "",
@@ -40,19 +40,25 @@ export default function ThemKhoaHoc(props) {
       [name]: value,
     });
   };
-  const handleChangeSelect1 = (e) => {
-    setValue({
-      ...values,
-      maDanhMucKhoaHoc: e,
-    });
-  };
-  const handleChangeSelect2 = (e) => {
-    setValue({
-      ...values,
-      maNhom: e,
-    });
-  };
-
+  // const handleChangeSelect1 = (e) => {
+  //   setValue({
+  //     ...values,
+  //     maDanhMucKhoaHoc: e,
+  //   });
+  // };
+ const handleChangeSelect = (value) =>{
+  setValue({
+    ...values,
+    maDanhMucKhoaHoc: value,
+  });
+ }
+                        
+ const handleChangeSelect1 = value =>{
+  setValue({
+    ...values,
+    maNhom: value,
+  });
+ }
   const handleOnChangeDate = (e) => {
     let getDate = moment(e).format("DD/MM/YYYY");
     setValue({
@@ -77,11 +83,11 @@ export default function ThemKhoaHoc(props) {
     dispatch(ThemKhoaHocAction(frm));
     // AddCourse(true);
     // setIsSubmit()
-  
+
     // let modal = ('#themKhoaHoc')
     // modal.modal('hide');
   };
-    
+
   return (
     <>
       <div>
@@ -110,157 +116,155 @@ export default function ThemKhoaHoc(props) {
               </div>
               <div className="modal-body">
                 <div className="container">
-                  <div className="row modal-body_-content">
-                    {/* <div className="col-6">
-                      <div className="form-group">
-                        <p className="mb-1">
-                          Người tạo <span style={{ color: "red" }}> *</span>
-                        </p>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={taiKhoan.taiKhoan}
-                          disabled
-                        />
-                      </div>
-                    </div> */}
-
+                  <div className="row">
                     <div className="col-6">
                       <div className="form-group">
-                        <p className="mb-1">
-                          Mã khóa học <span style={{ color: "red" }}> *</span>
+                        <p>
+                          Mã khóa học <span style={{ color: "red" }}>*</span>
                         </p>
                         <input
                           type="text"
                           className="form-control"
+                          placeholder="Eg BackEnd_01"
                           name="maKhoaHoc"
                           onChange={handleChange}
                         />
                       </div>
                     </div>
+                    {/* Tên khóa học  */}
                     <div className="col-6">
                       <div className="form-group">
-                        <p className="mb-1">
-                          Tên khóa học <span style={{ color: "red" }}> *</span>
+                        <p>
+                          Tên khóa học <span style={{ color: "red" }}>*</span>
                         </p>
                         <input
                           type="text"
                           className="form-control"
+                          placeholder="Eg Lập trình java"
                           name="tenKhoaHoc"
                           onChange={handleChange}
                         />
                       </div>
                     </div>
-                    <div className="col-6">
-                      <div className="form-group">
-                        <p className="mb-1">
-                          Bí danh <span style={{ color: "red" }}> *</span>
-                        </p>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="biDanh"
-                          onChange={handleChange}
-                        />
+                    {/* Danh mục khóa học  */}
+                    <div className="col-6 ">
+                      <div className="div-total d-flex">
+                        <div className="mr-5">
+                          <p>
+                            Danh mục khóa học
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                          <Select
+                            showSearch
+                            style={{ width: 200 }}
+                            placeholder="Chọn danh mục"
+                            optionFilterProp="children"
+                            // onChange={onChange}
+                            // value="BackEnd"
+                            name="maDanhMucKhoaHoc"
+                            onChange={handleChangeSelect}
+                            filterOption={(input, option) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                          >
+                            {categoriesCourses.map((category, index) => {
+                              return (
+                                <Option key={index} value={category.maDanhMuc}>
+                                  {category.tenDanhMuc}
+                                </Option>
+                              );
+                            })}
+                          </Select>
+                        </div>
+                        <div className="ml-2">
+                          <p>
+                            Mã nhóm
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                          <Select
+                            name="maNhom"
+                            // value="GP01"
+                            placeholder="GP01"
+                            onChange={handleChangeSelect1}
+                          >
+                            <Option value="GP01">GP01</Option>
+                            <Option value="GP02">GP02</Option>
+                            <Option value="GP03">GP03</Option>
+                            <Option value="GP04">GP04</Option>
+                            <Option value="GP05">GP05</Option>
+                            <Option value="GP06">GP06</Option>
+                            <Option value="GP07">GP07</Option>
+                            <Option value="GP08">GP08</Option>
+                            <Option value="GP09">GP09</Option>
+                            <Option value="GP10">GP10</Option>
+                          </Select>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="mt-1 mb-1">Ngày tạo <span style={{ color : "red"}}>*</span></p>
+                        <DatePicker onChange={handleOnChangeDate} format="DD/MM/YYYY" />
                       </div>
                     </div>
+                    {/* Mô tả khóa học  */}
                     <div className="col-6">
-                      <div className="form-group">
-                        <p className="mb-1">
-                          Mô tả <span style={{ color: "red" }}> *</span>
-                        </p>
-                        <textarea
-                          cols="30"
-                          rows="5"
-                          type="text"
-                          className="form-control"
-                          name="moTa"
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <p className="mb-1 ml-3">
-                        Mã danh mục <span style={{ color: "red" }}> *</span>
+                      <p>
+                        Mô tả <span style={{ color: "red" }}>*</span>
                       </p>
-
-                      <Select
-                        //   defaultValue="lucy"
-                        style={{ marginLeft: "15px", width: 300 }}
-                        onChange={handleChangeSelect1}
-                        defaultValue="BackEnd"
-                        name="maDanhMucKhoaHoc"
-                      >
-                        {categoriesCourses.map((maDM, index) => {
-                          return (
-                            <Option key={index} value={maDM.maDanhMuc}>
-                              {maDM.tenDanhMuc}
-                            </Option>
-                          );
-                        })}
-                      </Select>
+                      <textarea
+                        onChange={handleChange}
+                        type="text"
+                        className="form-control"
+                        placeholder="Mô tả khóa học của bạn"
+                        name="moTa"
+                        rows="4"
+                        cols="50"
+                      />
                     </div>
-                    <div className="form-group ml-4">
-                      <p className="mb-1">
-                        Mã nhóm <span style={{ color: "red" }}> *</span>
-                      </p>
-                      <Select
-                        defaultValue="GP01"
-                        style={{ width: 120 }}
-                        onChange={handleChangeSelect2}
-                        name="maNhom"
-                      >
-                        <Option value="GP01">GP01</Option>
-                        <Option value="GP02">GP02</Option>
-                        <Option value="GP03">GP03</Option>
-                        <Option value="GP04">GP04</Option>
-                        <Option value="GP05">GP05</Option>
-                        <Option value="GP06">GP06</Option>
-                        <Option value="GP07">GP07</Option>
-                        <Option value="GP08">GP08</Option>
-                        <Option value="GP09">GP09</Option>
-                        <Option value="GP10">GP010</Option>
-                      </Select>
-                    </div>
-                    <div className="col-6">
-                      <div className="form-group  ml-3">
-                        <p className="mb-1">
-                          Ngày tạo<span style={{ color: "red" }}> *</span>
-                        </p>
-                        <DatePicker
-                          format="DD/MM/YYYY"
-                          defaultValue={moment()}
-                          onChange={handleOnChangeDate}
-                        />
-                      </div>
-                    </div>
+                    {/* Bí danh  */}
                     <div className="col-6">
                       <div className="form-group">
-                        <p className="mb-1">
-                          Hình ảnh<span style={{ color: "red" }}> *</span>
+                        <p className="mt-2 mb-0">
+                          Hình ảnh
+                          <span style={{ color: "red" }}>*</span>
                         </p>
                         <input
                           type="file"
+                          placeholder="Chọn hình ảnh"
                           onChange={fileChangedHandler}
-                          // validations={[required]}
                         />
                       </div>
+                    </div>
+                    <div className="col-6">
+                      <p>
+                        Bí danh <span style={{ color: "red" }}>*</span>
+                      </p>
+                      <input
+                        type="text"
+                        name="biDanh"
+                        className="form-control"
+                        placeholder="Bí danh"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="modal-footer">
+              <div class="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  class="btn btn-secondary"
                   data-dismiss="modal"
-                  onClick={(evt)=>{props.OnChecked(true)}}
+                  onClick={()=>{
+                    OnChecked(true)
+                  }}
                 >
-                  Close
+                  Hủy
                 </button>
                 <button
+                  type="button"
+                  class="btn btn-primary"
                   onClick={handleSubmit}
-                  className="btn btn-primary"
                 >
                   Thêm khóa học
                 </button>

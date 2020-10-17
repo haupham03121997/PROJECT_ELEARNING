@@ -4,13 +4,17 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { themNguoiDungAction } from "../../../Action/themNguoiDungAction";
 import { useDispatch, useSelector } from "react-redux";
+import { DatePicker, Space  ,Button} from 'antd';
+import 'antd/dist/antd.css';
 export default function ThemUser() {
   const dispatch = useDispatch();
   const _handleSubmit = (values) => {
     dispatch(themNguoiDungAction(values));
     console.log("values" , values);
   };
-
+  function onChange(date, dateString) {
+    console.log(date, dateString);
+  }
   const lowcaseRegex = /(?=.*[a-z])/;
   const upcaseRegex = /(?=.*[A-Z])/;
   const numbericRegex = /(?=.*[0-9])/;
@@ -131,6 +135,8 @@ export default function ThemUser() {
                       type="password"
                       className="form-control"
                     />
+                     {/* <DatePicker onChange={onChange} /> */}
+                     <Button type="primary">Primary Button</Button>
                     <ErrorMessage name="matKhau">
                       {(msg) => (
                         <div className="alert alert-warning">{msg}</div>

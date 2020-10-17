@@ -42,10 +42,9 @@ export default function QuanLyKhoaHoc() {
   };
   // }
   const OnChecked = (value) => {
-    // console.log("value" ,value);
     setIsChecked(value);
   };
-  // console.log("iss" , isDeleted);
+
   useEffect(() => {
     dispatch(getCoursesPaginationAction(currentPage));
     // dispatch(getCoursesDetailAction())

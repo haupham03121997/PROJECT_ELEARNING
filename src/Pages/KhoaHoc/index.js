@@ -56,7 +56,7 @@ export default function KhoaHoc() {
                 })}
               </ul>
             </div>
-            <div className="col-md-8 col-lg-3 col-sm-12">
+            <div className="col-md-8 col-lg-9 col-sm-12">
               <h2 onClick={()=>{
                 setIsClick(false)
               }}>Các khóa học mới nhất</h2>

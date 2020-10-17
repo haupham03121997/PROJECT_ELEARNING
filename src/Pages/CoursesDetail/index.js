@@ -53,6 +53,7 @@ export default function CoursesDetail(props) {
   const khoaHoc = JSON.parse(localStorage.getItem(maKhoaHoc));
   console.log("khoas hocj tu local", khoaHoc);
   const handleSubmit = () => {
+    console.log("value" ,values);
     dispatch(dangKyKhoaHocAction(values));
     // console.log("value" , values);
   };

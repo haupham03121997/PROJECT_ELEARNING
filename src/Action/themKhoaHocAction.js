@@ -29,6 +29,7 @@ export const ThemKhoaHocAction = (value) => {
           type: Type.THEM_KHOA_HOC_FAIL,
 
         });
+        swal("", "Mã khóa học trùng khớp", "error");
       });
   };
 };

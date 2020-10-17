@@ -1,87 +1,135 @@
-import React, { useState , useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { DoiMatKhauAction } from "../../Action/doiMatKhauAction";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik, Field, ErrorMessage } from "formik";
-
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import swal from "sweetalert";
+import { DoiMatKhauAction } from "../../Action/doiMatKhauAction";
+import { timKiemNguoiDungAction } from "../../Action/timKiemNguoiDungAction";
 import "./changepassword.scss";
 
 export default function DoimatKhau(props) {
   const { match } = props;
-  console.log(match);
+  const user = JSON.parse(localStorage.getItem("userLogin"));
   const history = useHistory();
   const dispatch = useDispatch();
+  const [matKhauCu, setMatKhauCu] = useState("");
+  const [matKhauMoi, setMatKhauMoi] = useState("");
+  const [nhapMatKhauMoi, setNhapMatKhauMoi] = useState("");
   const [isShowPass, setIsShowPass] = useState(false);
+  const [isCheckPass, setIsCheckPass] = useState("");
+  const [isComparePass, setsComparePass] = useState("");
+  const [isCheckPassOld, setIsCheckPassOld] = useState("");
+  const [isCheckPassNew, setIsCheckPassNew] = useState("");
+  const [isCheckPassEmpty, setIsCheckPassEmpty] = useState("");
+  const [isCheckPassOldEmpty, setIsCheckPassOldEmpty] = useState("");
+  const [isCheckPassNewEmpty, setIsCheckPassNewEmpty] = useState("");
 
-  const handleSubmit = (value) => {
-    swal({
-      title: "Thay đổi mật khẩu?",
-      text: "Mật khẩu bạn thay đổi sẽ được đăng nhập vào lần tới!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal("Thay đổi mật khẩu thành công!", {
-          icon: "success",
-        });
-        dispatch(DoiMatKhauAction(value));
-      } else {
-        swal("Your imaginary file is safe!");
-      }
-    });
-  };
-
-  const user = JSON.parse(localStorage.getItem("userLogin"));
-  console.log("local", user);
-  console.log("user.hoTen :", user.hoTen);
-
-  // console.log("user", user);
   const taiKhoan = match.params.taiKhoan;
-  //  console.log(taiKhoan);
-
-  //  const taiKhoan = user.taiKhoan;
   const hoTen = user.hoTen;
   const email = user.email;
   const soDT = user.soDT;
-
-  const lowcaseRegex = /(?=.*[a-z])/;
-  const upcaseRegex = /(?=.*[A-Z])/;
-  const numbericRegex = /(?=.*[0-9])/;
-
-  const signupUserSchema = yup.object().shape({
-    taiKhoan: yup
-      .string()
-      .required("Tài khoản đang trống!")
-      .min(2, "*Too short"),
-    matKhau: yup
-      .string()
-      .required("Mật khẩu đang trống!")
-      .matches(lowcaseRegex, "*Một chữ viết thường")
-      .matches(upcaseRegex, "*Một chữ viết hoa")
-      .matches(numbericRegex, "*Bao gồm 1 số")
-      .min(8, "*Ít nhất 8 ký tự"),
-    hoTen: yup.string().required("Họ tên đang trống!"),
-    soDT: yup
-      .string()
-      .matches(/^[0-9]+$/)
-      .required("Số điện thoại đang trống!")
-      .min(10, "Bao gồm 10 số"),
-
-    email: yup
-      .string()
-      .required("Email đang trống!")
-      .email("*Email không đúng định dạng"),
+  const maLoaiNguoiDung = user.maLoaiNguoiDung;
+  const maNhom = user.maNhom;
+  const [values, setValues] = useState({
+    taiKhoan: taiKhoan,
+    matKhau: "",
+    hoTen: hoTen,
+    soDT: soDT,
+    maLoaiNguoiDung: maLoaiNguoiDung,
+    maNhom: maNhom,
+    email: email,
   });
-  //   console.log(credential);
+  useEffect(() => {
+    dispatch(timKiemNguoiDungAction(match.params.taiKhoan));
+  }, []);
+
+  const { timKiemNguoiDung } = useSelector(
+    (state) => state.TimKiemNguoiDungReDucer
+  );
+
+  if (timKiemNguoiDung.length) {
+    var mk = timKiemNguoiDung[0].matKhau;
+  }
+
+  // Viết hàm validate
+
+  const handleMatKhauCu = (e) => {
+    const value = e.target.value;
+    setMatKhauCu(value);
+    if (!value) {
+      setIsCheckPassOldEmpty("Vui lòng nhập mật khẩu!");
+    } else {
+      setIsCheckPassOldEmpty("");
+    }
+    if (value !== mk) {
+      setIsCheckPassOld("Mật khẩu cũng không chính xác!");
+    } else {
+      setIsCheckPassOld("");
+    }
+  };
+  const handleBlur = (e) => {
+    const value = e.target.value;
+    if (!value) {
+      setIsCheckPassOldEmpty("Vui lòng nhập mật khẩu!");
+    } else {
+      setIsCheckPassOldEmpty("");
+    }
+  };
+  const handleBlur1 = (e) => {
+    const value = e.target.value;
+    if (!value) {
+      setIsCheckPass("Vui lòng nhập mật khẩu");
+    } else {
+      setIsCheckPass("");
+    }
+  };
+  const handeMatKhauMoi = (e) => {
+    if (!e.target.value) {
+      setIsCheckPassEmpty("Vui lòng nhập mật khẩu!");
+    } else {
+      setIsCheckPassEmpty("");
+      setValues({
+        ...values,
+        matKhau: e.target.value,
+      });
+    }
+  };
+  const handleNhapLaiMk = (e) => {
+    if (!e.target.value) {
+      setIsCheckPassNewEmpty("Vui lòng nhập mật khẩu!");
+    } else {
+      setIsCheckPassNewEmpty("");
+      setNhapMatKhauMoi(e.target.value);
+    }
+    if (e.target.value !== values.matKhau) {
+      setIsCheckPassNew("Mật khẩu không trùng khớp!");
+    } else {
+      setIsCheckPassNew("");
+    }
+  };
+  const handleBlur2 = e =>{
+    if(!e.target.value){
+      setIsCheckPassNew("Vui lòng nhập mật khẩu!")
+    }else{
+      setIsCheckPassNew("");
+    }
+  }
+
+  const handleSubmit = () => {
+    dispatch(DoiMatKhauAction(values));
+  };
 
   return (
     <div className="taikhoan">
       <div className="taikhoan__header">
-        <div className="logo">
-          <img src="/img/logo2.png" alt="" />
+        <div
+          className="logo"
+          onClick={() => {
+            history.push("/");
+          }}
+        >
+          <img style={{ cursor: "pointer" }} src="/img/logo2.png" alt="" />
         </div>
         <div className="goback">
           <button
@@ -97,7 +145,7 @@ export default function DoimatKhau(props) {
       <div className="taikhoan__content mt-md-5 mt-sm-0">
         <div className="container">
           <div className="row">
-            <div className="col-md-3 col-sm-0 ml-auto">
+            <div className="col-md-4 col-sm-0 ml-auto">
               <div className="avatar">
                 <img src="/img/avatar.png" alt="" />
               </div>
@@ -111,7 +159,7 @@ export default function DoimatKhau(props) {
                 <p className="">===</p>
               </div>
             </div>
-            <div className="col-md-9 col-sm-12 taikhoan-right">
+            <div className="col-md-8 col-sm-12 taikhoan-right">
               <div className="taikhoan-right__title">
                 <h3>Đổi mật khẩu </h3>
                 <p>
@@ -121,135 +169,130 @@ export default function DoimatKhau(props) {
                 </p>
               </div>
               <div className="taikhoan-right__content">
-                <Formik
-                  initialValues={{
-                    taiKhoan: taiKhoan,
-                    matKhau: "",
-                    hoTen: hoTen,
-                    soDT: soDT,
-                    maLoaiNguoiDung: "HV",
-                    maNhom: "GP01",
-                    email: email,
-                  }}
-                  validationSchema={signupUserSchema}
-                  onSubmit={handleSubmit}
-                  render={(formikProps) => (
-                    <Form>
-                      <div className="form-group">
-                        <p>Tài Khoản</p>
-                        <Field
-                          render={({ field, form: { isSubmitting } }) => (
-                            <input
-                              {...field}
-                              disabled
-                              type="text"
-                              placeholder="lastName"
-                              className="form-control"
-                              value={taiKhoan}
-                              name="taiKhoan"
-                              // onChange={formikProps.handleChange(taiKhoan)}
-                            />
-                          )}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <p>Nhập email</p>
-                        <Field
-                          render={({ field, form: { isSubmitting } }) => (
-                            <input
-                              {...field}
-                              // disabled
-                              type="email"
-                              placeholder="VD 123@gmail.com"
-                              className="form-control"
-                              value={email}
-                              name="email"
-                              // onChange={formikProps.handleChange(taiKhoan)}
-                            />
-                          )}
-                        />
-                        <ErrorMessage name="email">
-                          {(msg) => (
-                            <div className="errMessage">
-                              <span className="errInput animate__animated animate__bounce animate__shakeX">
-                                {" "}
-                                <i className="fa fa-exclamation-triangle"></i>
-                              </span>
-                              {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                              {msg}
-                            </div>
-                          )}
-                        </ErrorMessage>
-                      </div>
-                      <div className="form-group">
-                        <p>Nhập số điện thoại </p>
-                        <Field
-                          render={({ field, form: { isSubmitting } }) => (
-                            <input
-                              {...field}
-                              disabled
-                              type="text"
-                              placeholder="VD 123187123"
-                              className="form-control"
-                              value={soDT}
-                              // onChange={formikProps.handleChange(taiKhoan)}
-                            />
-                          )}
-                        />
-                        <ErrorMessage name="soDT">
-                          {(msg) => (
-                            <div className="errMessage">
-                              <span className="errInput animate__animated animate__bounce animate__shakeX">
-                                {" "}
-                                <i className="fa fa-exclamation-triangle"></i>
-                              </span>
-                              {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                              {msg}
-                            </div>
-                          )}
-                        </ErrorMessage>
-                      </div>
-                      <div className="form-group password">
-                        <p> Nhập mật khẩu mới</p>
-                        <Field
-                          type={isShowPass ? "text" : "password"}
-                          name="matKhau"
-                          onChange={formikProps.handleChange}
-                          className="form-control"
-                          placeholder="Nhập mật khẩu"
-                        />
-                        <div className="show-pass">
-                          <i
-                            onClick={() => {
-                              setIsShowPass(!isShowPass);
-                            }}
-                            className="fa fa-eye-slash"
-                          ></i>
-                        </div>
-                        <ErrorMessage name="matKhau">
-                          {(msg) => (
-                            <div className="errMessage">
-                              <span className="errInput animate__animated animate__bounce animate__shakeX">
-                                {" "}
-                                <i className="fa fa-exclamation-triangle"></i>
-                              </span>
-                              {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                              {msg}
-                            </div>
-                          )}
-                        </ErrorMessage>
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="button-changepassword my-5"
+                {/* Mât khẩu cũ  */}
+                <div className="col-12">
+                  <div className="form-group">
+                    <p className="p-title">
+                      Mật khẩu cũ <span style={{ color: "red" }}>*</span>
+                    </p>
+                    <input
+                      type="password"
+                      placeholder="Nhập mật khẩu cũ"
+                      className="form-control"
+                      onChange={handleMatKhauCu}
+                      onBlur={handleBlur}
+                      value={matKhauCu}
+                    />
+                    {isCheckPassOldEmpty && (
+                      <p
+                        className="text-left ml-2 mr-4"
+                        style={{
+                          fontSize: "10px",
+                          color: "red",
+                          display: "inline-block",
+                        }}
                       >
-                        Đổi mật khẩu
-                      </button>
-                    </Form>
-                  )}
-                />
-                <p>
+                        {isCheckPassOldEmpty}
+                      </p>
+                    )}
+                    {isCheckPassOld ? (
+                      <p
+                        className="validata"
+                        style={{
+                          display: "inline-block",
+                          fontSize: "10px",
+                          color: "red",
+                        }}
+                      >
+                        {isCheckPassOld}
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                {/* Mật khẩu mới  */}
+                <div className="col-12">
+                  <div className="form-group">
+                    <p className="p-title">
+                      Mật khẩu mới <span style={{ color: "red" }}>*</span>
+                    </p>
+                    <input
+                      type="password"
+                      placeholder="Nhập mật khẩu mới"
+                      className="form-control form-control-validate"
+                      onChange={handeMatKhauMoi}
+                      onBlur={handleBlur1}
+                    />
+                    {isCheckPassEmpty && (
+                      <p
+                        className="text-left ml-2 mr-4"
+                        style={{
+                          fontSize: "10px",
+                          color: "red",
+                          display: "inline-block",
+                        }}
+                      >
+                        {isCheckPassEmpty}
+                      </p>
+                    )}
+                    {isCheckPass && (
+                      <p
+                        style={{
+                          fontSize: "10px",
+                          color: "red",
+                          display: "inline-block",
+                        }}
+                      >
+                        {isCheckPass}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {/* Nhập lại mật khẩu */}
+                <div className="col-12">
+                  <div className="form-group">
+                    <p className="p-title">
+                      Nhập lại mật khẩu <span style={{ color: "red" }}>*</span>
+                    </p>
+                    <input
+                      type="password"
+                      placeholder="Nhập lại mật khẩu mới"
+                      className="form-control"
+                      onChange={handleNhapLaiMk}
+                      onBlur={handleBlur2}
+                    />
+                    {isCheckPassNewEmpty && (
+                      <p
+                        className="text-left ml-2 mr-4 mb-4"
+                        style={{
+                          fontSize: "10px",
+                          color: "red",
+                          display: "inline-block",
+                        }}
+                      >
+                        {isCheckPassNewEmpty}
+                      </p>
+                    )}
+                    {isCheckPassNew && (
+                      <p className="mb-4" style={{
+                        fontSize: "10px",
+                        color: "red",
+                        display: "inline-block",
+                      }}>
+                        {isCheckPassNew}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="button-changepassword"
+                  onClick={handleSubmit}
+                >
+                  Đổi mật khẩu
+                </button>
+                <p className="mt-2">
                   <a
                     onClick={() => {
                       history.push("/");

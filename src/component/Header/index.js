@@ -147,7 +147,9 @@ export default function Header() {
             {isClickResponsive ? (
               <div className="collapse-resposive collapse-resposive-transion">
                 {credential ? (
-                  <div className="name">
+                  <div onClick = {()=>{
+                    history.push("/caidat/taikhoan")
+                  }}  style={{ cursor : "pointer"}} className="name">
                     <div className="name-res">
                       <div className="avatar">
                         <img src="/img/avatar.png" alt="avatar" />
@@ -418,7 +420,9 @@ export default function Header() {
 
                 {credential ? (
                   <div className="name-user">
-                    <div className="name">
+                    <div onClick = {()=>{
+                      history.push("/caidat/taikhoan")
+                    }} style={{ cursor : "pointer"}} className="name">
                       <div className="avatar">
                         <img src="/img/avatar.png" alt="avatar" />
                       </div>
