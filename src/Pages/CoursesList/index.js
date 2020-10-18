@@ -22,7 +22,7 @@ export default function HomeScreen(props) {
   const maDanhMuc = match.params.maDanhMucKhoaHoc;
   useEffect(() => {
     dispatch(getCoursesAction());
-    dispatch(layDanhMucKhoaHocAction(maDanhMuc));
+    // dispatch(layDanhMucKhoaHocAction(maDanhMuc));
   }, [maDanhMuc]);
 
   const { coursesList, loading, error } = useSelector(
@@ -253,49 +253,6 @@ export default function HomeScreen(props) {
                 </div> */}
               </div>
 
-              {categoriesCourses.map((item, index) => {
-                // console.log(coursesList, item);
-                // {item.filter(item => {
-                // console.log("item nè " , item);
-                // })}
-                // return (
-                //   <div
-                //     className="tab-pane"
-                //     id={`#${item.maDanhMuc}`}
-                //     role="tabpanel"
-                //     aria-labelledby="profile-tab"
-                //     key={index}
-                //   >
-                //     <div className="col-3 mt-4 section-content-main__detail ">
-                //       <div className="card card--custom">
-                //         <img
-                //           className="card-img-top"
-                //           src={item.hinhAnh}
-                //           alt={item.biDanh}
-                //         />
-                //         <div className="card-body">
-                //           <h4 className="card-title">{item.tenKhoaHoc}</h4>
-                //           <div className="rate-start">
-                //             <div>
-                //               <i className="fa fa-star" />
-                //               <i className="fa fa-star" />
-                //               <i className="fa fa-star" />
-                //               <i className="fa fa-star" />
-                //               <i className="fa fa-star-half-alt" />
-                //             </div>
-                //             <span>4.5(1.234)</span>
-                //           </div>
-                //           <div className="text-right mt-4">
-                //             <button className="btn btn-content-signin">
-                //               ĐĂNG KÝ
-                //             </button>
-                //           </div>
-                //         </div>
-                //       </div>
-                //     </div>
-                //   </div>
-                // );
-              })}
             </div>
           </div>
         </div>

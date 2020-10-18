@@ -331,7 +331,7 @@ export default function Header() {
                    history.push("/lienhe")
                  }}
                 >
-                  <a className="nav-link" href="#">
+                  <a className="nav-link">
                     <i className="fa fa-phone-square"></i> Liên Hệ 
                   </a>
                 </li>

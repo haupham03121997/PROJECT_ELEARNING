@@ -3,77 +3,65 @@ import { Select, DatePicker, Input, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
+import { Formik, Form, Field } from "formik";
 import moment from "moment";
-export default function CapNhatKhoaHoc({isParams , isUpDate}) {
+export default function CapNhatKhoaHoc({ isParams }) {
   const { Option } = Select;
-  const param = isParams;
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
+  console.log(taiKhoan.taiKhoan);
+
   const [isSubmit, setIsSubmit] = useState("");
   const dispatch = useDispatch();
-  
   useEffect(() => {
     dispatch(getCategoryAction());
-  }, []);
+    dispatch(getCoursesDetailAction(isParams));
+  }, [isParams]);
+  const { coursesDetail } = useSelector((state) => state.getCoursesList);
 
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
 
-  const [values, setValue] = useState({
-    maKhoaHoc: "maKhoaHoc",
-    biDanh: "",
-    tenKhoaHoc: "",
-    moTa: "",
-    luotXem: 0,
-    danhGia: 0,
-    hinhAnh: "",
-    maNhom: "",
-    ngayTao: "",
-    maDanhMucKhoaHoc: "",
-    taiKhoanNguoiTao: taiKhoan.taiKhoan,
-  });
-
+  const handleChangemaKH = (e) => {
+    setIsSubmit(e.target.value);
+  };
+  console.log(isSubmit);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValue({
-      ...values,
-      [name]: value,
-    });
-    console.log(name , value);
+    // setValue({
+    //   // ...values,
+    //   // [name]: value,
+    // });
   };
   const handleChangeSelect1 = (e) => {
-    setValue({
-      ...values,
-      maDanhMucKhoaHoc: e,
-    });
+    // setValue({
+    //   ...values,
+    //   maDanhMucKhoaHoc: e,
+    // });
   };
   const handleChangeSelect2 = (e) => {
-    setValue({
-      ...values,
-      maNhom: e,
-    });
+    // setValue({
+    //   ...values,
+    //   maNhom: e,
+    // });
   };
 
   const handleOnChangeDate = (e) => {
-    let getDate = moment(e).format("DD/MM/YYYY");
-    setValue({
-      ...values,
-      ngayTao: getDate,
-    });
+    // let getDate = moment(e).format("DD/MM/YYYY");
+    // setValue({
+    //   ...values,
+    //   ngayTao: getDate,
+    // });
   };
-  const fileChangedHandler = (e) => {
-    const image = e.target.files[0];
-    setValue({
-      ...values,
-      hinhAnh: image,
-    });
-  };
+  const fileChangedHandler = (e) => {};
 
-  const handleSubmit = () => {
-    
-  };
+  const handleSubmit = () => {};
 
-  // console.log("values" , values);
+  // console.log("values", values);
+  const _handleSubmit = (value) => {
+    console.log("value", value);
+    console.log(coursesDetail);
+  };
   return (
     <>
       <div>
@@ -116,28 +104,65 @@ export default function CapNhatKhoaHoc({isParams , isUpDate}) {
                         />
                       </div>
                     </div> */}
+                    {coursesDetail.maKhoaHoc ? (
+                      <Formik
+                        initialValues={{
+                          maKhoaHoc: coursesDetail.maKhoaHoc,
+                          biDanh: "",
+                          tenKhoaHoc: "",
+                          moTa: "",
+                          luotXem: 0,
+                          danhGia: 0,
+                          hinhAnh: "",
+                          maNhom: "GP01",
+                          ngayTao: "",
+                          maDanhMucKhoaHoc: coursesDetail.danhMucKhoaHoc.maDanhMucKhoahoc,
+                          taiKhoanNguoiTao: taiKhoan.taiKhoan,
+                        }}
+                        onSubmit={_handleSubmit}
+                        render={(formikProps) => (
+                          <Form>
+                            <div className="col-6">
+                              <div className="form-group">
+                                <p className="mb-1">
+                                  Mã khóa học{" "}
+                                  <span style={{ color: "red" }}> *</span>
+                                </p>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="maKhoaHoc"
+                                  onChange={formikProps.handleChange}
+                                />
+                              </div>
+                            </div>
+                            <div className="modal-footer">
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                                // onClick={(evt) => {
+                                //   props.OnChecked(true);
+                                // }}
+                              >
+                                Close
+                              </button>
+                              <button
+                                // onClick={handleSubmit}
+                                type="submit"
+                                className="btn btn-primary"
+                              >
+                                Thêm khóa học
+                              </button>
+                            </div>
+                          </Form>
+                        )}
+                      />
+                    ) : (
+                      ""
+                    )}
 
-                    <div className="col-6">
-                      <div className="form-group">
-                        <p className="mb-1">
-                          Mã khóa học <span style={{ color: "red" }}> *</span>
-                        </p>
-                        <input
-                          type="text"
-                          className="form-control"
-                          // name="maKhoaHoc"
-                          value="asdasdas"
-                          onChange={(evt)=>{
-                              setValue({
-                                ...values , 
-                                maKhoaHoc : evt.target.value
-                              })
-                          
-                          // value={coursesDetail.maKhoaHoc}
-                            }}
-                        />
-                      </div>
-                    </div>
+                    {/* 
                     <div className="col-6">
                       <div className="form-group">
                         <p className="mb-1">
@@ -147,7 +172,7 @@ export default function CapNhatKhoaHoc({isParams , isUpDate}) {
                           type="text"
                           className="form-control"
                           name="tenKhoaHoc"
-                          value={values.maKhoaHoc}
+                          value=""
                           onChange={handleChange}
                           // value={coursesDetail.tenKhoaHoc}
                         />
@@ -250,24 +275,9 @@ export default function CapNhatKhoaHoc({isParams , isUpDate}) {
                           // validations={[required]}
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                  // onClick={(evt) => {
-                  //   props.OnChecked(true);
-                  // }}
-                >
-                  Close
-                </button>
-                <button onClick={handleSubmit} className="btn btn-primary">
-                  Thêm khóa học
-                </button>
               </div>
             </div>
           </div>

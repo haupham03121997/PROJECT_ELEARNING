@@ -5,6 +5,7 @@ import { getCoursesPaginationAction } from "../../../Action/danhSachKhoaHocAtion
 import { xoaKhoaHocAction } from "../../../Action/xoaKhoaHocAction";
 import Pagination  from "../../../component/Pagination"
 import { layDanhMucKhoaHocAction } from "../../../Action/layDanhMucKhoaHocAction";
+// import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
 import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
 // import  Loading from "../../../component/Loading";
 import ThemKhoaHoc from "./ThemKhoaHoc";
@@ -44,10 +45,10 @@ export default function QuanLyKhoaHoc() {
   const OnChecked = (value) => {
     setIsChecked(value);
   };
-
+  
   useEffect(() => {
     dispatch(getCoursesPaginationAction(currentPage));
-    // dispatch(getCoursesDetailAction())
+   
   }, [isDeleted, isChecked , currentPage]);
 
   const { coursesListPagination, loading } = useSelector((state) => state.getCoursesList);
@@ -168,12 +169,17 @@ export default function QuanLyKhoaHoc() {
                         >
                           <i className="fa fa-check mr-1"></i>Ghi danh
                         </button>
-                        <button onClick={()=>{
-                           history.push(`/admin/courses-management/capnhatkhoahoc/maKhoahoc=${item.maKhoaHoc}`)
-                         }} className="btn-update mr-2">
+                        {/* <button 
+                        // onClick={()=>{
+                        //    history.push(`/admin/courses-management/capnhatkhoahoc/maKhoahoc=${item.maKhoaHoc}`)
+                        //  }} 
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#suakhoahoc"
+                         className="btn-update mr-2">
                          <i className="fa fa-share mr-1"></i> Cập nhập 
-                          </button>
-                        {/* <button
+                          </button> */}
+                        <button
                           type="button"
                           className="btn-update mr-2"
                           data-toggle="modal"
@@ -183,7 +189,7 @@ export default function QuanLyKhoaHoc() {
                           }}
                         >
                           <i className="fa fa-share mr-1"></i> Cập nhập
-                        </button> */}
+                        </button>
                         <button
                           className="btn-cancel mr-3"
                           onClick={() => {
@@ -228,7 +234,7 @@ export default function QuanLyKhoaHoc() {
         {/* /.container-fluid */}
       </div>
       <ThemKhoaHoc OnChecked={OnChecked} />
-      <SuaKhoaHoc isParams={isParams} isUpDate={!isChecked} />
+      <SuaKhoaHoc isParams={isParams} />
     </div>
   );
 }
