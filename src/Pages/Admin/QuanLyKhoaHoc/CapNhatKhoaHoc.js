@@ -8,7 +8,7 @@ import moment from "moment";
 export default function CapNhatKhoaHoc({ isParams }) {
   const { Option } = Select;
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
-  console.log(taiKhoan.taiKhoan);
+  // console.log(taiKhoan.taiKhoan);
   
   const [isSubmit, setIsSubmit] = useState("");
   const dispatch = useDispatch();
@@ -17,8 +17,6 @@ export default function CapNhatKhoaHoc({ isParams }) {
     dispatch(getCoursesDetailAction(isParams));
   }, [isParams ]);
   const { coursesDetail } = useSelector((state) => state.getCoursesList);
-  
-
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
@@ -26,7 +24,6 @@ export default function CapNhatKhoaHoc({ isParams }) {
   const handleChangemaKH = (e) => {
     setIsSubmit(e.target.value);
   };
-  console.log(isSubmit);
   const handleChange = (e) => {
     // const { name, value } = e.target;
     // setValues({
@@ -60,7 +57,7 @@ export default function CapNhatKhoaHoc({ isParams }) {
   const handleSubmit = () => {};
 
   // console.log("values", values);
-  const _handleSubmit = (value) => {
+  const _handleSubmit = (value ) => {
     console.log("value", value);
     console.log(coursesDetail);
   };
@@ -79,7 +76,7 @@ export default function CapNhatKhoaHoc({ isParams }) {
             <div className="modal-content modal-content--custom ">
               <div className="modal-header  py-0">
                 <h5 className="modal-title m-auto" id="exampleModalLabel">
-                  Thêm khóa học
+                  Cập nhật khóa học
                 </h5>
                 <button
                   type="button"
@@ -106,7 +103,7 @@ export default function CapNhatKhoaHoc({ isParams }) {
                         />
                       </div>
                     </div> */}
-                    {coursesDetail.maKhoaHoc ? (
+                    {coursesDetail.tenKhoaHoc ? (
                       <Formik
                         initialValues={{
                           maKhoaHoc: coursesDetail.maKhoaHoc,
@@ -122,7 +119,10 @@ export default function CapNhatKhoaHoc({ isParams }) {
                           taiKhoanNguoiTao: taiKhoan.taiKhoan,
                         }}
                         // onReset={_onReset}
-                        onSubmit={_handleSubmit}
+                        onSubmit={(value , {resetForm})=>{
+                          console.log("value" , value);
+                            resetForm({ value : ""})
+                        } }
                         render={(formikProps) => (
                           <Form style={{ width : "100%"}}>
                             <div className="col-6">
@@ -135,6 +135,7 @@ export default function CapNhatKhoaHoc({ isParams }) {
                                   type="text"
                                   className="form-control"
                                   name="maKhoaHoc"
+                                  // value={coursesDetail.maKhoaHoc}
                                   placeholder={coursesDetail.maKhoaHoc}
                                   onChange={formikProps.handleChange}
                                 />
@@ -146,7 +147,9 @@ export default function CapNhatKhoaHoc({ isParams }) {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-dismiss="modal"
-
+                                onClick={()=>{
+                                  formikProps.resetForm()
+                                }}
                               >
                                 Close
                               </button>
