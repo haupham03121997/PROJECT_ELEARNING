@@ -12,7 +12,7 @@ import CoursesDetail from "./Pages/CoursesDetail";
 import Signup from "./Pages/Signup";
 import Signin from "./Pages/Signin";
 import Lienhe from "./Pages/LienHe";
-import KhoaHoc from "./Pages/KhoaHoc"
+import KhoaHoc from "./Pages/KhoaHoc";
 
 import ThongTinTaiKhoan from "./Pages/ThongTinTaiKhoan";
 import AdminRouter from "./component/AdminRouter";
@@ -22,8 +22,8 @@ import GhiDanh from "./Pages/Admin/GhiDanhTheoMaKhoaHoc";
 import ThemNguoiDung from "./Pages/Admin/ThemUser";
 import TimKiemNguoiDung from "./Pages/Admin/QuanLyNguoiDung/TimKiemNguoiDung";
 import TimKiemKhoaHocAdmin from "./Pages/Admin/TimKiemKhoaHoc/TimKhoaHocAdmin";
-// import CapNhatNguoiDung from "./Pages/Admin/CapnhatNguoiDung";
-// import CApNhatKhoaHoc from "./Pages/Admin/CapnhatKhoaHoc";
+import TrangChu from "./Pages/Admin/TrangChu";
+
 import CustomRouter from "./component/CustomRoter";
 import RouterTaiKhoan from "./component/RouterTaiKhoan";
 import TaiKhoan from "./Pages/TaiKhoan";
@@ -56,13 +56,20 @@ function App() {
           path="/admin/user-management/nguoidung/:seacrh"
           component={TimKiemNguoiDung}
         /> */}
-{/* 
+        {/* 
         <AdminRouter
           path="/admin/user-management/ghidanh/taiKhoan/:taiKhoan"
           component={GhiDanh}
         /> */}
-        <AdminRouter path="/admin/courses-management/ghidanh/makhoahoc=:maKhoaHoc" component={GhiDanhTheoKhoaHoc} />  
-        <AdminRouter path="/admin/user-management/ghidanh/taikhoan/:taiKhoan" component={GhiDanhTheoTaiKhoan} />
+        <AdminRouter path="/admin/index" component={TrangChu} />
+        <AdminRouter
+          path="/admin/courses-management/ghidanh/makhoahoc=:maKhoaHoc"
+          component={GhiDanhTheoKhoaHoc}
+        />
+        <AdminRouter
+          path="/admin/user-management/ghidanh/taikhoan/:taiKhoan"
+          component={GhiDanhTheoTaiKhoan}
+        />
         {/* <AdminRouter
           exact
           path="/admin/user-management/capnhatnguoidung/taikhoan/:obj"
@@ -73,6 +80,8 @@ function App() {
           path="/admin/user-management/timkhoahoc/khoahoc/:makh"
           component={TimKiemKhoaHocAdmin}
         />
+        
+
         <AdminRouter
           path="/admin/user-management"
           component={QuanLyNguoiDung}

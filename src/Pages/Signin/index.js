@@ -19,7 +19,7 @@ export default function Signin() {
   const [isShowPass, setIsShowPass] = useState(false);
   if (credential !== null) {
     if (credential.maLoaiNguoiDung === "GV") {
-      return <Redirect to="admin/user-management" />;
+      return <Redirect to="admin/index" />;
     }
     if (credential.maLoaiNguoiDung === "HV") {
       const { search } = location;

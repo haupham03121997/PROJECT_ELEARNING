@@ -9,30 +9,32 @@ export default function CapNhatKhoaHoc({ isParams }) {
   const { Option } = Select;
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   console.log(taiKhoan.taiKhoan);
-
+  
   const [isSubmit, setIsSubmit] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategoryAction());
     dispatch(getCoursesDetailAction(isParams));
-  }, [isParams]);
+  }, [isParams ]);
   const { coursesDetail } = useSelector((state) => state.getCoursesList);
+  
 
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
-
+ 
   const handleChangemaKH = (e) => {
     setIsSubmit(e.target.value);
   };
   console.log(isSubmit);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    // setValue({
-    //   // ...values,
-    //   // [name]: value,
+    // const { name, value } = e.target;
+    // setValues({
+    //   ...values,
+    //   [name]: value,
     // });
   };
+
   const handleChangeSelect1 = (e) => {
     // setValue({
     //   ...values,
@@ -119,21 +121,24 @@ export default function CapNhatKhoaHoc({ isParams }) {
                           maDanhMucKhoaHoc: coursesDetail.danhMucKhoaHoc.maDanhMucKhoahoc,
                           taiKhoanNguoiTao: taiKhoan.taiKhoan,
                         }}
+                        // onReset={_onReset}
                         onSubmit={_handleSubmit}
                         render={(formikProps) => (
-                          <Form>
+                          <Form style={{ width : "100%"}}>
                             <div className="col-6">
                               <div className="form-group">
                                 <p className="mb-1">
                                   Mã khóa học{" "}
                                   <span style={{ color: "red" }}> *</span>
                                 </p>
-                                <input
+                                <Field
                                   type="text"
                                   className="form-control"
                                   name="maKhoaHoc"
+                                  placeholder={coursesDetail.maKhoaHoc}
                                   onChange={formikProps.handleChange}
                                 />
+                           
                               </div>
                             </div>
                             <div className="modal-footer">
@@ -141,9 +146,7 @@ export default function CapNhatKhoaHoc({ isParams }) {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-dismiss="modal"
-                                // onClick={(evt) => {
-                                //   props.OnChecked(true);
-                                // }}
+
                               >
                                 Close
                               </button>
