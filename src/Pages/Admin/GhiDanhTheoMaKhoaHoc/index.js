@@ -6,10 +6,12 @@ import {
   DSNguoiDungDaGhiDanhTheoKhoaHoc,
   DSNguoiDungChuaGhiDanhTheoKhoaHoc,
 } from "../../../Action/dsGhiDanhTheoKH";
-import {xacNhanKhTheoKH} from "../../../Action/xacNhanKhTheoKH";
-import {huyKHTheoKh} from "../../../Action/huyKHTheoKh";
+import { xacNhanKhTheoKH } from "../../../Action/xacNhanKhTheoKH";
+import { huyKHTheoKh } from "../../../Action/huyKHTheoKh";
 import Pagination from "../QuanLyNguoiDung/Paginnation/Pagination";
 import PostGhiDanh from "./PostGhiDanh/PostGhiDanh";
+import PostDaGhiDanh from "./PostDaGhiDanh/PostDaGhiDanh";
+import PostChoGhiDanh from "./PostChoGhiDanh/PostChoGhiDanh"
 import Pagin from "../QuanLyNguoiDung/Paginnation/Pagination";
 import swal from "sweetalert";
 import "./index.scss";
@@ -20,7 +22,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
   const dispatch = useDispatch();
   const makh = { maKhoaHoc: match.params.maKhoaHoc };
 
-  const [isAccept , setIsAccept] = useState(false);
+  const [isAccept, setIsAccept] = useState(false);
   const [currentPages, setCurrentPages] = useState(1);
   const [pageSize, setPageSize] = useState(7);
   const onChange = (pages) => {
@@ -31,14 +33,15 @@ export default function GhiDanhTheoKhoaHoc(props) {
     dispatch(DSNguoiDungDaGhiDanhTheoKhoaHoc(makh));
     dispatch(DSNguoiDungChuaGhiDanhTheoKhoaHoc(makh));
   }, [isAccept]);
+
   const { hvChoXetDuyet } = useSelector((state) => state.dsGhiDanhTheoKH);
   const { hdDaXetDuyet } = useSelector((state) => state.dsGhiDanhTheoKH);
   const { hvChuaXetDuyet } = useSelector((state) => state.dsGhiDanhTheoKH);
   // console.log("hvChoXetDuyet", hdDaXetDuyet);
-  const onChangeIsAccept = (isAccept) =>{
-  
-    setIsAccept(!isAccept)
-  }
+  const onChangeIsAccept = (isAccept) => {
+    setIsAccept(!isAccept);
+  };
+ 
   return (
     <div className="content-wrapper management-user">
       <h4 className="display-4">Danh sách ghi danh người dùng</h4>
@@ -96,10 +99,9 @@ export default function GhiDanhTheoKhoaHoc(props) {
               currentPages={currentPages}
               pageSize={pageSize}
               postPages={hvChuaXetDuyet}
-              onChange ={onChangeIsAccept}
+              onChange={onChangeIsAccept}
             />
             <Pagin
-
               currentPage={currentPages}
               pageSize={pageSize}
               totalCount={hvChuaXetDuyet.length}
@@ -113,7 +115,20 @@ export default function GhiDanhTheoKhoaHoc(props) {
             role="tabpanel"
             aria-labelledby="profile-tab"
           >
-            <table className="table mt-5 px-4 table-bordered p-4 table-custom">
+            <PostDaGhiDanh
+              maKH={makh}
+              currentPages={currentPages}
+              pageSize={pageSize}
+              postPages={hdDaXetDuyet}
+              onChange={onChangeIsAccept}
+            />
+             <Pagin
+              currentPage={currentPages}
+              pageSize={pageSize}
+              totalCount={hdDaXetDuyet.length}
+              onChange={onChange}
+            />
+            {/* <table className="table mt-5 px-4 table-bordered p-4 table-custom">
               <thead>
                 <tr>
                   <th>STT</th>
@@ -147,11 +162,6 @@ export default function GhiDanhTheoKhoaHoc(props) {
                               dispatch(
                                 huyKHTheoKh(values)
                               )
-                              
-                              swal("Xóa thành công!", {
-                               icon: "success",
-                                
-                              });
                               setIsAccept(!isAccept)
                             
                             } else {
@@ -167,7 +177,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
                   );
                 })}
               </tbody>
-            </table>
+            </table> */}
           </div>
           <div
             className="tab-pane px-4 fade"
@@ -175,7 +185,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
             role="tabpanel"
             aria-labelledby="contact-tab"
           >
-            <table className="table mt-5 px-4 table-bordered p-4 table-custom">
+            {/* <table className="table mt-5 px-4 table-bordered p-4 table-custom">
               <thead>
                 <tr>
                   <th>STT</th>
@@ -194,41 +204,43 @@ export default function GhiDanhTheoKhoaHoc(props) {
                       <td>{hv.biDanh}</td>
                       <td>{hv.hoTen}</td>
                       <td>
-                        <button onClick={()=>{
-                                const values = { ...makh ,taiKhoan : hv.taiKhoan}
-                                  dispatch(xacNhanKhTheoKH(values))
-                                  setIsAccept(!isAccept)
-                        }} className="btn-accept">
-                          
+                        <button
+                          onClick={() => {
+                            const values = { ...makh, taiKhoan: hv.taiKhoan };
+                            dispatch(xacNhanKhTheoKH(values));
+                            setIsAccept(!isAccept);
+                          }}
+                          className="btn-accept"
+                        >
                           <i className="fa fa-check"></i> Xác nhận
                         </button>
-                        <button className="btn-cancel"  onClick={()=>{
-                          swal({
-                            title: "Xóa khóa học này?",
-                            text: "",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                          })
-                          .then((willDelete) => {
-                            if (willDelete) {
-                              const values = {...makh , taiKhoan : hv.taiKhoan}
-                              dispatch(
-                                huyKHTheoKh(values)
-                              )
-                              
-                              swal("Xóa thành công!", {
-                                icon: "success",
-                                
-                              });
-                              setIsAccept(!isAccept)
-                            
-                            } else {
-                              swal("Hủy xóa");
-                            }
-                          });
-                           
-                        }}>
+                        <button
+                          className="btn-cancel"
+                          onClick={() => {
+                            swal({
+                              title: "Xóa khóa học này?",
+                              text: "",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
+                            }).then((willDelete) => {
+                              if (willDelete) {
+                                const values = {
+                                  ...makh,
+                                  taiKhoan: hv.taiKhoan,
+                                };
+                                dispatch(huyKHTheoKh(values));
+
+                                swal("Xóa thành công!", {
+                                  icon: "success",
+                                });
+                                setIsAccept(!isAccept);
+                              } else {
+                                swal("Hủy xóa");
+                              }
+                            });
+                          }}
+                        >
                           <i className="fa fa-times"></i> Hủy
                         </button>
                       </td>
@@ -236,7 +248,20 @@ export default function GhiDanhTheoKhoaHoc(props) {
                   );
                 })}
               </tbody>
-            </table>
+            </table> */}
+             <PostChoGhiDanh
+              maKH={makh}
+              currentPages={currentPages}
+              pageSize={pageSize}
+              postPages={hvChoXetDuyet}
+              onChange={onChangeIsAccept}
+            />
+            <Pagin
+              currentPage={currentPages}
+              pageSize={pageSize}
+              totalCount={hvChoXetDuyet.length}
+              onChange={onChange}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { xacNhanKhTheoKH } from "../../../../Action/xacNhanKhTheoKH";
-// import {huyKHTheoKh} from "../../../../Action/huyKHTheoKh";
+import {huyKHTheoKh} from "../../../../Action/huyKHTheoKh";
 import swal from "sweetalert";
 export default function PostGhiDanh({
   currentPages,
@@ -10,8 +10,7 @@ export default function PostGhiDanh({
   maKH,
   onChange,
 }) {
-  console.log( "Đã ghi danh" , postPages,
-    );
+  console.log("Đã ghi danh", postPages);
   const lastPages = currentPages * pageSize;
   const firstPages = lastPages - pageSize;
   const postPage = postPages.slice(firstPages, lastPages);
@@ -19,8 +18,7 @@ export default function PostGhiDanh({
 
   const dispatch = useDispatch();
   const [isAccept, setIsAccept] = useState(false);
-  useEffect(()=>{
-  } , [isAccept])
+  useEffect(() => {}, [isAccept]);
 
   return (
     <div>
@@ -29,8 +27,8 @@ export default function PostGhiDanh({
           <tr>
             <th>Tài khoản</th>
             <th>Họ tên</th>
-            <th>Email</th>
-            <th>Số điện thoại</th>
+
+            <th>Bí danh</th>
             <th className="text-center">Thao tác</th>
           </tr>
         </thead>
@@ -40,31 +38,30 @@ export default function PostGhiDanh({
               <tr key={index}>
                 <td>{item.taiKhoan}</td>
                 <td>{item.hoTen}</td>
-                <td>{item.email}</td>
-                <td>{item.soDT}</td>
+                <td>{item.biDanh}</td>
                 <td>
                   <button
                     className="btn btn-accept"
                     onClick={() => {
                       const values = { ...maKhoaHoc, taiKhoan: item.taiKhoan };
                       dispatch(xacNhanKhTheoKH(values));
-                        setIsAccept(!isAccept);
-                        onChange(!isAccept)
+                      setIsAccept(!isAccept);
+                      onChange(!isAccept);
                     }}
                   >
-                    <i className="fa fa-check mr-1"></i>Ghi Danh
+                    <i className="fa fa-check mr-1"></i>Ghi Danh 1
                   </button>
-                  {/* <button className="btn-cancel"  onClick={()=>{
-                       const values = { ...maKhoaHoc, taiKhoan: item.taiKhoan };
-                       console.log(values);
-                      dispatch(
-                        huyKHTheoKh(values)
-                      )
-                      setIsAccept(!isAccept)
-                           
-                        }}>
-                          <i className="fa fa-times"></i> Hủy
-                        </button> */}
+                  <button
+                    className="btn-cancel"
+                    onClick={() => {
+                        const values = { ...maKhoaHoc, taiKhoan: item.taiKhoan };
+                        dispatch(huyKHTheoKh(values));
+                          setIsAccept(!isAccept);
+                          onChange(!isAccept)
+                      }}
+                  >
+                    <i className="fa fa-times"></i> Hủy
+                  </button>{" "}
                 </td>
               </tr>
             );

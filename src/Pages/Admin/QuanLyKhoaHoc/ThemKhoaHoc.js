@@ -6,15 +6,16 @@ import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
 import ShowToast from "../../Admin/Showtoast";
 import moment from "moment";
 
-export default function ThemKhoaHoc(props) {
+export default function ThemKhoaHoc({OnChecked}) {
   // console.log("props" , props);
-  const {OnChecked}  =props;
+  
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   const dispatch = useDispatch();
   const { Option } = Select;
+  const [isSubmit, setIsSubmit] = useState(false);
   useEffect(() => {
     dispatch(getCategoryAction());
-  }, []);
+  }, [isSubmit]);
 
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
@@ -46,19 +47,20 @@ export default function ThemKhoaHoc(props) {
   //     maDanhMucKhoaHoc: e,
   //   });
   // };
- const handleChangeSelect = (value) =>{
-  setValue({
-    ...values,
-    maDanhMucKhoaHoc: value,
-  });
- }
-                        
- const handleChangeSelect1 = value =>{
-  setValue({
-    ...values,
-    maNhom: value,
-  });
- }
+  
+  const handleChangeSelect = (value) => {
+    setValue({
+      ...values,
+      maDanhMucKhoaHoc: value,
+    });
+  };
+
+  const handleChangeSelect1 = (value) => {
+    setValue({
+      ...values,
+      maNhom: value,
+    });
+  };
   const handleOnChangeDate = (e) => {
     let getDate = moment(e).format("DD/MM/YYYY");
     setValue({
@@ -75,17 +77,16 @@ export default function ThemKhoaHoc(props) {
   };
 
   const handleSubmit = (e) => {
-    console.log("value ", values);
+    const {name , value} = e.target
     let frm = new FormData();
     for (let key in values) {
       frm.append(key, values[key]);
+      console.log(key, values[key]);
     }
     dispatch(ThemKhoaHocAction(frm));
-    // AddCourse(true);
-    // setIsSubmit()
-
-    // let modal = ('#themKhoaHoc')
-    // modal.modal('hide');
+    // setIsSubmit(true);
+    OnChecked(true)
+   
   };
 
   return (
@@ -203,8 +204,13 @@ export default function ThemKhoaHoc(props) {
                         </div>
                       </div>
                       <div>
-                        <p className="mt-1 mb-1">Ngày tạo <span style={{ color : "red"}}>*</span></p>
-                        <DatePicker onChange={handleOnChangeDate} format="DD/MM/YYYY" />
+                        <p className="mt-1 mb-1">
+                          Ngày tạo <span style={{ color: "red" }}>*</span>
+                        </p>
+                        <DatePicker
+                          onChange={handleOnChangeDate}
+                          format="DD/MM/YYYY"
+                        />
                       </div>
                     </div>
                     {/* Mô tả khóa học  */}
@@ -245,24 +251,38 @@ export default function ThemKhoaHoc(props) {
                         name="biDanh"
                         className="form-control"
                         placeholder="Bí danh"
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-dismiss="modal"
-                  onClick={()=>{
-                    OnChecked(true)
+                  onClick={() => {
+                 
+                    setValue({
+                      maKhoaHoc: "",
+                      biDanh: "",
+                      tenKhoaHoc: "",
+                      moTa: "",
+                      luotXem: 0,
+                      danhGia: 0,
+                      hinhAnh: "",
+                      maNhom: "GP01",
+                      ngayTao: "",
+                      maDanhMucKhoaHoc: "BackEnd",
+                      taiKhoanNguoiTao: taiKhoan.taiKhoan,
+                    });
                   }}
                 >
                   Hủy
                 </button>
                 <button
-                  type="button"
+                  type="reset"
                   class="btn btn-primary"
                   onClick={handleSubmit}
                 >

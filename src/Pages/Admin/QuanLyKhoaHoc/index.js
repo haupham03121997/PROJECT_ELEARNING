@@ -37,14 +37,16 @@ export default function QuanLyKhoaHoc() {
   };
 
   const handleSubmit = () => {
-    // history.push(
-    //   `/admin/user-management/timkhoahoc/khoahoc/${search.searchText}`
-    // );
+   
   };
   // }
   const OnChecked = (value) => {
+   
     setIsChecked(value);
-  };
+    setTimeout(()=>{
+      setIsChecked(false)
+    } , 3000)
+  }
   
   useEffect(() => {
     dispatch(getCoursesPaginationAction(currentPage));
@@ -98,11 +100,11 @@ export default function QuanLyKhoaHoc() {
             </div>
             <div className="col-4"></div>
             <div className="col-6 ">
-              <form className="form-inline  ml-3">
+              <div className="form-inline  ml-3">
                 <div className="input-group  input-group--cusstom input-group-sm">
                   <input
                     name="searchText"
-                    value={search.searchText}
+                    // value={search.searchText}
                     onChange={handleChange}
                     className="form-control form-control-navbar"
                     type="search"
@@ -127,12 +129,12 @@ export default function QuanLyKhoaHoc() {
                     </ul>
                   </div> */}
                 </div>
-              </form>
+              </div>
             </div>
           </div>
           {/* /.row */}
           <div className="row px-3 mt-2  ">
-            <table class="table table-bordered table-custom">
+            <table className="table table-bordered table-custom">
               <thead>
                 <tr>
                   <th>Mã khóa học</th>
@@ -202,9 +204,7 @@ export default function QuanLyKhoaHoc() {
                             }).then((willDelete) => {
                               if (willDelete) {
                                 dispatch(xoaKhoaHocAction(item.maKhoaHoc));
-                                swal("Xóa thành công!", {
-                                  icon: "success",
-                                });
+                               
                                 setDeleted(!isDeleted);
                               } else {
                                 swal("");
@@ -233,7 +233,7 @@ export default function QuanLyKhoaHoc() {
             </div>
         {/* /.container-fluid */}
       </div>
-      <ThemKhoaHoc OnChecked={OnChecked} />
+      <ThemKhoaHoc OnChecked={OnChecked}  />
       <SuaKhoaHoc isParams={isParams} />
     </div>
   );

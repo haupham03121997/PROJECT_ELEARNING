@@ -24,12 +24,13 @@ export const ThemKhoaHocAction = (value) => {
         swal("", "Thêm Thành công!", "success");
       })
       .catch((err) => {
-        console.log(err);
+      
         dispatch({
           type: Type.THEM_KHOA_HOC_FAIL,
 
         });
-        swal("", "Mã khóa học trùng khớp", "error");
+        console.log("err" , err);
+        swal("", "Thêm thất bại!", "error");
       });
   };
 };

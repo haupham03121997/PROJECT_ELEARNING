@@ -20,16 +20,6 @@ export default function QuanLyNguoiDung(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-
-    setSeaarch({
-      ...search,
-      [name]: value,
-    });
-    console.log(name, value);
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleted, setDeleted] = useState(false);
   const [arrListed, setArrList] = useState([]);
@@ -49,19 +39,24 @@ export default function QuanLyNguoiDung(props) {
   // console.log(userAll);
   const handleSubmitSearch = () => {
     // history.push(`/admin/user-management/nguoidung/${search.searchTxt}`);
-    const arrList = userAll.filter((user) => {
-      return (
-        user.hoTen.toLowerCase().indexOf(search.searchTxt.toLowerCase()) !== -1
-      );
+  };
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+
+    setSeaarch({
+      ...search,
+      [name]: value,
     });
 
-    // console.log(arrList);
+    const arrList = userAll.filter((user) => {
+      return (
+        user.hoTen.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      );
+    });
     setArrList(arrList);
-   
   };
-  
 
-  // console.log("arrList" ,arrList);
+  console.log("arrList", arrListed);
   return (
     <div className="content-wrapper management-user">
       {/* Content Header (Page header) */}
@@ -151,170 +146,167 @@ export default function QuanLyNguoiDung(props) {
           {/* /.row */}
           <div className="row mt-2  ">
             <div className="col-12">
-              {arrListed.length ? (
-                <>
-                  <table className="table table-bordered table-custom">
-                    <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tài khoản</th>
-                        {/* <th>Mật khẩu</th> */}
-                        <th>Họ tên</th>
-                        <th>Email</th>
-                        <th>Số điện thoại</th>
-                        <th className="text-center">Thao tác</th>
-                      </tr>
-                    </thead>
+              {search.searchTxt ? (
+                <table className="table table-bordered table-custom">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tài khoản</th>
+                      {/* <th>Mật khẩu</th> */}
+                      <th>Họ tên</th>
+                      <th>Email</th>
+                      <th>Số điện thoại</th>
+                      <th className="text-center">Thao tác</th>
+                    </tr>
+                  </thead>
 
-                    <tbody>
-                      {" "}
-                      {arrListed.map((user, index) => {
-                        return (
-                          <tr key={index} style={{ cursor: "pointer" }}>
-                            <td>{(currentPage - 1) * 10 + index + 1}</td>
-                            <td>{user.taiKhoan}</td>
-                            <td>{user.hoTen}</td>
-                            <td>{user.email}</td>
-                            <td>{user.soDt}</td>
-                            <td>
+                  <tbody>
+                    {" "}
+                    {arrListed.map((user, index) => {
+                      return (
+                        <tr key={index} style={{ cursor: "pointer" }}>
+                          <td>{(currentPage - 1) * 10 + index + 1}</td>
+                          <td>{user.taiKhoan}</td>
+                          <td>{user.hoTen}</td>
+                          <td>{user.email}</td>
+                          <td>{user.soDt}</td>
+                          <td>
+                            <button
+                              className="btn-accept mr-2"
+                              onClick={() => {
+                                history.push(
+                                  `/admin/user-management/ghidanh/taikhoan/${user.taiKhoan}`
+                                );
+                              }}
+                            >
+                              <i className="fa fa-check mr-1"></i> Ghi danh
+                            </button>
+                            <button
+                              onClick={() => {
+                                history.push(
+                                  `/admin/user-management/capnhatnguoidung/taikhoan/${user.taiKhoan}`
+                                );
+                              }}
+                              className="btn-update mr-2"
+                            >
+                              <i className="fa fa-share mr-1"></i> Cập nhật
+                            </button>
+                            {user.maLoaiNguoiDung === "GV" ? (
+                              ""
+                            ) : (
                               <button
-                                className="btn-accept mr-2"
+                                className="btn-cancel"
                                 onClick={() => {
-                                  history.push(
-                                    `/admin/user-management/ghidanh/taikhoan/${user.taiKhoan}`
-                                  );
+                                  swal({
+                                    title: "Bạn có chắc muôn xóa?",
+                                    text: "",
+                                    icon: "warning",
+                                    buttons: true,
+                                    dangerMode: true,
+                                  }).then((willDelete) => {
+                                    if (willDelete) {
+                                      dispatch(xoaNguoiDung(user.taiKhoan));
+                                      setDeleted(!isDeleted);
+                                      // swal("Xóa thành công!", {
+                                      //   icon: "success",
+                                      // });
+                                    } else {
+                                      swal("");
+                                    }
+                                  });
                                 }}
                               >
-                                <i className="fa fa-check mr-1"></i> Ghi danh
+                                <i className="fa fa-trash mr-1"></i>Xóa
                               </button>
-                              <button
-                                onClick={() => {
-                                  history.push(
-                                    `/admin/user-management/capnhatnguoidung/taikhoan/${user.taiKhoan}`
-                                  );
-                                }}
-                                className="btn-update mr-2"
-                              >
-                                <i className="fa fa-share mr-1"></i> Cập nhật
-                              </button>
-                              {user.maLoaiNguoiDung === "GV" ? (
-                                ""
-                              ) : (
-                                <button
-                                  className="btn-cancel"
-                                  onClick={() => {
-                                    swal({
-                                      title: "Bạn có chắc muôn xóa?",
-                                      text: "",
-                                      icon: "warning",
-                                      buttons: true,
-                                      dangerMode: true,
-                                    }).then((willDelete) => {
-                                      if (willDelete) {
-                                        dispatch(xoaNguoiDung(user.taiKhoan));
-                                        setDeleted(!isDeleted);
-                                        // swal("Xóa thành công!", {
-                                        //   icon: "success",
-                                        // });
-                                      } else {
-                                        swal("");
-                                      }
-                                    });
-                                  }}
-                                >
-                                  <i className="fa fa-trash mr-1"></i>Xóa
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               ) : (
-                <>
-                  <table className="table table-bordered table-custom">
-                    <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tài khoản</th>
-                        {/* <th>Mật khẩu</th> */}
-                        <th>Họ tên</th>
-                        <th>Email</th>
-                        <th>Số điện thoại</th>
-                        <th className="text-center">Thao tác</th>
-                      </tr>
-                    </thead>
+                <table className="table table-bordered table-custom">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tài khoản</th>
+                      {/* <th>Mật khẩu</th> */}
+                      <th>Họ tên</th>
+                      <th>Email</th>
+                      <th>Số điện thoại</th>
+                      <th className="text-center">Thao tác</th>
+                    </tr>
+                  </thead>
 
-                    <tbody>{}</tbody>
+                  <tbody>{}</tbody>
 
-                    <tbody>
-                      {userList?.items?.map((item, index) => {
-                        return (
-                          <tr key={index} style={{ cursor: "pointer" }}>
-                            <td>{(currentPage - 1) * 10 + index + 1}</td>
-                            <td>{item.taiKhoan}</td>
-                            <td>{item.hoTen}</td>
-                            <td>{item.email}</td>
-                            <td>{item.soDT}</td>
-                            <td>
+                  <tbody>
+                    {userList?.items?.map((item, index) => {
+                      return (
+                        <tr key={index} style={{ cursor: "pointer" }}>
+                          <td>{(currentPage - 1) * 10 + index + 1}</td>
+                          <td>{item.taiKhoan}</td>
+                          <td>{item.hoTen}</td>
+                          <td>{item.email}</td>
+                          <td>{item.soDT}</td>
+                          <td>
+                            <button
+                              className="btn-accept mr-2"
+                              onClick={() => {
+                                history.push(
+                                  `/admin/user-management/ghidanh/taikhoan/${item.taiKhoan}`
+                                );
+                              }}
+                            >
+                              <i className="fa fa-check mr-1"></i> Ghi danh
+                            </button>
+                            <button
+                              onClick={() => {
+                                history.push(
+                                  `/admin/user-management/capnhatnguoidung/taikhoan/${item.taiKhoan}`
+                                );
+                              }}
+                              className="btn-update mr-2"
+                            >
+                              <i className="fa fa-share mr-1"></i> Cập nhật
+                            </button>
+                            {item.maLoaiNguoiDung === "GV" ? (
+                              ""
+                            ) : (
                               <button
-                                className="btn-accept mr-2"
+                                className="btn-cancel"
                                 onClick={() => {
-                                  history.push(
-                                    `/admin/user-management/ghidanh/taikhoan/${item.taiKhoan}`
-                                  );
+                                  swal({
+                                    title: "Bạn có chắc muôn xóa?",
+                                    text: "",
+                                    icon: "warning",
+                                    buttons: true,
+                                    dangerMode: true,
+                                  }).then((willDelete) => {
+                                    if (willDelete) {
+                                      dispatch(xoaNguoiDung(item.taiKhoan));
+                                      setDeleted(!isDeleted);
+                                      // swal("Xóa thành công!", {
+                                      //   icon: "success",
+                                      // });
+                                    } else {
+                                      swal("");
+                                    }
+                                  });
                                 }}
                               >
-                                <i className="fa fa-check mr-1"></i> Ghi danh
+                                <i className="fa fa-trash mr-1"></i>Xóa
                               </button>
-                              <button
-                                onClick={() => {
-                                  history.push(
-                                    `/admin/user-management/capnhatnguoidung/taikhoan/${item.taiKhoan}`
-                                  );
-                                }}
-                                className="btn-update mr-2"
-                              >
-                                <i className="fa fa-share mr-1"></i> Cập nhật
-                              </button>
-                              {item.maLoaiNguoiDung === "GV" ? (
-                                ""
-                              ) : (
-                                <button
-                                  className="btn-cancel"
-                                  onClick={() => {
-                                    swal({
-                                      title: "Bạn có chắc muôn xóa?",
-                                      text: "",
-                                      icon: "warning",
-                                      buttons: true,
-                                      dangerMode: true,
-                                    }).then((willDelete) => {
-                                      if (willDelete) {
-                                        dispatch(xoaNguoiDung(item.taiKhoan));
-                                        setDeleted(!isDeleted);
-                                        // swal("Xóa thành công!", {
-                                        //   icon: "success",
-                                        // });
-                                      } else {
-                                        swal("");
-                                      }
-                                    });
-                                  }}
-                                >
-                                  <i className="fa fa-trash mr-1"></i>Xóa
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               )}
+              {arrListed.length ? <></> : <></>}
             </div>
           </div>
           <div className="">

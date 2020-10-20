@@ -1,11 +1,11 @@
-import React from "react";
-import { useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import "./menuAdmin.scss";
 export default function MenuAdmin() {
-
-  const {credential } = useSelector(state => state.UserReducer);
+  const { credential } = useSelector((state) => state.UserReducer);
   const histoty = useHistory();
+  const [isActive, setIsActive] = useState(0);
   return (
     <div>
       <aside className="main-sidebar main-sidebar--custom sidebar-dark-primary elevation-4">
@@ -19,9 +19,8 @@ export default function MenuAdmin() {
           />
           <span className="brand-text font-weight-light">Admin Cybersoft</span>
         </a>
-       
+
         <div className="sidebar">
-         
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
               <img
@@ -39,31 +38,37 @@ export default function MenuAdmin() {
           {/* Sidebar Menu */}
           <nav className="mt-2">
             <ul
-              className="nav nav-pills nav-sidebar flex-column"
+              className="nav nav-pills nav-sidebar flex-column menu-active"
               data-widget="treeview"
               role="menu"
               data-accordion="false"
             >
-             
-              <li className="nav-item" onClick={() => { 
-                histoty.push("/admin/courses-management")
-              }}>
+              <li
+                className={(isActive ===1 ? "nav-item active" : "nav-item ")}
+                onClick={() => {
+                  histoty.push("/admin/courses-management");
+                  setIsActive(1);
+                }}
+              >
                 <a href="#" className="nav-link">
                   <p>Quản Lý Khóa Học</p>
                 </a>
               </li>
-              <li className="nav-item" onClick={()=>{
-                histoty.push("/admin/user-management")
-              }}>
+              <li
+                className={isActive ===2 ? "nav-item active" : "nav-item"}
+                onClick={() => {
+                  histoty.push("/admin/user-management");
+                  setIsActive(2)
+                }}
+              >
                 <a href="#" className="nav-link">
                   <p>Quản Lý Người Dùng</p>
+
                 </a>
               </li>
             </ul>
           </nav>
-        
         </div>
-      
       </aside>
     </div>
   );

@@ -8,7 +8,8 @@ import ShowToast from "../../Admin/Showtoast";
 import moment from "moment";
 
 export default function ThemKhoaHoc(props) {
-  // console.log("props" , props);
+  const {OnChecked} = props;
+  console.log("props", OnChecked);
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -68,15 +69,15 @@ export default function ThemKhoaHoc(props) {
     });
   };
 
-  const handleChangeTK = (e) =>{
-      // console.log(e.target);
-      
-      const {name , value} = e.target;
-      setValue({
-        ...values,
-        maKhoaHoc : value
-      })
-  }
+  const handleChangeTK = (e) => {
+    // console.log(e.target);
+
+    const { name, value } = e.target;
+    setValue({
+      ...values,
+      maKhoaHoc: value,
+    });
+  };
 
   const handleSubmit = (e) => {
     console.log("value ", values);
@@ -85,13 +86,8 @@ export default function ThemKhoaHoc(props) {
       frm.append(key, values[key]);
     }
     dispatch(ThemKhoaHocAction(frm));
-    // AddCourse(true);
-    // setIsSubmit()
-  
-    // let modal = ('#themKhoaHoc')
-    // modal.modal('hide');
   };
-    
+
   return (
     <>
       <div>
@@ -194,14 +190,11 @@ export default function ThemKhoaHoc(props) {
                       <p className="mb-1 ml-3">
                         Mã danh mục <span style={{ color: "red" }}> *</span>
                       </p>
-
-                     
                     </div>
                     <div className="form-group ml-4">
                       <p className="mb-1">
                         Mã nhóm <span style={{ color: "red" }}> *</span>
                       </p>
-                     
                     </div>
                     <div className="col-6">
                       <div className="form-group  ml-3">
@@ -235,14 +228,13 @@ export default function ThemKhoaHoc(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
-                  onClick={(evt)=>{props.OnChecked(true)}}
+                  onClick={(evt) => {
+                    // props.OnChecked(true);
+                  }}
                 >
                   Close
                 </button>
-                <button
-                  onClick={handleSubmit}
-                  className="btn btn-primary"
-                >
+                <button onClick={handleSubmit} className="btn btn-primary">
                   Thêm khóa học
                 </button>
               </div>

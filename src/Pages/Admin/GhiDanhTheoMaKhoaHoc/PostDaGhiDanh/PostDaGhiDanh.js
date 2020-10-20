@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { xacNhanKhTheoKH } from "../../../../Action/xacNhanKhTheoKH";
+import { huyKHTheoKh } from "../../../../Action/huyKHTheoKh";
 // import {huyKHTheoKh} from "../../../../Action/huyKHTheoKh";
 import swal from "sweetalert";
-export default function PostGhiDanh({
+export default function PostDaGhiDanh({
   currentPages,
   pageSize,
   postPages,
@@ -29,8 +29,8 @@ export default function PostGhiDanh({
           <tr>
             <th>Tài khoản</th>
             <th>Họ tên</th>
-            <th>Email</th>
-            <th>Số điện thoại</th>
+            {/* <th>Email</th>
+            <th>Số điện thoại</th> */}
             <th className="text-center">Thao tác</th>
           </tr>
         </thead>
@@ -40,19 +40,19 @@ export default function PostGhiDanh({
               <tr key={index}>
                 <td>{item.taiKhoan}</td>
                 <td>{item.hoTen}</td>
-                <td>{item.email}</td>
-                <td>{item.soDT}</td>
+                {/* <td>{item.email}</td>
+                <td>{item.soDT}</td> */}
                 <td>
                   <button
-                    className="btn btn-accept"
+                    className="btn btn-cancle"
                     onClick={() => {
                       const values = { ...maKhoaHoc, taiKhoan: item.taiKhoan };
-                      dispatch(xacNhanKhTheoKH(values));
+                      dispatch(huyKHTheoKh(values));
                         setIsAccept(!isAccept);
                         onChange(!isAccept)
                     }}
                   >
-                    <i className="fa fa-check mr-1"></i>Ghi Danh
+                    <i className="fa fa-check mr-1"></i>Hủy ghi danh
                   </button>
                   {/* <button className="btn-cancel"  onClick={()=>{
                        const values = { ...maKhoaHoc, taiKhoan: item.taiKhoan };

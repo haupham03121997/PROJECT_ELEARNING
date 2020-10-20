@@ -110,7 +110,7 @@ export default function HomeScreen(props) {
                           <img
                             className="card-img-top"
                             src={item.hinhAnh}
-                            alt
+                            alt={item.biDanh}
                           />
                           <div className="card__overlay"></div>
                         </div>

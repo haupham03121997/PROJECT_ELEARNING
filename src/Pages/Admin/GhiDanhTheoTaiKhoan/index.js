@@ -153,7 +153,7 @@ export default function GhiDanhTheoTaiKhoan(props) {
                       <td>{courses.tenKhoaHoc}</td>
                       <td>
                        
-                        <button className="btn-cancle ml-3">
+                        <button className="btn-cancle ml-3" >
                           <i className="fa fa-trash mr-1"></i>Hủy
                         </button>
                       </td>

@@ -13,6 +13,7 @@ export const xacNhanKhTheoKH = (values) => {
                 data : res.data
             }
         });
+        swal("Ghi danh thành công!", "success");
     }).catch((err)=>{
         dispatch({
             type: "XAC_NHAN_KHOA_HOC_ERR",

@@ -1,65 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { Select, DatePicker, Input, message } from "antd";
+import { Select, Input, message, DatePicker } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
+import {capNhatKhoaHoc} from "../../../Action/capNhatKhoaHoc"
 import { Formik, Form, Field } from "formik";
 import moment from "moment";
 export default function CapNhatKhoaHoc({ isParams }) {
   const { Option } = Select;
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
-  // console.log(taiKhoan.taiKhoan);
-  
-  const [isSubmit, setIsSubmit] = useState("");
+  const [isDate, setIsDate] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isImage, setIsImage] = useState("");
+  const [isSelect1, setIsSelect1] = useState("");
+  const [isSelect2, setIsSelect2] = useState("");
+  const [isTextArea, setIsTextArea] = useState("");
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategoryAction());
     dispatch(getCoursesDetailAction(isParams));
-  }, [isParams ]);
+  }, [isParams , isSubmit]);
   const { coursesDetail } = useSelector((state) => state.getCoursesList);
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
- 
-  const handleChangemaKH = (e) => {
-    setIsSubmit(e.target.value);
-  };
-  const handleChange = (e) => {
-    // const { name, value } = e.target;
-    // setValues({
-    //   ...values,
-    //   [name]: value,
-    // });
-  };
 
   const handleChangeSelect1 = (e) => {
-    // setValue({
-    //   ...values,
-    //   maDanhMucKhoaHoc: e,
-    // });
+    setIsSelect1(e);
   };
+
   const handleChangeSelect2 = (e) => {
-    // setValue({
-    //   ...values,
-    //   maNhom: e,
-    // });
+    setIsSelect2(e);
   };
 
   const handleOnChangeDate = (e) => {
-    // let getDate = moment(e).format("DD/MM/YYYY");
-    // setValue({
-    //   ...values,
-    //   ngayTao: getDate,
-    // });
+    const getDate = moment(e).format("DD/MM/YYYY");
+    setIsDate(getDate);
   };
-  const fileChangedHandler = (e) => {};
+  const handleChangeTextArea = (e) => {
+    setIsTextArea(e.target.value);
+  };
+  const fileChangedHandler = (e) => {
+    const image = e.target.files[0];
+    setIsImage(image);
+  };
 
-  const handleSubmit = () => {};
+
 
   // console.log("values", values);
-  const _handleSubmit = (value ) => {
-    console.log("value", value);
-    console.log(coursesDetail);
+  const _handleSubmit = (value) => {
+    let frm = new FormData();
+    for (let key in value) {
+      frm.append(key, value[key]);
+      console.log(key , value[key]);
+    }
+    dispatch(capNhatKhoaHoc(frm))
   };
   return (
     <>
@@ -90,76 +86,221 @@ export default function CapNhatKhoaHoc({ isParams }) {
               <div className="modal-body">
                 <div className="container">
                   <div className="row modal-body_-content">
-                    {/* <div className="col-6">
-                      <div className="form-group">
-                        <p className="mb-1">
-                          Người tạo <span style={{ color: "red" }}> *</span>
-                        </p>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={taiKhoan.taiKhoan}
-                          disabled
-                        />
-                      </div>
-                    </div> */}
-                    {coursesDetail.tenKhoaHoc ? (
+                    {coursesDetail.tenKhoaHoc &&
+                    coursesDetail.danhMucKhoaHoc &&
+                    coursesDetail.maKhoaHoc ? (
                       <Formik
+                        enableReinitialize={true}
                         initialValues={{
                           maKhoaHoc: coursesDetail.maKhoaHoc,
-                          biDanh: "",
-                          tenKhoaHoc: "",
-                          moTa: "",
+                          biDanh: coursesDetail.biDanh,
+                          tenKhoaHoc: coursesDetail.tenKhoaHoc,
+                          moTa: isTextArea ? isTextArea : coursesDetail.moTa,
                           luotXem: 0,
                           danhGia: 0,
-                          hinhAnh: "",
-                          maNhom: "GP01",
-                          ngayTao: "",
-                          maDanhMucKhoaHoc: coursesDetail.danhMucKhoaHoc.maDanhMucKhoahoc,
+                          hinhAnh: isImage ? isImage : coursesDetail.hinhAnh,
+                          maNhom: isSelect2 ? isSelect2 : coursesDetail.maNhom,
+                          ngayTao: isDate ? isDate : coursesDetail.ngayTao,
+                          maDanhMucKhoaHoc: isSelect1
+                            ? isSelect1
+                            : coursesDetail.danhMucKhoaHoc.maDanhMucKhoahoc,
                           taiKhoanNguoiTao: taiKhoan.taiKhoan,
                         }}
                         // onReset={_onReset}
-                        onSubmit={(value , {resetForm})=>{
-                          console.log("value" , value);
-                            resetForm({ value : ""})
-                        } }
+                        // onSubmit={ (value ,  { resetForm }) => {
+                        //   let frm = new FormData();
+                        //   for (let key in value) {
+                        //         frm.append(key, value[key]);
+                        //       }
+                        //       dispatch(capNhatKhoaHoc(frm));
+                        //       setIsSubmit(true);
+                        // }}
+                        onSubmit={_handleSubmit}
                         render={(formikProps) => (
-                          <Form style={{ width : "100%"}}>
-                            <div className="col-6">
-                              <div className="form-group">
-                                <p className="mb-1">
-                                  Mã khóa học{" "}
-                                  <span style={{ color: "red" }}> *</span>
-                                </p>
-                                <Field
-                                  type="text"
-                                  className="form-control"
-                                  name="maKhoaHoc"
-                                  // value={coursesDetail.maKhoaHoc}
-                                  placeholder={coursesDetail.maKhoaHoc}
-                                  onChange={formikProps.handleChange}
-                                />
-                           
+                          <Form
+                            onReset={formikProps.onReset}
+                            style={{ width: "100%" }}
+                          >
+                            <div className="container-fluid">
+                              <div className="row">
+                                {/* Mã khóa học  */}
+                                <div className="col-6">
+                                  <div className="form-group">
+                                    <p className="mb-1">
+                                      Mã khóa học{" "}
+                                      <span style={{ color: "red" }}> *</span>
+                                    </p>
+
+                                    <Field
+                                      name="firstName"
+                                      render={({ field, form, meta }) => (
+                                        <div>
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            {...field}
+                                            value={coursesDetail.maKhoaHoc}
+                                            disabled
+                                          />
+                                        </div>
+                                      )}
+                                    />
+                                  </div>
+                                </div>
+                                {/* Tên khóa học  */}
+                                <div className="col-6">
+                                  <div className="form-group">
+                                    <p className="mb-1">
+                                      Tên khóa học{" "}
+                                      <span style={{ color: "red" }}> *</span>
+                                    </p>
+                                    <Field
+                                      className="form-control"
+                                      name="tenKhoaHoc"
+                                      onChange={formikProps.handleChange}
+                                    />
+                                  </div>
+                                </div>
+                                {/* Danh mục khóa học và mã nhóm */}
+                                <div className="col-6">
+                                  <div className="div-total d-flex">
+                                    <div className="mr-5">
+                                      <p>
+                                        Danh mục khóa học
+                                        <span style={{ color: "red" }}>*</span>
+                                      </p>
+                                      <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="Chọn danh mục"
+                                        optionFilterProp="children"
+                                        placeholder={
+                                          coursesDetail.danhMucKhoaHoc
+                                            .tenDanhMucKhoaHoc
+                                        }
+                                        value={
+                                          coursesDetail.danhMucKhoaHoc.maDanhMuc
+                                        }
+                                        name="maDanhMucKhoaHoc"
+                                        onChange={handleChangeSelect1}
+                                        filterOption={(input, option) =>
+                                          option.children
+                                            .toLowerCase()
+                                            .indexOf(input.toLowerCase()) >= 0
+                                        }
+                                      >
+                                        {categoriesCourses.map(
+                                          (category, index) => {
+                                            return (
+                                              <Option
+                                                key={index}
+                                                value={category.maDanhMuc}
+                                              >
+                                                {category.tenDanhMuc}
+                                              </Option>
+                                            );
+                                          }
+                                        )}
+                                      </Select>
+                                    </div>
+                                    <div className="ml-2">
+                                      <p>
+                                        Mã nhóm
+                                        <span style={{ color: "red" }}>*</span>
+                                      </p>
+                                      <Select
+                                        name="maNhom"
+                                        value={coursesDetail.maNhom}
+                                        placeholder={coursesDetail.maNhom}
+                                        onChange={handleChangeSelect2}
+                                      >
+                                        <Option value="GP01">GP01</Option>
+                                        <Option value="GP02">GP02</Option>
+                                        <Option value="GP03">GP03</Option>
+                                        <Option value="GP04">GP04</Option>
+                                        <Option value="GP05">GP05</Option>
+                                        <Option value="GP06">GP06</Option>
+                                        <Option value="GP07">GP07</Option>
+                                        <Option value="GP08">GP08</Option>
+                                        <Option value="GP09">GP09</Option>
+                                        <Option value="GP10">GP10</Option>
+                                      </Select>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="mt-1 mb-1">
+                                      Ngày tạo{" "}
+                                      <span style={{ color: "red" }}>*</span>
+                                    </p>
+                                    <DatePicker
+                                      onChange={handleOnChangeDate}
+                                      format="DD/MM/YYYY"
+                                      defaultValue={moment()}
+                                    />
+                                  </div>
+                                </div>
+                                {/* Mô tả khóa học  */}
+                                <div className="col-6">
+                                  <p>
+                                    Mô tả{" "}
+                                    <span style={{ color: "red" }}>*</span>
+                                  </p>
+                                  <textarea
+                                    onChange={handleChangeTextArea}
+                                    type="text"
+                                    className="form-control"
+                                    placeholder={coursesDetail.moTa}
+                                    name="moTa"
+                                    rows="4"
+                                    cols="50"
+                                  />
+                                </div>
+                                {/* Bí danh  */}
+                                <div className="col-6">
+                                  <div className="form-group">
+                                    <p className="mt-2 mb-0">
+                                      Hình ảnh
+                                      <span style={{ color: "red" }}>*</span>
+                                    </p>
+                                    <input
+                                      type="file"
+                                      placeholder="Chọn hình ảnh"
+                                      onChange={fileChangedHandler}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="form-group">
+                                    <p className="mt-2 mb-0">
+                                      Bí danh
+                                      <span style={{ color: "red" }}>*</span>
+                                    </p>
+                                    <Field
+                                      name="biDanh"
+                                      className="form-control"
+                                      onChange={formikProps.handleChange}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="modal-footer">
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-dismiss="modal"
+                                    onClick={() => {
+                                      formikProps.resetForm();
+                                    }}
+                                  >
+                                    Hủy
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                  >
+                                   Cập nhật
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                            <div className="modal-footer">
-                              <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-dismiss="modal"
-                                onClick={()=>{
-                                  formikProps.resetForm()
-                                }}
-                              >
-                                Close
-                              </button>
-                              <button
-                                // onClick={handleSubmit}
-                                type="submit"
-                                className="btn btn-primary"
-                              >
-                                Thêm khóa học
-                              </button>
                             </div>
                           </Form>
                         )}
