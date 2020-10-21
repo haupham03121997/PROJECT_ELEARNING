@@ -19,7 +19,6 @@ const _handleSubmit = (value)=>{
       <Modal  isOpen={isOpen} toggle={toggle} className={"modal-lg"}>
         <ModalHeader style={{color : "red"}} toggle={toggle}>Thêm người dùng</ModalHeader>
        
-       
         <Formik
           initialValues={{
             taiKhoan: "",

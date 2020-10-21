@@ -4,10 +4,11 @@ import { useHistory } from "react-router-dom";
 import { layDanhSachNguoiDungAction } from "../../../Action/layDanhSachNguoiDungAction";
 import { layDanhSachUser } from "../../../Action/layDanhSachUserAdmin";
 import { xoaNguoiDung } from "../../../Action/xoaNguoiDungAction";
+import ThemNguoiDung from './themNguoiDung'
 import Pagination from "../../../component/Pagination";
-import { Button } from "reactstrap";
+// import { Button } from "reactstrap";
 import swal from "sweetalert";
-import ModalThemUser from "./ModalThemUser/addUser";
+// import ModalThemUser from "./ModalThemUser/addUser";
 export default function QuanLyNguoiDung(props) {
   // const { match } = props;
   const history = useHistory();
@@ -15,10 +16,10 @@ export default function QuanLyNguoiDung(props) {
   const [search, setSeaarch] = useState({
     searchTxt: "",
   });
-  const { buttonLabel, className } = props;
+  // const { buttonLabel, className } = props;
 
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
+  // const toggle = () => setModal(!modal);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleted, setDeleted] = useState(false);
@@ -49,9 +50,7 @@ export default function QuanLyNguoiDung(props) {
     });
 
     const arrList = userAll.filter((user) => {
-      return (
-        user.hoTen.toLowerCase().indexOf(value.toLowerCase()) !== -1
-      );
+      return user.hoTen.toLowerCase().indexOf(value.toLowerCase()) !== -1;
     });
     setArrList(arrList);
   };
@@ -87,26 +86,24 @@ export default function QuanLyNguoiDung(props) {
         <div className="container-fluid">
           <div className="row">
             <div className="col-2">
-              <button
+              {/* <button
                 onClick={() => {
                   history.push("/admin/themnguoidung");
                 }}
                 className=" btn btn-add"
               >
-                Thêm người dùng
+            
+              </button> */}
+              <button
+                type="button"
+                className=" btn btn-add"
+                data-toggle="modal"
+                data-target="#themnguoidung"
+              >
+                    Thêm người dùng
               </button>
-              {/* <Button 
-              className="btn-add"
-                color="danger" 
-                onClick={toggle}>
-                Thêm Người Dùng
-              </Button> */}
-
-              <ModalThemUser
-                isOpen={modal}
-                toggle={toggle}
-                className={className}
-              />
+           
+       
             </div>
             <div className="col-4"></div>
             <div className="col-6">
@@ -309,19 +306,21 @@ export default function QuanLyNguoiDung(props) {
               {arrListed.length ? <></> : <></>}
             </div>
           </div>
-          <div className="">
+          
             <Pagination
               currentPage={currentPage}
               pageSize={8}
               totalCount={userList.totalCount}
               onChange={onChanges}
             />
-          </div>
+         
+        
         </div>
         {/* /.container-fluid */}
       </div>
-
+      {/* */}
       {/* /.content */}
+      <ThemNguoiDung />
     </div>
   );
 }

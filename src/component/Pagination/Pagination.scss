@@ -12,14 +12,14 @@
         //     }
         // }
         .page-item.active .page-link {
-            background-color: #28a745 !important;
-            // border: 1px solid #28a745;
-            border: none;
+            background-color: #007bff !important;
+            // border: 1px solid #28#a745;
+            border: 1px solid #007bff;
         }
         .page-link {
             transition: all 0.5s;
             &:hover {
-                background-color: #28a745 !important;
+                background-color: #007bff !important;
             }
         }
     }

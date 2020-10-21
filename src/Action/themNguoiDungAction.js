@@ -15,7 +15,7 @@ export const themNguoiDungAction = (values) => {
             data: res.data,
           },
         });
-        swal("", "Đăng Ký Thành công!", "success");
+        swal("", "Thêm người dùng thành công!", "success");
       })
       .catch((err) => {
       

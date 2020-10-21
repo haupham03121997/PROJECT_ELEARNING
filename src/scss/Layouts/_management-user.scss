@@ -1,7 +1,7 @@
 .management-user {
     background-color: #fff !important;
     padding: 0 20px;
-    height: 560px;
+    height: 600px;
     h4 {
         margin-top: 20px;
         font-size: 20px;
@@ -12,9 +12,7 @@
         }
     }
     h5 {
-        width: 100px;
-        background-color: #238BAA;
-        color: #fff;
+        color: #238BAA;
         // padding: 10px;
         font-size: 16px !important;
         border-radius: 4px;
@@ -23,6 +21,12 @@
         i {
             font-size: 17px;
             margin-right: 4px;
+        }
+    }
+    .ant-select-selector {
+        height: 40px !important;
+        .ant-select-selection-item {
+            line-height: 40px !important;
         }
     }
     .btn-ghidanh {

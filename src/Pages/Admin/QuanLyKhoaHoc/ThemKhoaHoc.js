@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Select, DatePicker, Input, message } from "antd";
+import { Select, DatePicker } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
@@ -41,12 +41,7 @@ export default function ThemKhoaHoc({OnChecked}) {
       [name]: value,
     });
   };
-  // const handleChangeSelect1 = (e) => {
-  //   setValue({
-  //     ...values,
-  //     maDanhMucKhoaHoc: e,
-  //   });
-  // };
+ 
   
   const handleChangeSelect = (value) => {
     setValue({
