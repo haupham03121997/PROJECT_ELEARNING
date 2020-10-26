@@ -13,7 +13,7 @@ export const CapNhatNguoiDungAction = (value) => {
         dispatch({
           type: Type.UPDATE_USER_SUCCESS,
         });
-        console.log("result"  , result);
+        swal("Cập nhật", "Cập nhật thành công!", "success");
       })
       .catch((err) => {
         dispatch({

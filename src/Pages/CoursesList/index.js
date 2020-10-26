@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getCoursesAction } from "../../Action/danhSachKhoaHocAtion";
 import { layDanhMucKhoaHocAction } from "../../Action/layDanhMucKhoaHocAction";
+import {ThemGioHang} from "../../Action/Themgiohang"
 import Carousel from "../../component/Carousel";
 import Loading from "../../component/Loading";
 import Introduce from "../../component/Introduce";
@@ -114,11 +115,11 @@ export default function HomeScreen(props) {
                           />
                           <div className="card__overlay"></div>
                         </div>
-                        <div className="card-body pb-0">
-                          <h4   onClick={() => {
+                        <div className="card-body p-0 pb-0">
+                          <h4 onClick={() => { 
                           history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
-                        }} className="card-title mb-0">{item.tenKhoaHoc}</h4>
-                          <div className="rate-start">
+                        }} className="card-title mb-0 ml-4">{item.tenKhoaHoc}</h4>
+                          <div className="rate-start pl-4">
                             <span>
                               <i className="fa fa-star" />
                               <i className="fa fa-star" />
@@ -129,15 +130,24 @@ export default function HomeScreen(props) {
 
                             <span>4.5(1.234)</span>
                           </div>
-                          <p className="view my-2">
+                          <p className="view my-2 pl-4" onClick={()=>{
+                            dispatch(ThemGioHang(item))
+                          }}>
                             Lượt xem <i class="fa fa-eye"></i> {item.luotXem}
                           </p>
                           {/* <p>Người tạo : {item.danhMucKhoaHoc.maDanhMucKhoahoc}</p> */}
-                          <div className="btn-detail mt-1">
+                          <div className="btn-detail mt-1 ml-4 mr-3">
                             <button className="btn btn-content-signin"   onClick={() => {
                           history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
                         }} >
                             <i className=" mr-2 fa fa-angle-right"></i>Xem chi tiết
+                            </button>
+                            <button className="btn btn-content-signin"   onClick={() => {
+                          history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
+                        }} >
+                            {/* <i className=" mr-2 fa fa-angle-right"></i> */}
+                            <i className="fa fa-shopping-cart  mr-2"></i>
+                            Thêm 
                             </button>
                            
                           </div>

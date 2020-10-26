@@ -19,7 +19,6 @@ export const ThemKhoaHocAction = (value) => {
         console.log(res);
         dispatch({
           type: Type.THEM_KHOA_HOC_SUCCESS,
-        
         });
         swal("", "Thêm Thành công!", "success");
       })

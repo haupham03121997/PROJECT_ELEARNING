@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { huyKHTheoKh } from "../../../Action/huyKHTheoKh";
+import { Table , Pagination  } from "antd";
 import {
   DSKHDaGhiDanh,
   DSKHChoGhiDanh,
@@ -13,8 +15,8 @@ export default function GhiDanhTheoTaiKhoan(props) {
   const dispatch = useDispatch();
   const value = { TaiKhoan: match.params.taiKhoan };
   const taiKhoan = { taiKhoan: match.params.taiKhoan };
-  
-  const [isAccept , setIsAccept ] = useState(false);
+
+  const [isAccept, setIsAccept] = useState(false);
 
   useEffect(() => {
     dispatch(DSKHDaGhiDanh(value));
@@ -27,11 +29,47 @@ export default function GhiDanhTheoTaiKhoan(props) {
   const { dsKHChuaXetDuyet } = useSelector((state) => state.dsGhiDanhKhReducer);
 
   const { dsKHChoXetDuyet } = useSelector((state) => state.dsGhiDanhKhReducer);
-  // console.log("dsKHDaXetDuyet" ,dsKHDaXetDuyet);
-  // console.log("dsKHChuaXetDuyet" ,dsKHChuaXetDuyet);
-
-  // console.log("dsKHChoXetDuyet" ,dsKHChoXetDuyet);
-
+  // const columns = [
+  //   { title: "STT", dataIndex: "length", key: "length" },
+  //   { title: "Mã khóa học", dataIndex: "maKhoaHoc", key: "taiKhoan" },
+  //   { title: "Bí danh", dataIndex: "biDanh", key: "biDanh" },
+  //   {
+  //     title: "Action",
+  //     dataIndex: "",
+  //     key: "x",
+  //     render: () => <a>Delete</a>,
+  //   },
+  // ];
+  // const data = [
+  //   {
+  //     key: 1,
+  //     name: 'John Brown',
+  //     age: 32,
+  //     address: 'New York No. 1 Lake Park',
+  //     description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+  //   },
+  //   {
+  //     key: 2,
+  //     name: 'Jim Green',
+  //     age: 42,
+  //     address: 'London No. 1 Lake Park',
+  //     description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
+  //   },
+  //   {
+  //     key: 3,
+  //     name: 'Not Expandable',
+  //     age: 29,
+  //     address: 'Jiangsu No. 1 Lake Park',
+  //     description: 'This not expandable',
+  //   },
+  //   {
+  //     key: 4,
+  //     name: 'Joe Black',
+  //     age: 32,
+  //     address: 'Sidney No. 1 Lake Park',
+  //     description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
+  //   },
+  // ];
   return (
     <div className="content-wrapper management-user">
       {/* <h4 className="display-4">
@@ -44,7 +82,12 @@ export default function GhiDanhTheoTaiKhoan(props) {
       <p className="my-3">
         Khóa học sẽ được tự động thêm vào khi người dùng đăng ký khóa học
       </p>
-
+      {/* <Table
+        columns={columns}
+       
+        dataSource={dsKHChuaXetDuyet}
+      /> */}
+      ,
       <div className="mt-4">
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item">
@@ -111,23 +154,26 @@ export default function GhiDanhTheoTaiKhoan(props) {
                       <td>{courses.maKhoaHoc}</td>
                       <td>{courses.biDanh}</td>
                       <td>
-                        <button className="btn-ghidanh"
-                         onClick={() => {
-                          const values = {
-                            ...taiKhoan,
-                            maKhoaHoc: courses.maKhoaHoc,
-                          };
-                          dispatch(xacNhanKhTheoKH(values))
-                          setIsAccept(!isAccept)
-
-                        }}
-                        >Ghi danh</button>
+                        <button
+                          className="btn-ghidanh"
+                          onClick={() => {
+                            const values = {
+                              ...taiKhoan,
+                              maKhoaHoc: courses.maKhoaHoc,
+                            };
+                            dispatch(xacNhanKhTheoKH(values));
+                            setIsAccept(!isAccept);
+                          }}
+                        >
+                          Ghi danh
+                        </button>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+           
           </div>
           <div
             className="tab-pane fade"
@@ -136,30 +182,48 @@ export default function GhiDanhTheoTaiKhoan(props) {
             aria-labelledby="profile-tab"
           >
             <table class="table mt-5">
-              <thead>
-                <tr style={{ color: "#238BAA" }}>
-                  <th scope="col">STT</th>
-                  <th scope="col">Mã khóa học</th>
-                  <th scope="col">Tên khóa học</th>
-                  <th scope="col">Thao tác</th>
-                </tr>
-              </thead>
+            
+                <thead style={{ display : dsKHDaXetDuyet.length ? "block": "none"  }}>
+                  <tr style={{ color: "#238BAA" }}>
+                    <th scope="col">STT</th>
+                    <th scope="col">Mã khóa học</th>
+                    <th scope="col">Tên khóa học</th>
+                    <th scope="col">Thao tác</th>
+                  </tr>
+                </thead>
+             
               <tbody>
-                {dsKHDaXetDuyet.map((courses, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index++}</td>
-                      <td>{courses.maKhoaHoc}</td>
-                      <td>{courses.tenKhoaHoc}</td>
-                      <td>
-                       
-                        <button className="btn-cancle ml-3" >
-                          <i className="fa fa-trash mr-1"></i>Hủy
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {dsKHDaXetDuyet.length ? (
+                  <>
+                    {" "}
+                    {dsKHDaXetDuyet.map((courses, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{index++}</td>
+                          <td>{courses.maKhoaHoc}</td>
+                          <td>{courses.tenKhoaHoc}</td>
+                          <td>
+                            <button
+                              className="btn-cancle ml-3"
+                              onClick={() => {
+                                const values = {
+                                  ...taiKhoan,
+                                  maKhoaHoc: courses.maKhoaHoc,
+                                };
+                                dispatch(huyKHTheoKh(values));
+                                setIsAccept(!isAccept);
+                              }}
+                            >
+                              <i className="fa fa-trash mr-1"></i>Hủy
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}{" "}
+                  </>
+                ) : (
+                  "Chưa có khóa học nào đã xét duyệt!"
+                )}
               </tbody>
             </table>
           </div>

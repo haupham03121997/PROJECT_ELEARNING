@@ -1,0 +1,95 @@
+.section-phone {
+    // background-color: #72d5cd;
+    background-color: transparent;
+    position: absolute;
+    bottom: -550%;
+    left: 20px;
+    .section__pluse {
+        cursor: pointer;
+        width: 150px;
+        height: 45px;
+        background-color: #238BAA;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        span {
+            color: #fff;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .pluse {
+            height: 40px;
+            margin-left: 5px;
+            width: 40px;
+            border-radius: 50%;
+            position: relative;
+            border: 2px solid #72d5cd;
+            background-color: #72d5cd;
+            text-align: center;
+            i {
+                height: 30px;
+                width: 30px;
+                color: #fff;
+                font-size: 30px;
+                text-align: center;
+                line-height: 40px;
+                // transform: rotate(0.2turn);
+                animation: animatephone 2s infinite;
+                @keyframes animatephone {
+                    0% {
+                        transform: rotate(0.1turn);
+                    }
+                    25% {
+                        transform: rotate(0turn);
+                    }
+                    50% {
+                        transform: rotate(-0.1turn);
+                    }
+                    75% {
+                        transform: rotate(0turn);
+                    }
+                    100% {
+                        transform: rotate(0.1turn);
+                    }
+                }
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                left: -50%;
+                top: -50%;
+                width: calc(100% + 40px);
+                height: calc(100% + 40px);
+                border-radius: 50%;
+                border: 1px solid #72d5cd;
+                animation: anime 1.5s linear infinite;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                left: -50%;
+                top: -50%;
+                width: calc(100% + 40px);
+                height: calc(100% + 40px);
+                border-radius: 50%;
+                border: 1px solid #72d5cd;
+                animation: anime 1.5s linear infinite;
+                animation-delay: 0.4s;
+            }
+            @keyframes anime {
+                0% {
+                    transform: scale(0.5);
+                    opacity: 0;
+                }
+                50% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.4);
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}

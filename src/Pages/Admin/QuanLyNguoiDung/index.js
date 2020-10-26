@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { layDanhSachNguoiDungAction } from "../../../Action/layDanhSachNguoiDungAction";
 import { layDanhSachUser } from "../../../Action/layDanhSachUserAdmin";
 import { xoaNguoiDung } from "../../../Action/xoaNguoiDungAction";
-import ThemNguoiDung from './themNguoiDung'
+import ThemNguoiDung from "./themNguoiDung";
+import Capnhatnguoidung from "./Capnhatnguoidung";
 import Pagination from "../../../component/Pagination";
 // import { Button } from "reactstrap";
 import swal from "sweetalert";
-// import ModalThemUser from "./ModalThemUser/addUser";
+
 export default function QuanLyNguoiDung(props) {
   // const { match } = props;
   const history = useHistory();
@@ -16,13 +17,11 @@ export default function QuanLyNguoiDung(props) {
   const [search, setSeaarch] = useState({
     searchTxt: "",
   });
-  // const { buttonLabel, className } = props;
-
+  const [isParams, setIsParam] = useState("");
   const [modal, setModal] = useState(false);
-  // const toggle = () => setModal(!modal);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleted, setDeleted] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const [arrListed, setArrList] = useState([]);
   const onChanges = (pages) => {
     console.log("pages", pages);
@@ -33,11 +32,11 @@ export default function QuanLyNguoiDung(props) {
   }, []);
   useEffect(() => {
     dispatch(layDanhSachNguoiDungAction(currentPage));
-  }, [currentPage, isDeleted]);
-
+  }, [currentPage, isDeleted, isCheck]);
+  console.log("isDeleted", isDeleted);
   const { userList } = useSelector((state) => state.getUserList);
   const { userAll } = useSelector((state) => state.listUserAll);
-  // console.log(userAll);
+
   const handleSubmitSearch = () => {
     // history.push(`/admin/user-management/nguoidung/${search.searchTxt}`);
   };
@@ -55,7 +54,10 @@ export default function QuanLyNguoiDung(props) {
     setArrList(arrList);
   };
 
-  console.log("arrList", arrListed);
+  const isChecked = (checked) => {
+    setIsCheck(checked);
+  };
+  console.log("arrList", isCheck);
   return (
     <div className="content-wrapper management-user">
       {/* Content Header (Page header) */}
@@ -100,10 +102,8 @@ export default function QuanLyNguoiDung(props) {
                 data-toggle="modal"
                 data-target="#themnguoidung"
               >
-                    Thêm người dùng
+                Thêm người dùng
               </button>
-           
-       
             </div>
             <div className="col-4"></div>
             <div className="col-6">
@@ -156,7 +156,6 @@ export default function QuanLyNguoiDung(props) {
                       <th className="text-center">Thao tác</th>
                     </tr>
                   </thead>
-
                   <tbody>
                     {" "}
                     {arrListed.map((user, index) => {
@@ -178,13 +177,24 @@ export default function QuanLyNguoiDung(props) {
                             >
                               <i className="fa fa-check mr-1"></i> Ghi danh
                             </button>
-                            <button
+                            {/* <button
                               onClick={() => {
                                 history.push(
                                   `/admin/user-management/capnhatnguoidung/taikhoan/${user.taiKhoan}`
                                 );
                               }}
                               className="btn-update mr-2"
+                            >
+                              <i className="fa fa-share mr-1"></i> Cập nhật
+                            </button> */}
+                            <button
+                              type="button"
+                              className="btn-update mr-2"
+                              data-toggle="modal"
+                              data-target="#capnhatuser"
+                              onClick={() => {
+                                dispatch();
+                              }}
                             >
                               <i className="fa fa-share mr-1"></i> Cập nhật
                             </button>
@@ -258,13 +268,24 @@ export default function QuanLyNguoiDung(props) {
                             >
                               <i className="fa fa-check mr-1"></i> Ghi danh
                             </button>
-                            <button
+                            {/* <button
                               onClick={() => {
                                 history.push(
                                   `/admin/user-management/capnhatnguoidung/taikhoan/${item.taiKhoan}`
                                 );
                               }}
                               className="btn-update mr-2"
+                            >
+                              <i className="fa fa-share mr-1"></i> Cập nhật
+                            </button> */}
+                            <button
+                              type="button"
+                              className="btn-update mr-2"
+                              data-toggle="modal"
+                              data-target="#capnhatuser"
+                              onClick={() => {
+                                setIsParam(item.taiKhoan);
+                              }}
                             >
                               <i className="fa fa-share mr-1"></i> Cập nhật
                             </button>
@@ -306,21 +327,20 @@ export default function QuanLyNguoiDung(props) {
               {arrListed.length ? <></> : <></>}
             </div>
           </div>
-          
-            <Pagination
-              currentPage={currentPage}
-              pageSize={8}
-              totalCount={userList.totalCount}
-              onChange={onChanges}
-            />
-         
-        
+
+          <Pagination
+            currentPage={currentPage}
+            pageSize={8}
+            totalCount={userList.totalCount}
+            onChange={onChanges}
+          />
         </div>
         {/* /.container-fluid */}
       </div>
       {/* */}
       {/* /.content */}
-      <ThemNguoiDung />
+      <ThemNguoiDung isChecked={isChecked} />
+      <Capnhatnguoidung  isChecked={isChecked} isParams={isParams} />
     </div>
   );
 }

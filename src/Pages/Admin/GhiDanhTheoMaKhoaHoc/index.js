@@ -25,6 +25,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
   const [isAccept, setIsAccept] = useState(false);
   const [currentPages, setCurrentPages] = useState(1);
   const [pageSize, setPageSize] = useState(7);
+
   const onChange = (pages) => {
     setCurrentPages(pages);
   };

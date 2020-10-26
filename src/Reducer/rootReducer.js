@@ -20,6 +20,7 @@ export const rootReducer = combineReducers({
     dsGhiDanhTheoKH,
     dsGhiDanhKhReducer,
     TimKiemNguoiDungReDucer,
+    ThemKhoaHocReducer
     
     // DsUserDaGhiDanh
 })

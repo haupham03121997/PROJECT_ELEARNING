@@ -434,6 +434,7 @@
                 &.active {
                     // color: #F05123 !important;
                     font-weight: 600 !important;
+                    // color: #f05123 !important;
                 }
                 font-size: 14px !important;
                 i {
@@ -455,6 +456,9 @@
                     transform-origin: 50% 50%;
                     transition: all 0.5s;
                     // transition: ;
+                }
+                &.active::after {
+                    transform: translateX(-50%) scaleX(1);
                 }
                 &:hover::after {
                     transform: translateX(-50%) scaleX(1);
@@ -555,11 +559,21 @@
                         line-height: 30px;
                     }
                     .notification {
-                        font-size: 20px;
+                        font-size: 16px;
                         cursor: pointer;
                         margin-top: 3px;
                         @include Mediaquery($xs) {
                             display: none;
+                        }
+                    }
+                    .shopping-cart {
+                        i {
+                            font-size: 18px !important;
+                            cursor: pointer;
+                            margin-top: 8px;
+                            @include Mediaquery($xs) {
+                                display: none;
+                            }
                         }
                     }
                     .logout-setting {
@@ -567,7 +581,7 @@
                             display: none;
                         }
                         cursor: pointer;
-                        font-size: 24px;
+                        font-size: 20px;
                         position: relative;
                         // margin-top: 3px;
                         .logout {
@@ -775,9 +789,6 @@
                         @include Text($fs-5, $colorWhite, $fw-4);
                         letter-spacing: 1px;
                         display: inline-block;
-                    }
-                    &.active::after {
-                        width: 100%;
                     }
                     &:hover::after {
                         width: 100%;

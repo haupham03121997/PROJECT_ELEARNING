@@ -6,7 +6,8 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { timKiemKhoaHoc } from "../../Action/timKiemKhoaHoc";
 import { UserReducer } from "../../Reducer/UserReducer";
 import Search from "../../component/Search";
-import BackToTop from "../../component/BackToTop"
+import BackToTop from "../../component/BackToTop";
+import PhoneCall from "../../component/PhoneCall/phonecall";
 import swal from "sweetalert";
 function useOutSideClick(ref, callback, when) {
   const savedCallback = useRef(callback);
@@ -27,6 +28,9 @@ function useOutSideClick(ref, callback, when) {
   }, [when]);
 }
 export default function Header() {
+  const history = useHistory();
+  const dropDownMenuRef = useRef();
+  const dropDownMenuRef1 = useRef();
   // Hàm Scroll
   const [isScrolled, setIsScroll] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
@@ -48,27 +52,14 @@ export default function Header() {
       }
     });
   }, []);
-  const [isClicked, setIsClicked] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const [isClickResponsive, setIsClickResponsive] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
+  const [isClickCourses, setIClickCourses] = useState(false);
+  const [searchItem, setSearch] = useState({ idCourses: "" });
   const [isClickCategory, setIsClickCategory] = useState(false);
-  const [isClickCourses , setIClickCourses] = useState(false);
-  const history = useHistory();
-  const dropDownMenuRef = useRef();
-  const dropDownMenuRef1 = useRef();
-  const [searchItem, setSearch] = useState({
-    idCourses: "",
-  });
-  const userLocal = localStorage.getItem("userLogin");
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setSearch({
-      ...searchItem,
-      [name]: value,
-    });
-    console.log(name, value);
-  };
+  const [isClickResponsive, setIsClickResponsive] = useState(false);
+  const [isActive, setIsActive] = useState(1);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -80,14 +71,22 @@ export default function Header() {
   );
   const { credential } = useSelector((state) => state.UserReducer);
 
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setSearch({
+      ...searchItem,
+      [name]: value,
+    });
+    console.log(name, value);
+  };
+
   const hideDropdown = () => {
     setIsFocus(false);
   };
   useOutSideClick(dropDownMenuRef, hideDropdown, isFocus);
-
-  const handleSubmit = (e) => {
-    dispatch(timKiemKhoaHoc(searchItem));
-  };
+  // const handleSubmit = (e) => {
+  //   dispatch(timKiemKhoaHoc(searchItem));
+  // };
 
   // const logout = localStorage.getItem("userLogin");
   const Logout = () => {
@@ -110,10 +109,7 @@ export default function Header() {
       }
     });
   };
-
   const location = useLocation();
-  // console.log(isSearched);
-
   return (
     <>
       <div
@@ -124,7 +120,7 @@ export default function Header() {
         }
       >
         <div className="container-fluid">
-          <nav  className="navbar navbar--custom   navbar-expand-lg  ">
+          <nav className="navbar navbar--custom   navbar-expand-lg  ">
             <Link to="/" className="navbar-brand mr-5" href="#">
               <img src="/img/logo.png" alt="" />
             </Link>
@@ -147,9 +143,13 @@ export default function Header() {
             {isClickResponsive ? (
               <div className="collapse-resposive collapse-resposive-transion">
                 {credential ? (
-                  <div onClick = {()=>{
-                    history.push("/caidat/taikhoan")
-                  }}  style={{ cursor : "pointer"}} className="name">
+                  <div
+                    onClick={() => {
+                      history.push("/caidat/taikhoan");
+                    }}
+                    style={{ cursor: "pointer" }}
+                    className="name"
+                  >
                     <div className="name-res">
                       <div className="avatar">
                         <img src="/img/avatar.png" alt="avatar" />
@@ -183,50 +183,63 @@ export default function Header() {
                       className="nav-link active"
                       onClick={() => {
                         history.push("/");
-                        setIsClickResponsive(!isClickResponsive)
+                        setIsClickResponsive(!isClickResponsive);
                       }}
                     >
                       <i className="fa fa-home "></i> Trang Chủ
                     </a>
                   </li>
-                  <li className="nav-item-res-courses line nav-item--custom" onClick={()=>{
-                    setIClickCourses(!isClickCourses)
-                  }}>
+                  <li
+                    className="nav-item-res-courses line nav-item--custom"
+                    onClick={() => {
+                      setIClickCourses(!isClickCourses);
+                    }}
+                  >
                     <a className="nav-link">
                       <span>
                         <i className="fa fa-book mr-2"></i> Khóa Học
                       </span>
                       {/* <i className="fa fa-caret-down ml-2" /> */}
                     </a>
-                   {isClickCourses ?  <ul className="dropdown-cate-res">
-                    {categoriesCourses.map((khoahoc, index) => {
-                      return (
-                        <li
-                          key={index}
-                          onClick={() => {
-                            history.push(
-                              `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
-                            );
-                            setIsClickResponsive(!isClickResponsive)
-                          }}
-                        >
-                         <a className="nav-link-res">
-                         <i className="fa fa-angle-right"></i>{" "}
-                          {khoahoc.tenDanhMuc}
-                         </a>
-                        </li>
-                      );
-                    })}
-                  </ul> : ""}
+                    {isClickCourses ? (
+                      <ul className="dropdown-cate-res">
+                        {categoriesCourses.map((khoahoc, index) => {
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => {
+                                history.push(
+                                  `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
+                                );
+                                setIsClickResponsive(!isClickResponsive);
+                              }}
+                            >
+                              <a className="nav-link-res">
+                                <i className="fa fa-angle-right"></i>{" "}
+                                {khoahoc.tenDanhMuc}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : (
+                      ""
+                    )}
                   </li>
-                  <li className="nav-item-res " onClick={()=>{
-                    history.push("/lienhe")
-                  }}>
-                    <a className="nav-link "  onClick={() => {
-                    history.push("/lienhe");
-                    setIsClickResponsive(!isClickResponsive)
-                  }}>
-                      <i className="fa fa-phone-square"></i>Liên hệ 
+                  <li
+                    className="nav-item-res "
+                    onClick={() => {
+                      history.push("/lienhe");
+                    }}
+                  >
+                    <a
+                      className="nav-link "
+                      onClick={() => {
+                        history.push("/lienhe");
+                        setIsClickResponsive(!isClickResponsive);
+                      }}
+                    >
+                      <i className="fa fa-phone-square"></i>Liên hệ
                     </a>
                   </li>
 
@@ -294,16 +307,19 @@ export default function Header() {
               <ul className="navbar-nav ml-md-5 ml-xs-1  mr-auto mt-2 mt-lg-0">
                 <li className="nav-item line active">
                   <a
-                    className="nav-link active"
+                    className={isActive === 1 ? "nav-link active" : "nav-link"}
                     onClick={() => {
                       history.push("/");
+                      setIsActive(1);
                     }}
                   >
                     <i className="fa fa-home "></i> Trang Chủ
                   </a>
                 </li>
                 <li className="nav-item line nav-item--custom">
-                  <a className="nav-link">
+                  <a
+                    className={isActive === 2 ? " nav-link active" : "nav-link"}
+                  >
                     <i className="fa fa-book "></i> Khóa Học
                     <i className="fa fa-caret-down ml-2" />
                   </a>
@@ -316,6 +332,7 @@ export default function Header() {
                             history.push(
                               `/DanhMucKhoaHoc/${khoahoc.maDanhMuc}`
                             );
+                            setIsActive(2);
                           }}
                         >
                           <i className="fa fa-angle-right"></i>{" "}
@@ -325,22 +342,32 @@ export default function Header() {
                     })}
                   </ul>
                 </li>
-                <li
-                  className="nav-item line"
-                 onClick={()=>{
-                   history.push("/lienhe")
-                 }}
-                >
-                  <a className="nav-link">
-                    <i className="fa fa-phone-square"></i> Liên Hệ 
+                <li className="nav-item line">
+                  <a
+                    className={isActive === 3 ? "nav-link active" : "nav-link"}
+                    onClick={() => {
+                      history.push("/lienhe");
+                      setIsActive(3);
+                    }}
+                  >
+                    <i className="fa fa-phone-square"></i> Liên Hệ
                   </a>
                 </li>
                 <li
-              
                   className="nav-item nav-item--search line"
+                  onClick={() => {
+                    setIsActive(4);
+                  }}
                 >
                   <i className="fa fa-search"></i>
-                  <a     onClick={() => setIsSearched(!isSearched)} className="nav-link " href="#">
+                  <a
+                    onClick={() => {
+                      setIsSearched(!isSearched);
+                    }}
+                    className={
+                      isActive === 4 ? "nav-link active " : "nav-link "
+                    }
+                  >
                     Tìm Kiếm Khóa Học
                   </a>
                   {isSearched ? (
@@ -420,9 +447,13 @@ export default function Header() {
 
                 {credential ? (
                   <div className="name-user">
-                    <div onClick = {()=>{
-                      history.push("/caidat/taikhoan")
-                    }} style={{ cursor : "pointer"}} className="name">
+                    <div
+                      onClick={() => {
+                        history.push("/caidat/taikhoan");
+                      }}
+                      style={{ cursor: "pointer" }}
+                      className="name"
+                    >
                       <div className="avatar">
                         <img src="/img/avatar.png" alt="avatar" />
                       </div>
@@ -432,6 +463,9 @@ export default function Header() {
                         {credential.taiKhoan}
                       </a>
                     </div>
+                    <div className="shopping-cart ml-3">
+                      <i className="fa fa-shopping-cart"></i>
+                    </div>
                     <div className="notification ml-3">
                       <i className="fa fa-bell" />
                     </div>
@@ -440,7 +474,10 @@ export default function Header() {
                       onClick={() => setIsFocus(!isFocus)}
                       className="logout-setting ml-3"
                     >
-                      <i ref={dropDownMenuRef} className="fa fa-caret-down" />
+                      <i
+                        ref={dropDownMenuRef}
+                        className="fa fa-caret-down mb-1"
+                      />
                       {isFocus ? (
                         <div className="logout text-left">
                           <ul>
@@ -499,7 +536,8 @@ export default function Header() {
               </div>
             </div>
           </nav>
-           {backToTop ?  <BackToTop /> :""} 
+          {backToTop ? <BackToTop /> : ""}
+          <PhoneCall />
         </div>
       </div>
       {/* <div className="navbar-collapse--custom">adasdas</div> */}

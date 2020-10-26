@@ -1,19 +1,44 @@
 .backToTop {
     position: absolute;
-    bottom: -600%;
+    bottom: -550%;
     right: 20px;
     // height: 100vh;
     button {
+        opacity: 1;
         height: 40px;
         width: 40px;
         border-radius: 50%;
-        background-color: #72D5CD;
-        border: 1px solid #72D5CD;
+        // background-color: #72d5cd;
+        background-color: transparent;
+        border: 2px solid #72d5cd;
+        transition: all 0.5s;
+        &:hover {
+            background-color: #72d5cd;
+            border: 2px solid #72d5cd;
+            i {
+                color: #fff;
+            }
+        }
         &:focus {
             outline: none;
         }
         i {
-            color: #fff;
+            color: #72d5cd;
+        }
+        animation: animate 1s ease-in-out;
+        @keyframes animate {
+            0% {
+                opacity: 0.2;
+                bottom: -400%;
+            }
+            50% {
+                opacity: 0.6;
+                bottom: -500%;
+            }
+            100% {
+                opacity: 1;
+                bottom: -550%;
+            }
         }
     }
 }
