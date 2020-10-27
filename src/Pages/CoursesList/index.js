@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getCoursesAction } from "../../Action/danhSachKhoaHocAtion";
 import { layDanhMucKhoaHocAction } from "../../Action/layDanhMucKhoaHocAction";
-import {ThemGioHang} from "../../Action/Themgiohang"
+import { ThemGioHang } from "../../Action/Themgiohang";
 import Carousel from "../../component/Carousel";
 import Loading from "../../component/Loading";
 import Introduce from "../../component/Introduce";
@@ -13,11 +13,9 @@ import { Button } from "reactstrap";
 import FeedBack from "../../component/FeedBack";
 export default function HomeScreen(props) {
   const { buttonLabel, className } = props;
-  const { location, match } = props;;
-
+  const { location, match } = props;
   const history = useHistory();
   const dispatch = useDispatch();
-
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const maDanhMuc = match.params.maDanhMucKhoaHoc;
@@ -29,11 +27,10 @@ export default function HomeScreen(props) {
   const { coursesList, loading, error } = useSelector(
     (state) => state.getCoursesList
   );
-
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
   );
-  // console.log("coursesList", coursesList);
+  const { danhSachKH } = useSelector((state) => state.ThemKhoaHocReducer);
 
   var settings = {
     // dots: true,
@@ -43,30 +40,28 @@ export default function HomeScreen(props) {
     slidesToScroll: 1,
     autoplaySpeed: 1000,
     responsive: [
-     
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-       
-        }
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
+          slidesToScroll: 1,
+        },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   if (loading) {
@@ -74,7 +69,7 @@ export default function HomeScreen(props) {
   }
   return (
     <div>
-      <Carousel />    
+      <Carousel />
       <Introduce />
       <div className="section-content-main">
         <div className="container-fluid carousel-slick-background">
@@ -83,8 +78,10 @@ export default function HomeScreen(props) {
         <div className="container">
           <div className="container--custom">
             <div className="carousel-slick--custom ">
-              <h3 className="mt-5 text-center carousel-slick--custom__title">KHÓA HỌC NỔI BẬT</h3>
-          
+              <h3 className="mt-5 text-center carousel-slick--custom__title">
+                KHÓA HỌC NỔI BẬT
+              </h3>
+
               <p className="text-center carousel-slick--custom__title1">
                 {/* Những khóa học có số lượng học viên theo học nhiều nhất và có */}
                 {/* phản hồi tích cực nhất */}
@@ -103,10 +100,7 @@ export default function HomeScreen(props) {
                       className="col-12  mt-5 section-content-main__detail "
                       key={index}
                     >
-                      <div
-                      
-                        className="card card--custom mb-3"
-                      >
+                      <div className="card card--custom mb-3">
                         <div className="card--img">
                           <img
                             className="card-img-top"
@@ -116,9 +110,14 @@ export default function HomeScreen(props) {
                           <div className="card__overlay"></div>
                         </div>
                         <div className="card-body p-0 pb-0">
-                          <h4 onClick={() => { 
-                          history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
-                        }} className="card-title mb-0 ml-4">{item.tenKhoaHoc}</h4>
+                          <h4
+                            onClick={() => {
+                              history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
+                            }}
+                            className="card-title mb-0 ml-4"
+                          >
+                            {item.tenKhoaHoc}
+                          </h4>
                           <div className="rate-start pl-4">
                             <span>
                               <i className="fa fa-star" />
@@ -130,26 +129,49 @@ export default function HomeScreen(props) {
 
                             <span>4.5(1.234)</span>
                           </div>
-                          <p className="view my-2 pl-4" onClick={()=>{
-                            dispatch(ThemGioHang(item))
-                          }}>
+                          <p className="view my-2 pl-4">
                             Lượt xem <i class="fa fa-eye"></i> {item.luotXem}
                           </p>
                           {/* <p>Người tạo : {item.danhMucKhoaHoc.maDanhMucKhoahoc}</p> */}
                           <div className="btn-detail mt-1 ml-4 mr-3">
-                            <button className="btn btn-content-signin"   onClick={() => {
-                          history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
-                        }} >
-                            <i className=" mr-2 fa fa-angle-right"></i>Xem chi tiết
+                            <button
+                              className="btn btn-content-signin"
+                              onClick={() => {
+                                history.push(
+                                  `/ChiTietKhoaHoc/${item.maKhoaHoc}`
+                                );
+                              }}
+                            >
+                              <i className=" mr-2 fa fa-angle-right"></i>Xem chi
+                              tiết
                             </button>
-                            <button className="btn btn-content-signin"   onClick={() => {
-                          history.push(`/ChiTietKhoaHoc/${item.maKhoaHoc}`);
-                        }} >
-                            {/* <i className=" mr-2 fa fa-angle-right"></i> */}
-                            <i className="fa fa-shopping-cart  mr-2"></i>
-                            Thêm 
+                            {danhSachKH
+                              .filter(
+                                (courses) =>
+                                  courses.maKhoaHoc === item.maKhoaHoc
+                              )
+                              .map((hihi) => {
+                                return (
+                                  <button
+                                    className="btn btn-content-go "
+                                  
+                                  >
+                                    <div className="span">
+                                      <i className="fa fa-shopping-cart  mr-2"></i>
+                                      Đến giỏ hàng
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            <button
+                              className="btn btn-content-signin"
+                              onClick={() => {
+                                dispatch(ThemGioHang(item));
+                              }}
+                            >
+                              <i className="fa fa-shopping-cart  mr-2"></i>
+                              Thêm
                             </button>
-                           
                           </div>
                         </div>
                       </div>
@@ -262,7 +284,6 @@ export default function HomeScreen(props) {
                   })}
                 </div> */}
               </div>
-
             </div>
           </div>
         </div>

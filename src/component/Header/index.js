@@ -70,7 +70,7 @@ export default function Header() {
     (state) => state.getCategoriesCourses
   );
   const { credential } = useSelector((state) => state.UserReducer);
-
+  // const shopCart =JSON.parse( localStorage.getItem("giohang"));
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setSearch({
@@ -87,7 +87,8 @@ export default function Header() {
   // const handleSubmit = (e) => {
   //   dispatch(timKiemKhoaHoc(searchItem));
   // };
-
+  const {danhSachKH} = useSelector(state => state.ThemKhoaHocReducer); 
+  // console.log("giohang" ,giohang);
   // const logout = localStorage.getItem("userLogin");
   const Logout = () => {
     swal({
@@ -444,7 +445,6 @@ export default function Header() {
                 ) : (
                   ""
                 )}
-
                 {credential ? (
                   <div className="name-user">
                     <div
@@ -459,17 +459,21 @@ export default function Header() {
                       </div>
                       <a className="pl-2">
                         {/* <i className="fa fa-user mr-2" /> */}
-
                         {credential.taiKhoan}
                       </a>
                     </div>
                     <div className="shopping-cart ml-3">
-                      <i className="fa fa-shopping-cart"></i>
+                      <span className="shopping">
+                        <i className="fa fa-shopping-cart"></i> 
+                        <span className="count-shopping">
+                          {danhSachKH.length}
+                        </span>
+                      </span>
+                     
                     </div>
                     <div className="notification ml-3">
                       <i className="fa fa-bell" />
                     </div>
-
                     <div
                       onClick={() => setIsFocus(!isFocus)}
                       className="logout-setting ml-3"

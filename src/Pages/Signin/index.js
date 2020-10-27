@@ -58,7 +58,7 @@ export default function Signin() {
                 validationSchema={signinUserSchema}
                 render={(formiProps) => (
                   <Form>
-                    <div className="form-group">
+                    <div className="form-group mb-2">
                       <label htmlFor="">
                         Tài Khoản <span style={{ color: "red" }}>*</span>
                       </label>
@@ -77,7 +77,7 @@ export default function Signin() {
                               <i className="fa fa-exclamation-triangle"></i>
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
+                          <p>{msg}</p>
                           </div>
                         )}
                       </ErrorMessage>
@@ -114,7 +114,7 @@ export default function Signin() {
                               {/* <i className="fa fa-exclamation-triangle"></i> */}
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
+                            <p>{msg}</p>
                           </div>
                         )}
                       </ErrorMessage>

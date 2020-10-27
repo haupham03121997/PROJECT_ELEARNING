@@ -47,10 +47,13 @@
     .form-group {
         // height: 117px !important;
         position: relative;
+        height: 105px;
         .errMessage {
-            color: red;
-            margin-top: 10px;
-            font-size: 14px;
+            p {
+                color: red;
+                margin-top: 10px;
+                font-size: 12px;
+            }
         }
         .errInput {
             position: absolute;

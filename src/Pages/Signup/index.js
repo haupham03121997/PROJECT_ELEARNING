@@ -100,7 +100,7 @@ export default function Signup() {
                           <div className="errMessage">
                             <span className="errInput animate__animated animate__bounce animate__shakeX">
                               {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
+                              {/* <i className="fa fa-exclamation-triangle"></i> */}
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
                             {msg}
@@ -165,7 +165,7 @@ export default function Signup() {
                           <div className="errMessage">
                             <span className="errInput animate__animated animate__bounce animate__shakeX">
                               {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
+                              {/* <i className="fa fa-exclamation-triangle"></i> */}
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
                             {msg}
@@ -191,7 +191,7 @@ export default function Signup() {
                           <div className="errMessage">
                             <span className="errInput animate__animated animate__bounce animate__shakeX">
                               {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
+                              {/* <i className="fa fa-exclamation-triangle"></i> */}
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
                             {msg}
@@ -214,13 +214,13 @@ export default function Signup() {
                       />
                       <ErrorMessage name="soDT">
                         {(msg) => (
-                          <div className="errMessage">
+                          <div className="errMessage mb-4">
                             <span className="errInput animate__animated animate__bounce animate__shakeX">
                               {" "}
-                              <i className="fa fa-exclamation-triangle"></i>
+                              {/* <i className="fa fa-exclamation-triangle"></i> */}
                             </span>
                             {/* <i className="fa fa-exclamation-triangle mr-1"></i> */}
-                            {msg}
+                            <p className="mt-0">{msg}</p>
                           </div>
                         )}
                       </ErrorMessage>
