@@ -30,3 +30,14 @@ export const xoaKhoaHocAction = (id) => {
       });
   };
 };
+
+export const XoaKhoaHocLocalStorage = (id)=>{
+  return(dispatch) =>{
+      dispatch({
+        type: Type.XOA_KHOA_HOC_LOCAL_SUCCESS, 
+          id
+      })
+  }
+}
+
+

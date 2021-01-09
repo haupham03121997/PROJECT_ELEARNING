@@ -6,14 +6,13 @@ export default function Pagination({
   totalCount, //Tổng số phần tử 20
   onChange,
 }) {
-
   const generatePage = () => {
     const detal = 2;
     const totalPage = Math.ceil(totalCount / pageSize); 
     const firstPage = Math.max(1, currentPage - detal); 
     const lastPage = Math.min(totalPage, currentPage + detal);
     const pages = [];
-
+    
     for (let page = firstPage; page <= lastPage; page++) {
       pages.push(
         <li style={{cursor: 'pointer'}}
@@ -28,9 +27,6 @@ export default function Pagination({
     }
     return pages;
   };
-
-    // console.log("current Pages" , currentPage);
-
   return (
    
       <nav aria-label="Page navigation" className="page--custom">

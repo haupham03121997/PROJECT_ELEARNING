@@ -3,7 +3,6 @@ import { Select, DatePicker } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
-import ShowToast from "../../Admin/Showtoast";
 import moment from "moment";
 
 export default function ThemKhoaHoc({OnChecked}) {
@@ -12,10 +11,9 @@ export default function ThemKhoaHoc({OnChecked}) {
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   const dispatch = useDispatch();
   const { Option } = Select;
-  const [isSubmit, setIsSubmit] = useState(false);
   useEffect(() => {
     dispatch(getCategoryAction());
-  }, [isSubmit]);
+  }, []);
 
   const { categoriesCourses } = useSelector(
     (state) => state.getCategoriesCourses
@@ -72,7 +70,6 @@ export default function ThemKhoaHoc({OnChecked}) {
   };
 
   const handleSubmit = (e) => {
-    const {name , value} = e.target
     let frm = new FormData();
     for (let key in values) {
       frm.append(key, values[key]);
@@ -258,7 +255,6 @@ export default function ThemKhoaHoc({OnChecked}) {
                   className="btn btn-secondary"
                   data-dismiss="modal"
                   onClick={() => {
-                 
                     setValue({
                       maKhoaHoc: "",
                       biDanh: "",

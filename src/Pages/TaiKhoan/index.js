@@ -1,20 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import "./taikhoan.scss";
 
 export default function TaiKhoan() {
   const history = useHistory();
-  const dispatch = useDispatch();
-
   const { credential } = useSelector((state) => state.UserReducer);
-
-  console.log(credential);
 
   return (
     <div className="taikhoan">
       <div className="taikhoan__header">
-        <div className="logo">
+        <div className="logo" onClick={()=>{
+                  history.push("/")
+                }}>
           <img src="/img/logo2.png" alt="" />
         </div>
         <div className="goback">
@@ -28,14 +26,12 @@ export default function TaiKhoan() {
           </button>
         </div>
       </div>
-      <div className="taikhoan__content mt-md-5 mt-sm-0">
+      {credential ? <div className="taikhoan__content mt-md-5 mt-sm-0">
         <div className="container">
           <div className="row">
             <div className="col-md-3 col-sm-0 ml-auto">
               <div className="avatar">
-                <img onClick={()=>{
-                  history.push("/")
-                }} src="/img/avatar.png" alt="" />
+                <img  src="/img/avatar.png" alt="" />
               </div>
               <div className="name">
                 <p className="my-2">
@@ -121,7 +117,8 @@ export default function TaiKhoan() {
             </div>
           </div>
         </div>
-      </div>
+      </div> : <p>ádasd</p>}
+      
       <div className="footer">
         <div className="container">
           <div className="row">

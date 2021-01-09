@@ -10,7 +10,7 @@ export default function ThemUser() {
   const dispatch = useDispatch();
   const _handleSubmit = (values) => {
     dispatch(themNguoiDungAction(values));
-    console.log("values" , values);
+    // console.log("values" , values);
   };
   function onChange(date, dateString) {
     console.log(date, dateString);

@@ -13,10 +13,12 @@ export const  huyKHTheoKh =(values)=> {
             })
             swal("Hủy thành công!", {
                 icon: "success",
-                 
                });
-
             localStorage.removeItem(values.maKhoaHoc);
+            // dispatch({
+            //         type : "HUY_KHOA_HOC_DA_DANG_kY",
+            //         values
+            // })
         }).catch((err)=>{
             dispatch({
                 type : "HUY_KHOA_HOC_ERR"
@@ -28,3 +30,10 @@ export const  huyKHTheoKh =(values)=> {
         })
     }
 }
+
+// export const HuyKhDaDangKy = (values)=>{
+//     console.log("values" , values);
+//     return(dispatch)=>{
+     
+//     }
+// } 

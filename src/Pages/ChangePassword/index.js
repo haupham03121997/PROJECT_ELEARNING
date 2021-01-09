@@ -108,16 +108,19 @@ export default function DoimatKhau(props) {
       setIsCheckPassNew("");
     }
   };
-  const handleBlur2 = e =>{
-    if(!e.target.value){
-      setIsCheckPassNew("Vui lòng nhập mật khẩu!")
-    }else{
+  const handleBlur2 = (e) => {
+    if (!e.target.value) {
+      setIsCheckPassNew("Vui lòng nhập mật khẩu!");
+    } else {
       setIsCheckPassNew("");
     }
-  }
-
+  };
+  console.log("asd ",isCheckPassEmpty);
+  console.log(isCheckPassOld);
+  console.log(isCheckPassNew);
   const handleSubmit = () => {
-    dispatch(DoiMatKhauAction(values));
+   
+    // dispatch(DoiMatKhauAction(values));
   };
 
   return (
@@ -275,11 +278,14 @@ export default function DoimatKhau(props) {
                       </p>
                     )}
                     {isCheckPassNew && (
-                      <p className="mb-4" style={{
-                        fontSize: "10px",
-                        color: "red",
-                        display: "inline-block",
-                      }}>
+                      <p
+                        className="mb-4"
+                        style={{
+                          fontSize: "10px",
+                          color: "red",
+                          display: "inline-block",
+                        }}
+                      >
                         {isCheckPassNew}
                       </p>
                     )}
@@ -292,6 +298,26 @@ export default function DoimatKhau(props) {
                 >
                   Đổi mật khẩu
                 </button>
+                
+                {/* {isCheckPass ||
+                isCheckPassEmpty ||
+                isCheckPassNew ||
+                isCheckPassNewEmpty ||
+                isCheckPassOld ||
+                isCheckPassOldEmpty ||
+                isComparePass === "" ? (
+                  <button
+                  type="button"
+                  disabled
+                  className="button-changepassword"
+                  onClick={handleSubmit}
+                >
+                  Đổi mật khẩu
+                </button>
+                ) : (
+                  
+                )} */}
+               
                 <p className="mt-2">
                   <a
                     onClick={() => {

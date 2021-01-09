@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { Select } from "antd";
+import { Select } from 'antd';
+import 'antd/dist/antd.css';
 import { themNguoiDungAction } from "../../../Action/themNguoiDungAction";
 const { Option } = Select;
 function ThemNguoiDung({ isChecked }) {
@@ -14,7 +15,6 @@ function ThemNguoiDung({ isChecked }) {
     setSelect1(e);
   };
   const handelChangeSelec2 = (e) => {
- 
     setSelect2(e);
   };
   const lowcaseRegex = /(?=.*[a-z])/;
@@ -66,6 +66,8 @@ function ThemNguoiDung({ isChecked }) {
               >
                 <span aria-hidden="true">×</span>
               </button>
+            
+          
             </div>
             <Formik
               enableReinitialize={true}
@@ -102,11 +104,10 @@ function ThemNguoiDung({ isChecked }) {
                               placeholder="Nhập tài khoản"
                               onChange={formikPops.handleChange}
                             />
-                            <ErrorMessage name="taiKhoan">    
+                            <ErrorMessage name="taiKhoan">
                               {(msg) => (
                                 <div className="errMessage">
-                                  <span className="errInput">
-                                  </span>
+                                  <span className="errInput"></span>
                                   {msg}
                                 </div>
                               )}
@@ -128,11 +129,10 @@ function ThemNguoiDung({ isChecked }) {
                               placeholder="Nhập mật khẩu"
                               onChange={formikPops.handleChange}
                             />
-                             <ErrorMessage name="matKhau">    
+                            <ErrorMessage name="matKhau">
                               {(msg) => (
                                 <div className="errMessage">
-                                  <span className="errInput">
-                                  </span>
+                                  <span className="errInput"></span>
                                   {msg}
                                 </div>
                               )}
@@ -151,11 +151,10 @@ function ThemNguoiDung({ isChecked }) {
                               className="form-control"
                               onChange={formikPops.handleChange}
                             />
-                             <ErrorMessage name="hoTen">    
+                            <ErrorMessage name="hoTen">
                               {(msg) => (
                                 <div className="errMessage">
-                                  <span className="errInput">
-                                  </span>
+                                  <span className="errInput"></span>
                                   {msg}
                                 </div>
                               )}
@@ -175,11 +174,10 @@ function ThemNguoiDung({ isChecked }) {
                               className="form-control"
                               onChange={formikPops.handleChange}
                             />
-                             <ErrorMessage name="soDT">    
+                            <ErrorMessage name="soDT">
                               {(msg) => (
                                 <div className="errMessage">
-                                  <span className="errInput">
-                                  </span>
+                                  <span className="errInput"></span>
                                   {msg}
                                 </div>
                               )}
@@ -198,11 +196,10 @@ function ThemNguoiDung({ isChecked }) {
                               className="form-control"
                               onChange={formikPops.handleChange}
                             />
-                             <ErrorMessage name="email">    
+                            <ErrorMessage name="email">
                               {(msg) => (
                                 <div className="errMessage">
-                                  <span className="errInput">
-                                  </span>
+                                  <span className="errInput"></span>
                                   {msg}
                                 </div>
                               )}
@@ -226,6 +223,7 @@ function ThemNguoiDung({ isChecked }) {
                                 <Option value="HV">Học viên</Option>
                                 <Option value="GV">Giáo vụ</Option>
                               </Select>
+                             
                             </div>
                           </div>
                           <div className="col-6">

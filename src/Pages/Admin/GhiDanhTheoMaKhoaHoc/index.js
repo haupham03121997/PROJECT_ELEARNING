@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import {
   DSNguoiDungChoXetDuyetTHeoKhoaHoc,
   DSNguoiDungDaGhiDanhTheoKhoaHoc,
   DSNguoiDungChuaGhiDanhTheoKhoaHoc,
 } from "../../../Action/dsGhiDanhTheoKH";
-import { xacNhanKhTheoKH } from "../../../Action/xacNhanKhTheoKH";
-import { huyKHTheoKh } from "../../../Action/huyKHTheoKh";
-import Pagination from "../QuanLyNguoiDung/Paginnation/Pagination";
-import PostGhiDanh from "./PostGhiDanh/PostGhiDanh";
 import PostDaGhiDanh from "./PostDaGhiDanh/PostDaGhiDanh";
-import PostChoGhiDanh from "./PostChoGhiDanh/PostChoGhiDanh"
+import PostChoGhiDanh from "./PostChoGhiDanh/PostChoGhiDanh";
+import PostChuaGhiDanh from "./PostChuaGhiDanh/PostChuaGhiDanh"
 import Pagin from "../QuanLyNguoiDung/Paginnation/Pagination";
-import swal from "sweetalert";
 import "./index.scss";
 
 export default function GhiDanhTheoKhoaHoc(props) {
   const { match } = props;
-  const history = useHistory();
   const dispatch = useDispatch();
   const makh = { maKhoaHoc: match.params.maKhoaHoc };
 
@@ -41,8 +35,9 @@ export default function GhiDanhTheoKhoaHoc(props) {
   // console.log("hvChoXetDuyet", hdDaXetDuyet);
   const onChangeIsAccept = (isAccept) => {
     setIsAccept(!isAccept);
+    console.log("Onchange isAccept"  ,isAccept);
   };
- 
+
   return (
     <div className="content-wrapper management-user">
       <h4 className="display-4">Danh sách ghi danh người dùng</h4>
@@ -95,7 +90,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
             role="tabpanel"
             aria-labelledby="home-tab"
           >
-            <PostGhiDanh
+            <PostChuaGhiDanh
               maKH={makh}
               currentPages={currentPages}
               pageSize={pageSize}
@@ -108,6 +103,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
               totalCount={hvChuaXetDuyet.length}
               onChange={onChange}
             />
+     
           </div>
           <div
             style={{ height: "460px" }}
@@ -179,6 +175,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
                 })}
               </tbody>
             </table> */}
+        
           </div>
           <div
             className="tab-pane px-4 fade"
@@ -186,6 +183,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
             role="tabpanel"
             aria-labelledby="contact-tab"
           >
+           
             {/* <table className="table mt-5 px-4 table-bordered p-4 table-custom">
               <thead>
                 <tr>
@@ -250,7 +248,7 @@ export default function GhiDanhTheoKhoaHoc(props) {
                 })}
               </tbody>
             </table> */}
-             <PostChoGhiDanh
+            <PostChoGhiDanh
               maKH={makh}
               currentPages={currentPages}
               pageSize={pageSize}
@@ -263,9 +261,77 @@ export default function GhiDanhTheoKhoaHoc(props) {
               totalCount={hvChoXetDuyet.length}
               onChange={onChange}
             />
+        
           </div>
         </div>
       </div>
+      {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="home-tab"
+            data-toggle="tab"
+            href="#home"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+          >
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="profile-tab"
+            data-toggle="tab"
+            href="#profile"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+          >
+            Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="contact-tab"
+            data-toggle="tab"
+            href="#contact"
+            role="tab"
+            aria-controls="contact"
+            aria-selected="false"
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          ...
+        </div>
+        <div
+          class="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          ...
+        </div>
+        <div
+          class="tab-pane fade"
+          id="contact"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          ...
+        </div>
+      </div> */}
     </div>
   );
 }

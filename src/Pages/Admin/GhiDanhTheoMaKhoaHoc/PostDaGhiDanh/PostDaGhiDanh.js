@@ -10,8 +10,8 @@ export default function PostDaGhiDanh({
   maKH,
   onChange,
 }) {
-  console.log( "Đã ghi danh" , postPages,
-    );
+  // console.log( "Đã ghi danh" , postPages,
+  //   );
   const lastPages = currentPages * pageSize;
   const firstPages = lastPages - pageSize;
   const postPage = postPages.slice(firstPages, lastPages);
@@ -21,7 +21,6 @@ export default function PostDaGhiDanh({
   const [isAccept, setIsAccept] = useState(false);
   useEffect(()=>{
   } , [isAccept])
-
   return (
     <div>
       <table class="table mt-5 px-4 table-bordered p-4 table-custom">

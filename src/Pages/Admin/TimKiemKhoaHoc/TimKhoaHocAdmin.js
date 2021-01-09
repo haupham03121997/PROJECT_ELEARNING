@@ -3,21 +3,17 @@ import {useDispatch , useSelector} from "react-redux";
 import {getCoursesAction} from "../../../Action/danhSachKhoaHocAtion";
 export default function TimKhoaHocAdmin(props) {
     const {match} = props;
-    console.log("match" , match);
     const search = match.params.makh;
-    console.log("seach" , search);
     const dispatch = useDispatch();
     useEffect(()=>{
         dispatch(getCoursesAction());
     },[])
 
     const { coursesList } = useSelector((state) => state.getCoursesList);
-    console.log(coursesList);
-
     const arrSearchUser = coursesList.filter((khoahoc) => {
         return khoahoc.tenKhoaHoc.toLowerCase().indexOf(search.toLowerCase()) !== -1;
       });
-      console.log(arrSearchUser);
+
       
     return (
         <div className="content-wrapper management-user">

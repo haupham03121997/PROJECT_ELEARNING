@@ -6,7 +6,7 @@ import { layDanhSachUser } from "../../../Action/layDanhSachUserAdmin";
 import { xoaNguoiDung } from "../../../Action/xoaNguoiDungAction";
 import ThemNguoiDung from "./themNguoiDung";
 import Capnhatnguoidung from "./Capnhatnguoidung";
-import Pagination from "../../../component/Pagination";
+import { Pagination } from 'antd';
 // import { Button } from "reactstrap";
 import swal from "sweetalert";
 
@@ -18,7 +18,6 @@ export default function QuanLyNguoiDung(props) {
     searchTxt: "",
   });
   const [isParams, setIsParam] = useState("");
-  const [modal, setModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isDeleted, setDeleted] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
@@ -57,7 +56,6 @@ export default function QuanLyNguoiDung(props) {
   const isChecked = (checked) => {
     setIsCheck(checked);
   };
-  console.log("arrList", isCheck);
   return (
     <div className="content-wrapper management-user">
       {/* Content Header (Page header) */}
@@ -328,12 +326,12 @@ export default function QuanLyNguoiDung(props) {
             </div>
           </div>
 
-          <Pagination
+          {/* <Pagination
             currentPage={currentPage}
             pageSize={8}
             totalCount={userList.totalCount}
             onChange={onChanges}
-          />
+          /> */}
         </div>
         {/* /.container-fluid */}
       </div>
@@ -341,6 +339,7 @@ export default function QuanLyNguoiDung(props) {
       {/* /.content */}
       <ThemNguoiDung isChecked={isChecked} />
       <Capnhatnguoidung  isChecked={isChecked} isParams={isParams} />
+      <Pagination defaultCurrent={currentPage}  onChange={onChanges} total={userList.totalCount} />
     </div>
   );
 }

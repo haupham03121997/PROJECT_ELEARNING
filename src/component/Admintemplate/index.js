@@ -1,19 +1,19 @@
 import React , {Component} from "react";
-import HeaderAdmin from "../PagesAdmin/HeaderAdmin";
-import MenuAdmin from "../PagesAdmin/MenuAdmin";
-import FooterAdmin from "../PagesAdmin/FooterAdmin";
+import HeaderAdmin1 from "../PagesAdmin/HeaderAdmin1";
+import MenuAdmin1 from "../PagesAdmin/MenuAdmin1";
+import FooterAdmin1 from "../PagesAdmin/FooterAdmin1";
 
-class AdminTemplate extends Component {
+class AdminTemplate1 extends Component {
     render() {
         return (
-            <div className="hold-transition sidebar-mini">
-            <HeaderAdmin />
-            <MenuAdmin />
+            <div className="">
+            {/* <HeaderAdmin1/>
+            <MenuAdmin1 />
             {this.props.children}
-            <FooterAdmin />
+            <FooterAdmin1 /> */}
           </div>
         );
     }
 }
 
-export default AdminTemplate;
+export default AdminTemplate1;

@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
-import Footer from '../Footer'
-
-class CustomTemplate extends Component {
-    render() {
-        return (
-            <div>
-                {this.props.children}
-                <Footer />
-            </div>
-        )
-    }
+import React from 'react'
+import Footer from "../Footer";
+export default function CustomTemplate(props) {
+    return (
+        <div>
+            {props.children}
+            <Footer/>
+        </div>
+    )
 }
-export default  CustomTemplate;
+

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Select, DatePicker, Input, message } from "antd";
+import { Select, DatePicker} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryAction } from "../../../Action/danhMucKhoaHocAction";
 import { ThemKhoaHocAction } from "../../../Action/themKhoaHocAction";
-
-import ShowToast from "../../Admin/Showtoast";
 import moment from "moment";
 
 export default function ThemKhoaHoc(props) {
-  const {OnChecked} = props;
-  console.log("props", OnChecked);
   const taiKhoan = JSON.parse(localStorage.getItem("userLogin"));
   const dispatch = useDispatch();
   const { Option } = Select;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-
+import PhoneCall from "../PhoneCall/phonecall";
 class DefaultTemPlate extends Component {
     render() {
         return (
@@ -10,6 +10,7 @@ class DefaultTemPlate extends Component {
                 {this.props.children}
                 <Footer />
                 {/* <modal /> */}
+                <PhoneCall />
             </div>
         );
     }

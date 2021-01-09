@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getCoursesAction } from "../../Action/danhSachKhoaHocAtion";
-import { layDanhMucKhoaHocAction } from "../../Action/layDanhMucKhoaHocAction";
 import { ThemGioHang } from "../../Action/Themgiohang";
 import Carousel from "../../component/Carousel";
 import Loading from "../../component/Loading";
 import Introduce from "../../component/Introduce";
 import Slider from "react-slick";
-import { Button } from "reactstrap";
-// import ModelTest from "../../component/Modeltest";
+
 import FeedBack from "../../component/FeedBack";
 export default function HomeScreen(props) {
-  const { buttonLabel, className } = props;
-  const { location, match } = props;
+  const {  match } = props;
   const history = useHistory();
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -24,14 +21,11 @@ export default function HomeScreen(props) {
     // dispatch(layDanhMucKhoaHocAction(maDanhMuc));
   }, [maDanhMuc]);
 
-  const { coursesList, loading, error } = useSelector(
+  const { coursesList, loading } = useSelector(
     (state) => state.getCoursesList
   );
-  const { categoriesCourses } = useSelector(
-    (state) => state.getCategoriesCourses
-  );
   const { danhSachKH } = useSelector((state) => state.ThemKhoaHocReducer);
-
+  const {credential} = useSelector((state)=>state.UserReducer);
   var settings = {
     // dots: true,
     infinite: true,
@@ -154,7 +148,9 @@ export default function HomeScreen(props) {
                                 return (
                                   <button
                                     className="btn btn-content-go "
-                                  
+                                    onClick={()=>{
+                                      history.push("/giohang")
+                                    }}
                                   >
                                     <div className="span">
                                       <i className="fa fa-shopping-cart  mr-2"></i>
@@ -163,7 +159,8 @@ export default function HomeScreen(props) {
                                   </button>
                                 );
                               })}
-                            <button
+                              {credential ? 
+                               <button
                               className="btn btn-content-signin"
                               onClick={() => {
                                 dispatch(ThemGioHang(item));
@@ -171,7 +168,16 @@ export default function HomeScreen(props) {
                             >
                               <i className="fa fa-shopping-cart  mr-2"></i>
                               Thêm
-                            </button>
+                            </button> :  <button
+                              className="btn btn-content-signin"
+                              onClick={() => {
+                               history.push("/DangNhap")
+                              }}
+                            >
+                              <i className="fa fa-shopping-cart  mr-2"></i>
+                                Thêm
+                            </button>}
+                           
                           </div>
                         </div>
                       </div>

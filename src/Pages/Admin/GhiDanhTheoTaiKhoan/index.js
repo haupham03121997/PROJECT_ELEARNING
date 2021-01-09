@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { huyKHTheoKh } from "../../../Action/huyKHTheoKh";
-import { Table , Pagination  } from "antd";
+import { Table, Pagination } from "antd";
 import {
   DSKHDaGhiDanh,
   DSKHChoGhiDanh,
   DSKHChuaGhiDanh,
 } from "../../../Action/dsGhiDanhTheoTK";
 import { xacNhanKhTheoKH } from "../../../Action/xacNhanKhTheoKH";
-
 export default function GhiDanhTheoTaiKhoan(props) {
   const { match } = props;
   const dispatch = useDispatch();
@@ -29,17 +28,17 @@ export default function GhiDanhTheoTaiKhoan(props) {
   const { dsKHChuaXetDuyet } = useSelector((state) => state.dsGhiDanhKhReducer);
 
   const { dsKHChoXetDuyet } = useSelector((state) => state.dsGhiDanhKhReducer);
-  // const columns = [
-  //   { title: "STT", dataIndex: "length", key: "length" },
-  //   { title: "Mã khóa học", dataIndex: "maKhoaHoc", key: "taiKhoan" },
-  //   { title: "Bí danh", dataIndex: "biDanh", key: "biDanh" },
-  //   {
-  //     title: "Action",
-  //     dataIndex: "",
-  //     key: "x",
-  //     render: () => <a>Delete</a>,
-  //   },
-  // ];
+  const columns = [
+    // { title: "STT", dataIndex: "length", key: "length" },
+    { title: "Mã khóa học", dataIndex: "maKhoaHoc", key: "taiKhoan" },
+    { title: "Bí danh", dataIndex: "biDanh", key: "biDanh" },
+    {
+      title: "Thao tác",
+      dataIndex: "",
+      key: "x",
+      render: (text, record) => <a>Delete</a>,
+    },
+  ];
   // const data = [
   //   {
   //     key: 1,
@@ -87,7 +86,7 @@ export default function GhiDanhTheoTaiKhoan(props) {
        
         dataSource={dsKHChuaXetDuyet}
       /> */}
-      ,
+      {/* <Table columns={columns} dataSource={dsKHChuaXetDuyet} /> */}
       <div className="mt-4">
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item">
@@ -140,10 +139,10 @@ export default function GhiDanhTheoTaiKhoan(props) {
             <table class="table mt-5">
               <thead>
                 <tr style={{ color: "#238BAA" }}>
-                  <th scope="col">STT</th>
-                  <th scope="col">Mã khóa học</th>
-                  <th scope="col">Bí danh</th>
-                  <th scope="col">Thao tác</th>
+                  <th>STT</th>
+                  <th>Mã khóa học</th>
+                  <th>Bí danh</th>
+                  <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -173,7 +172,6 @@ export default function GhiDanhTheoTaiKhoan(props) {
                 })}
               </tbody>
             </table>
-           
           </div>
           <div
             className="tab-pane fade"
@@ -182,20 +180,19 @@ export default function GhiDanhTheoTaiKhoan(props) {
             aria-labelledby="profile-tab"
           >
             <table class="table mt-5">
-            
-                <thead style={{ display : dsKHDaXetDuyet.length ? "block": "none"  }}>
-                  <tr style={{ color: "#238BAA" }}>
-                    <th scope="col">STT</th>
-                    <th scope="col">Mã khóa học</th>
-                    <th scope="col">Tên khóa học</th>
-                    <th scope="col">Thao tác</th>
-                  </tr>
-                </thead>
-             
+              <thead
+                // style={{ display: dsKHDaXetDuyet.length ? "block" : "none" }}
+              >
+                <tr style={{ color: "#238BAA" }}>
+                  <th>STT</th>
+                  <th>Mã khóa học</th>
+                  <th>Tên khóa học</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
               <tbody>
                 {dsKHDaXetDuyet.length ? (
                   <>
-                    {" "}
                     {dsKHDaXetDuyet.map((courses, index) => {
                       return (
                         <tr key={index}>
@@ -219,7 +216,7 @@ export default function GhiDanhTheoTaiKhoan(props) {
                           </td>
                         </tr>
                       );
-                    })}{" "}
+                    })}
                   </>
                 ) : (
                   "Chưa có khóa học nào đã xét duyệt!"

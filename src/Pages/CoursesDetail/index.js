@@ -2,31 +2,38 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCoursesDetailAction } from "../../Action/danhSachKhoaHocAtion";
-import { dangKyKhoaHocAction } from "../../Action/dangKyKhoaHocAction";
+import {
+  dangKyKhoaHocAction,
+  NGuoiDungDangKyKhoaHoc,
+} from "../../Action/dangKyKhoaHocAction";
+import { huyKHTheoKh } from "../../Action/huyKHTheoKh";
 import { useHistory } from "react-router-dom";
 import axios from "../../Utils/axiosClient";
 import "./chitietkh.scss";
 
 export default function CoursesDetail(props) {
+  console.log("props " , props); 
   const history = useHistory();
   const { match } = props;
-  console.log("Mactch chi tiet", match);
-  // const [isCompleted, setisCompleted] = useState(false);
+  
   const dispatch = useDispatch();
   const maKhoaHoc = match.params.maKhoaHoc;
   useEffect(() => {
     dispatch(getCoursesDetailAction(maKhoaHoc));
   }, [match.params.maKhoaHoc]);
   const { coursesDetail } = useSelector((state) => state.getCoursesList);
-  console.log("coursesDetail", coursesDetail);
+  // console.log("coursesDetail", coursesDetail);
   const { categoriesDetail } = useSelector(
     (state) => state.getCategoriesCourses
   );
-  console.log(coursesDetail);
+  const { khDaDangKy } = useSelector((state) => state.ThemKhoaHocReducer);
+
+
   const { credential } = useSelector((state) => state.UserReducer);
-
+  const { danhSachKH } = useSelector((state) => state.ThemKhoaHocReducer);
+  const { credentialFacebook } = useSelector((state) => state.UserReducer);
   //Ghi danh khóa học
-
+  const [isCheck, setIsCheck] = useState(false);
   const [values, setValues] = useState({
     maKhoaHoc: "",
     taiKhoan: "",
@@ -39,24 +46,21 @@ export default function CoursesDetail(props) {
         maKhoaHoc: maKhoaHoc,
         taiKhoan: taiKhoan,
       });
-      axios.post(
-        "http://elearning0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet"
-      );
     }
   }, []);
 
   const { err } = useSelector((state) => state.ghiDanhKHReducer);
-  // console.log("lỗi ", err);
-  // if (err) {
-  //   alert("Khóa học này bạn đã ghi danh!");
-  // }
   const khoaHoc = JSON.parse(localStorage.getItem(maKhoaHoc));
   console.log("khoas hocj tu local", khoaHoc);
   const handleSubmit = () => {
-    console.log("value" ,values);
+    console.log("values", values);
     dispatch(dangKyKhoaHocAction(values));
-    // console.log("value" , values);
+    // dispatch(NGuoiDungDangKyKhoaHoc(coursesDetail));
   };
+  const filterArr = danhSachKH.filter((courses) => {
+    return courses.maKhoaHoc.indexOf(maKhoaHoc) !== -1;
+  });
+  console.log("filter", filterArr);
   return (
     <div className="courses_detail ">
       {/* <h1 class="animate__animated animate__bounce animate__slow animate__fadeInDown animate__bounceIn">An animated element</h1> */}
@@ -65,15 +69,24 @@ export default function CoursesDetail(props) {
           <img src={coursesDetail.hinhAnh} alt="" />
           <div>
             <p className="pb-1 mb-0">Tên khóa học {coursesDetail.tenKhoaHoc}</p>
-            {credential ? (
+            {credential || credentialFacebook ? (
               <>
-                {khoaHoc ? (
+                {filterArr.length ? (
                   <>
-                    <button className="btn-dangkykhoahoc my-2">
-                      <i className="fa fa-check mr-2"></i>Đã Đăng Ký
+                    <button
+                      onClick={handleSubmit}
+                      className="btn-dangkykhoahoc my-2"
+                    >
+                      <i className="fa fa-caret-right mr-2"></i>Đăng ký khóa học
                     </button>
-                    <button className="btn-huykhoahoc my-2">
-                      <i className="fa fa-times mr-2"></i>Hủy Đăng Ký
+                    <button
+                      // onClick={handleSubmit}
+                      className="btn-dangkykhoahoc my-2 ml-2"
+                      onClick={()=>{
+                        history.push("/giohang")
+                      }}
+                    >
+                      <i className="fa fa-shopping-cart mr-2"></i>Tới giỏ hàng
                     </button>
                   </>
                 ) : (
@@ -83,6 +96,12 @@ export default function CoursesDetail(props) {
                       className="btn-dangkykhoahoc my-2"
                     >
                       <i className="fa fa-caret-right mr-2"></i>Đăng ký khóa học
+                    </button>
+                    <button
+                      // onClick={handleSubmit}
+                      className="btn-dangkykhoahoc my-2 ml-2"
+                    >
+                      <i className="fa fa-shopping-cart mr-2"></i>Thêm giỏ hàng
                     </button>
                   </>
                 )}
@@ -121,12 +140,12 @@ export default function CoursesDetail(props) {
           />
 
           <div className="header-detail__overlay"></div>
-          <div className="image1__content animate__animated animate__bounce animate__delay-2s animate__backInLeft">
+          <div className="image1__content ">
             <div className="image1__content__body1">
               KHÓA HỌC {coursesDetail.tenKhoaHoc}
             </div>
           </div>
-          <div className="image1__link1 animate__animated animate__bounce animate__delay-2s animate__backInLeft">
+          <div className="image1__link1 ">
             <div className="image1__link1__body1">
               <i
                 className="fa fa-home"
@@ -189,7 +208,6 @@ export default function CoursesDetail(props) {
                   LẬP TRÌNH {match.params.maKhoaHoc} LÀ GÌ
                   {/* {coursesDetail.nguoiTao.hoTen} */}
                   {/* {coursesDetail.length ? <span>{coursesDetail.nguoiTao.taiKhoan}</span> : "anajksdnajs"} */}
-                  
                   <i className="fa fa-question"></i>
                 </h3>
                 <p className="mt-5 p1">

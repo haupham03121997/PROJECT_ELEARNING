@@ -8,8 +8,7 @@ import {listUserAll} from "./listUserAll";
 import {dsGhiDanhTheoKH} from "./dsGhiDanhTheoKH";
 import {dsGhiDanhKhReducer} from "./dsGhiDanhKhUser";
 import {TimKiemNguoiDungReDucer} from "./timKiemNguoiDung";
-import {ThemKhoaHocReducer} from "./themKhoaHoc"
-import {DsUserDaGhiDanh} from "./UserGhiDanh";
+import {ThemKhoaHocReducer ,NGuoiDungDangKyKhoaHoc  ,ThemSanPhamYeuThich} from "./themKhoaHoc"
 export const rootReducer = combineReducers({
     getCoursesList,
     getCategoriesCourses,
@@ -20,7 +19,8 @@ export const rootReducer = combineReducers({
     dsGhiDanhTheoKH,
     dsGhiDanhKhReducer,
     TimKiemNguoiDungReDucer,
-    ThemKhoaHocReducer
+    ThemKhoaHocReducer,
+    NGuoiDungDangKyKhoaHoc,
+    ThemSanPhamYeuThich
     
-    // DsUserDaGhiDanh
 })

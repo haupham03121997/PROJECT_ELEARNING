@@ -31,33 +31,34 @@ export const Login = (value) => {
   };
 };
 
+export const LOGINFACEBOOK = (values) =>{
+  return(dispatch)=>{
+      dispatch({
+        type : "LOGIN_FACEBOOK_SUCCESS",
+        values
+      })
+         localStorage.setItem("userLoginFacebook", JSON.stringify(values));
+  }
+}
+
 export const LOGOUTACTION = () => {
   return (dispatch) => {
-    // swal({
-    //   title: "Bạn muốn đăng xuất tài khoản?",
-    //   // text: "Once deleted, you will not be able to recover this imaginary file!",
-    //   // icon: "warning",
-    //   buttons: true,
-    //   dangerMode: true,
-    // })
-    // .then((willDelete) => {
-    //   if (willDelete) {
-       
-    //     swal("Đã đăng xuất!", {
-    //       icon: "success",
-    //     });
-    //   } else {
-    //     swal("Ở lại!");
-    //   }
-    // });
     dispatch({
       type: type.LOGOUT,
-      
     });
     // localStorage.clear("userLogin");
     swal("Đã Đăng Xuất!");
   };
 };
+export const LOGOUFACEBOOKTACTION = () =>{
+  return (dispatch) => {
+    dispatch({
+      type: "LOGOUT_FACEBOOK_SUCCESS",
+    });
+    // localStorage.clear("userLogin");
+    swal("Đã Đăng Xuất!");
+  };
+}
 
 export const GetUserInfoAction = (user) => {
   return (dispatch) => {

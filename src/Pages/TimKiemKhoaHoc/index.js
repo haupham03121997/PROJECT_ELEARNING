@@ -1,41 +1,26 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import {timKiemKhoaHoc} from '../../Action/timKiemKhoaHoc';
 import Header from "../../component/Header";
 import { getCoursesAction } from "../../Action/danhSachKhoaHocAtion";
 
 export default function TimKiemKhoaHoc(props) {
+
   const history = useHistory();
-  const { location, match } = props;
-  // console.log("match Seacch " , match);
-
-  // const dispatch = useDispatch();
-
-  // useEffect(()=>{
-  //     const tenKhoaHoc = match.params.makhoahoc;
-  //     dispatch(timKiemKhoaHoc(tenKhoaHoc))
-  // },[match.params.makhoahoc])
-  // const {searchCourses} = useSelector((state ) => state.getCoursesList)
-  // // console.log("searchCourses" , searchCourses);
-  // console.log( "id" ,searchCourses);
-  // // console.log("renđẻ");
+  const {  match } = props;
   const searchItem = match.params.makhoahoc;
-  console.log(searchItem);
-  // console.log("Mã khóa học"  , searchItem);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCoursesAction());
   }, []);
   const { coursesList } = useSelector((state) => state.getCoursesList);
-  // console.log("coursesList tìm kiếm" , coursesList);
   const arrSearchCoursesItem = coursesList.filter((courses) => {
     return (
       courses.tenKhoaHoc.toLowerCase().indexOf(searchItem.toLowerCase()) !== -1
     );
   });
 
-  // console.log("arrSearchCoursesItem", arrSearchCoursesItem);
   return (
     <div className="search-courses">
       <Header />

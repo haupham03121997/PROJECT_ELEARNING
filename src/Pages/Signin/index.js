@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Redirect, useLocation, Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import { Login } from "../../Action/User";
+import { Login  , LOGINFACEBOOK} from "../../Action/User";
 import { Checkbox } from 'antd';
+import Facebook from "../../component/SigninFacebook";
 export default function Signin() {
   // const history = useHistory();
   const { credential, err } = useSelector((state) => state.UserReducer);
+  const { credentialFacebook } = useSelector((state) => state.UserReducer);
+  // console.log("credentialLogin" , credentialFacebook);
+  // console.log("credential" , credential);
   const dispatch = useDispatch();
   const _hanleSubmit = (value) => {
     // dispatch(LOGIN(value))
@@ -26,6 +30,9 @@ export default function Signin() {
       const redirect = search.split("?redirect=")[1];
       return <Redirect to={redirect ? redirect : "/"} />;
     }
+  }
+  if(credentialFacebook !== null){
+      return <Redirect to="/" />
   }
   const signinUserSchema = yup.object().shape({
     taiKhoan: yup.string().required("*Tài khoản trống"),
@@ -49,6 +56,11 @@ export default function Signin() {
                 dự án thực tế. * Phương pháp đột phá, hào hứng mỗi buổi đến lớp,
                 code ngay tại lớp, không lý thuyết lan man. * Đào tạo Lập trình
               </p>
+                <div style={{ margin : "auto" , textAlign: "center"}}>
+                <Facebook />
+                <p>Mẹo: Đăng nhập nhanh hơn với Facebook!</p>
+                <p>Hoặc</p>
+                </div>
               <Formik
                 initialValues={{
                   taiKhoan: "",

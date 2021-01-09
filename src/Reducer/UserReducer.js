@@ -1,12 +1,14 @@
 import * as Type from '../Contanst/Courses';
 import * as TypeUser from '../Contanst/user';
 const userLogin = localStorage.getItem("userLogin");
+const userLoginFacebook = localStorage.getItem("userLoginFacebook");
 
 const innitialValue = {
     credential: userLogin ? JSON.parse(userLogin)  : null,
     loading: false,
     err: false,
     userInfomation : [],
+    credentialFacebook : userLoginFacebook ? JSON.parse(userLoginFacebook) : null,
 }
 export const UserReducer = (state = innitialValue, action) => {
     switch (action.type) {
@@ -62,6 +64,16 @@ export const UserReducer = (state = innitialValue, action) => {
         case TypeUser.CHANGE_PASSWORD_ERR : {
             return{
                 ...state, loading: false,  err: true
+            }
+        }
+        case "LOGIN_FACEBOOK_SUCCESS" : {
+            return {
+                ...state , credentialFacebook : action.values , loading : false , err : false
+            }
+        }
+        case "LOGOUT_FACEBOOK_SUCCESS" : {
+            return {
+                ...state , credentialFacebook : null , loading : false , err : false
             }
         }
         default:

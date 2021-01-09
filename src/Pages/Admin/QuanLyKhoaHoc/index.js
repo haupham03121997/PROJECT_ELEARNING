@@ -4,10 +4,6 @@ import { useHistory } from "react-router-dom";
 import { getCoursesPaginationAction } from "../../../Action/danhSachKhoaHocAtion";
 import { xoaKhoaHocAction } from "../../../Action/xoaKhoaHocAction";
 import Pagination  from "../../../component/Pagination"
-import { layDanhMucKhoaHocAction } from "../../../Action/layDanhMucKhoaHocAction";
-// import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
-import { getCoursesDetailAction } from "../../../Action/danhSachKhoaHocAtion";
-// import  Loading from "../../../component/Loading";
 import ThemKhoaHoc from "./ThemKhoaHoc";
 import SuaKhoaHoc from "./CapNhatKhoaHoc.js";
 import "./quanlykh.scss";
@@ -52,9 +48,7 @@ export default function QuanLyKhoaHoc() {
     dispatch(getCoursesPaginationAction(currentPage));
    
   }, [isDeleted, isChecked , currentPage]);
-
-  const { coursesListPagination, loading } = useSelector((state) => state.getCoursesList);
-  const { coursesDetail } = useSelector((state) => state.getCoursesList);
+  const { coursesListPagination } = useSelector((state) => state.getCoursesList);
 
   return (
     <div className="content-wrapper management-user">
@@ -188,6 +182,7 @@ export default function QuanLyKhoaHoc() {
                           data-target="#suakhoahoc"
                           onClick={()=>{
                             setIsParams(item.maKhoaHoc)
+
                           }}
                         >
                           <i className="fa fa-share mr-1"></i> Cập nhập

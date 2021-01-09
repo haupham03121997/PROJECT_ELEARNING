@@ -6,11 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore , applyMiddleware, compose} from 'redux';
 import { rootReducer } from './Reducer/rootReducer';
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk';  
 
 const enhencer = compose(
   applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.REDUX_DEVTOOLS_EXTENSION
+  //     ? window.REDUX_DEVTOOLS_EXTENSION()
+  //     : (f) => f
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 const store = createStore(rootReducer , enhencer);
 

@@ -12,6 +12,8 @@
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="stylesheet" href="css/animate.css">
+    <link href="%PUBLIC_URL%/dist/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="%PUBLIC_URL%/dist/css/sb-admin-2.min.css" rel="stylesheet">
     <!--
   manifest.json provides metadata used when your web app is installed on a
   user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -28,6 +30,14 @@
 -->
 
     <!-- DASHBOARD  -->
+    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/plugins/fontawesome-free/css/all.min.css"> -->
+    <!-- IonIcons -->
+    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <!-- Theme style -->
+    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/dist/css/adminlte.min.css"> -->
+    <!-- Google Font: Source Sans Pro -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
+    <!-- END DASHBOARD  -->
     <link rel="stylesheet" href="%PUBLIC_URL%/plugins/fontawesome-free/css/all.min.css">
     <!-- IonIcons -->
     <link rel="stylesheet" href="%PUBLIC_URL%/http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -35,7 +45,6 @@
     <link rel="stylesheet" href="%PUBLIC_URL%/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <!-- END DASHBOARD  -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -55,8 +64,7 @@
     <script defer src="/__/firebase/7.24.0/firebase-analytics.js"></script>
     <script defer src="/__/firebase/7.24.0/firebase-remote-config.js"></script>
     <script defer src="/__/firebase/7.24.0/firebase-performance.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+
 
     <style media="screen">
         body {
@@ -124,9 +132,7 @@
                 background: white;
                 box-shadow: none;
             }
-            body {
-                /* border-top: 16px solid #ffa100; */
-            }
+           
         }
     </style>
 </head>
@@ -168,6 +174,24 @@
     </script>
     <!-- <noscript></noscript> -->
     <div id="root"></div>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="%PUBLIC_URL%/dist/vendor/jquery/jquery.min.js"></script>
+    <script src="%PUBLIC_URL%/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="%PUBLIC_URL%/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="%PUBLIC_URL%/distjs/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="%PUBLIC_URL%/distvendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="%PUBLIC_URL%/distjs/demo/chart-area-demo.js"></script>
+    <script src="%PUBLIC_URL%/distjs/demo/chart-pie-demo.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjI-Dpw5gXZAspHPM74bODWI-IBaKfYiQ&libraries=places"></script>
 </body>
 
 </html>

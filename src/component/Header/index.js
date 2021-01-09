@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getCategoryAction } from "../../Action/danhMucKhoaHocAction";
-import { LOGOUTACTION } from "../../Action/User";
+import { LOGOUTACTION, LOGOUFACEBOOKTACTION } from "../../Action/User";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { timKiemKhoaHoc } from "../../Action/timKiemKhoaHoc";
-import { UserReducer } from "../../Reducer/UserReducer";
-import Search from "../../component/Search";
+import { NavLink, Link, useHistory, useLocation } from "react-router-dom";
 import BackToTop from "../../component/BackToTop";
-import PhoneCall from "../../component/PhoneCall/phonecall";
 import swal from "sweetalert";
 function useOutSideClick(ref, callback, when) {
   const savedCallback = useRef(callback);
@@ -30,7 +26,6 @@ function useOutSideClick(ref, callback, when) {
 export default function Header() {
   const history = useHistory();
   const dropDownMenuRef = useRef();
-  const dropDownMenuRef1 = useRef();
   // Hàm Scroll
   const [isScrolled, setIsScroll] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
@@ -53,11 +48,9 @@ export default function Header() {
     });
   }, []);
   const [isFocus, setIsFocus] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
   const [isClickCourses, setIClickCourses] = useState(false);
   const [searchItem, setSearch] = useState({ idCourses: "" });
-  const [isClickCategory, setIsClickCategory] = useState(false);
   const [isClickResponsive, setIsClickResponsive] = useState(false);
   const [isActive, setIsActive] = useState(1);
 
@@ -70,6 +63,7 @@ export default function Header() {
     (state) => state.getCategoriesCourses
   );
   const { credential } = useSelector((state) => state.UserReducer);
+  const { credentialFacebook } = useSelector((state) => state.UserReducer);
   // const shopCart =JSON.parse( localStorage.getItem("giohang"));
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -77,19 +71,14 @@ export default function Header() {
       ...searchItem,
       [name]: value,
     });
-    console.log(name, value);
   };
 
   const hideDropdown = () => {
     setIsFocus(false);
   };
   useOutSideClick(dropDownMenuRef, hideDropdown, isFocus);
-  // const handleSubmit = (e) => {
-  //   dispatch(timKiemKhoaHoc(searchItem));
-  // };
-  const {danhSachKH} = useSelector(state => state.ThemKhoaHocReducer); 
-  // console.log("giohang" ,giohang);
-  // const logout = localStorage.getItem("userLogin");
+
+  const { danhSachKH } = useSelector((state) => state.ThemKhoaHocReducer);
   const Logout = () => {
     swal({
       title: "Bạn muốn đăng xuất?",
@@ -102,6 +91,24 @@ export default function Header() {
         localStorage.removeItem("userLogin");
         dispatch(LOGOUTACTION());
 
+        swal("Đăng xuất thành công!", {
+          icon: "success",
+        });
+        history.push("./DangNhap");
+      } else {
+      }
+    });
+  };
+  const LogoutFacebook = () => {
+    swal({
+      title: "Bạn muốn đăng xuất?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        localStorage.removeItem("userLoginFacebook");
+        dispatch(LOGOUFACEBOOKTACTION());
         swal("Đăng xuất thành công!", {
           icon: "success",
         });
@@ -307,23 +314,29 @@ export default function Header() {
             <div className="collapse navbar-collapse" id="collapsibleNavId">
               <ul className="navbar-nav ml-md-5 ml-xs-1  mr-auto mt-2 mt-lg-0">
                 <li className="nav-item line active">
-                  <a
-                    className={isActive === 1 ? "nav-link active" : "nav-link"}
-                    onClick={() => {
-                      history.push("/");
-                      setIsActive(1);
-                    }}
+                  <NavLink
+                    to="/"
+                    exact
+                    // className={isActive === 1 ? "nav-link active" : "nav-link"}
+                    // onClick={() => {
+                    //   history.push("/");
+                    //   setIsActive(1);
+                    // }}
+                    className="nav-link"
+                    activeClassName="nav-link active"
                   >
                     <i className="fa fa-home "></i> Trang Chủ
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item line nav-item--custom">
-                  <a
-                    className={isActive === 2 ? " nav-link active" : "nav-link"}
+                  <NavLink
+                    to="/DanhMucKhoaHoc"
+                    className="nav-link"
+                    // className={isActive === 2 ? " nav-link active" : "nav-link"}
                   >
                     <i className="fa fa-book "></i> Khóa Học
                     <i className="fa fa-caret-down ml-2" />
-                  </a>
+                  </NavLink>
                   <ul className="dropdown-cate">
                     {categoriesCourses.map((khoahoc, index) => {
                       return (
@@ -344,15 +357,19 @@ export default function Header() {
                   </ul>
                 </li>
                 <li className="nav-item line">
-                  <a
-                    className={isActive === 3 ? "nav-link active" : "nav-link"}
-                    onClick={() => {
-                      history.push("/lienhe");
-                      setIsActive(3);
-                    }}
+                  <NavLink
+                    exact
+                    to="/lienhe"
+                    className="nav-link"
+                    activeClassName="nav-link active"
+                    // className={isActive === 3 ? "nav-link active" : "nav-link"}
+                    // onClick={() => {
+                    //   history.push("/lienhe");
+                    //   setIsActive(3);
+                    // }}
                   >
                     <i className="fa fa-phone-square"></i> Liên Hệ
-                  </a>
+                  </NavLink>
                 </li>
                 <li
                   className="nav-item nav-item--search line"
@@ -363,11 +380,15 @@ export default function Header() {
                   <i className="fa fa-search"></i>
                   <a
                     onClick={() => {
+                      history.push("/timkiem")
                       setIsSearched(!isSearched);
                     }}
-                    className={
-                      isActive === 4 ? "nav-link active " : "nav-link "
-                    }
+                    // className={
+                    //   isActive === 4 ? "nav-link active " : "nav-link "
+                    // }
+                    exact
+                    className="nav-link"
+                    activeClassName="nav-link active"
                   >
                     Tìm Kiếm Khóa Học
                   </a>
@@ -445,7 +466,7 @@ export default function Header() {
                 ) : (
                   ""
                 )}
-                {credential ? (
+                {/* {credential ? (
                   <div className="name-user">
                     <div
                       onClick={() => {
@@ -458,12 +479,14 @@ export default function Header() {
                         <img src="/img/avatar.png" alt="avatar" />
                       </div>
                       <a className="pl-2">
-                        {/* <i className="fa fa-user mr-2" /> */}
+                   
                         {credential.taiKhoan}
                       </a>
                     </div>
                     <div className="shopping-cart ml-3">
-                      <span className="shopping">
+                      <span className="shopping" onClick={()=>{
+                        history.push("/giohang")
+                      }}>
                         <i className="fa fa-shopping-cart"></i> 
                         <span className="count-shopping">
                           {danhSachKH.length}
@@ -513,9 +536,173 @@ export default function Header() {
                       )}
                     </div>
                   </div>
-                ) : (
+                )  : (
                   <>
                     {" "}
+                    <div className="signin">
+                      <a
+                        onClick={() => {
+                          history.push("/DangNhap");
+                        }}
+                      >
+                        <i className="fa fa-sign-in"></i>
+                        Đăng Nhập
+                      </a>
+                    </div>
+                    <div className="signup">
+                      <a
+                        onClick={() => {
+                          history.push(`/DangKy`);
+                        }}
+                      >
+                        <i className="fa fa-user-plus"></i> Đăng Ký
+                      </a>
+                    </div>
+                  </>
+                )} */}
+                {credential ? (
+                  <div className="name-user">
+                    <div
+                      onClick={() => {
+                        history.push("/caidat/taikhoan");
+                      }}
+                      style={{ cursor: "pointer" }}
+                      className="name"
+                    >
+                      <div className="avatar">
+                        <img src="/img/avatar.png" alt="avatar" />
+                      </div>
+                      <a className="pl-2">{credential.taiKhoan}</a>
+                    </div>
+                    <div className="shopping-cart ml-3">
+                      <span
+                        className="shopping"
+                        onClick={() => {
+                          history.push("/giohang");
+                        }}
+                      >
+                        <i className="fa fa-shopping-cart"></i>
+                        <span className="count-shopping">
+                          {danhSachKH.length}
+                        </span>
+                      </span>
+                    </div>
+                    <div className="notification ml-3">
+                      <i className="fa fa-bell" />
+                    </div>
+                    <div
+                      onClick={() => setIsFocus(!isFocus)}
+                      className="logout-setting ml-3"
+                    >
+                      <i
+                        ref={dropDownMenuRef}
+                        className="fa fa-caret-down mb-1"
+                      />
+                      {isFocus ? (
+                        <div className="logout text-left">
+                          <ul>
+                            <li
+                              onClick={() => {
+                                history.push("/caidat/taikhoan");
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-cog mr-3" />
+                                Cài đặt
+                              </a>
+                            </li>
+
+                            <li
+                              onClick={() => {
+                                Logout();
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-sign-language mr-3" />
+                                Đăng xuất
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                ) : credentialFacebook ? (
+                  <div className="name-user">
+                    <div
+                      onClick={() => {
+                        history.push("/caidat/taikhoan");
+                      }}
+                      style={{ cursor: "pointer" }}
+                      className="name"
+                    >
+                      <div className="avatar-facebook">
+                        <img
+                          src={credentialFacebook.picture.data.url}
+                          alt="avatar"
+                        />
+                      </div>
+                      <a className="pl-2">{credentialFacebook.name}</a>
+                    </div>
+                    <div className="shopping-cart ml-3">
+                      <span
+                        className="shopping"
+                        onClick={() => {
+                          history.push("/giohang");
+                        }}
+                      >
+                        <i className="fa fa-shopping-cart"></i>
+                        <span className="count-shopping">
+                          {danhSachKH.length}
+                        </span>
+                      </span>
+                    </div>
+                    <div className="notification ml-3">
+                      <i className="fa fa-bell" />
+                    </div>
+                    <div
+                      onClick={() => setIsFocus(!isFocus)}
+                      className="logout-setting ml-3"
+                    >
+                      <i
+                        ref={dropDownMenuRef}
+                        className="fa fa-caret-down mb-1"
+                      />
+                      {isFocus ? (
+                        <div className="logout text-left">
+                          <ul>
+                            <li
+                              onClick={() => {
+                                history.push("/caidat/taikhoan");
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-cog mr-3" />
+                                Cài đặt
+                              </a>
+                            </li>
+
+                            <li
+                              onClick={() => {
+                                LogoutFacebook();
+                              }}
+                            >
+                              <a className="mx-4">
+                                <i className="fa fa-sign-language mr-3" />
+                                Đăng xuất
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <>
                     <div className="signin">
                       <a
                         onClick={() => {
@@ -541,7 +728,6 @@ export default function Header() {
             </div>
           </nav>
           {backToTop ? <BackToTop /> : ""}
-          <PhoneCall />
         </div>
       </div>
       {/* <div className="navbar-collapse--custom">adasdas</div> */}

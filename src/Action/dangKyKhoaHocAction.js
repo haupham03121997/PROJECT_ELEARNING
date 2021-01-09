@@ -3,6 +3,7 @@ import axios from "../Utils/axiosClient";
 import swal from "sweetalert";
 export const dangKyKhoaHocAction = (values) => {
   return (dispatch) => {
+    console.log("values " , values);
     dispatch({
       type: Type.GHI_DANH_KHOA_HOC_REQUEST,
     });
@@ -31,3 +32,12 @@ export const dangKyKhoaHocAction = (values) => {
       });
   };
 };
+// export const NGuoiDungDangKyKhoaHoc = (values)=>{
+//     return(dispatch)=>{
+//       console.log("Người dùng đăng ký khóa học" , values);
+//       dispatch({
+//         type : "NGUOI_DUNG_DANG_KY_KHOA_HOC",
+//         values
+//       })
+//     }
+// }

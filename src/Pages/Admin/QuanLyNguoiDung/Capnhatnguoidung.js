@@ -1,7 +1,7 @@
-import { isMoment } from "moment";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import { Select } from "antd";
 import { timKiemNguoiDungAction } from "./../../../Action/timKiemNguoiDungAction";
 import { CapNhatNguoiDungAction } from "./../../../Action/capNhatNguoiDungAction";
@@ -27,10 +27,9 @@ export default function Capnhatnguoidung({ isParams, isChecked }) {
   const handleChangeSelect1 = (e) => {
     setMaLoaiNguoiDung(e);
   };
-  const _hanldeSubmit = (value) => {
-    dispatch(CapNhatNguoiDungAction(value));
-  };
-
+  // const _hanldeSubmit = (value) => {
+  //   dispatch(CapNhatNguoiDungAction(value));
+  // };
   return (
     <div>
       <div

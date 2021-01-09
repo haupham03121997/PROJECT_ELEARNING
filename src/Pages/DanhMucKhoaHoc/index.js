@@ -23,7 +23,7 @@ export default function DanhMucKhoaHoc(props) {
   const { categoriesDetail } = useSelector(
     (state) => state.getCategoriesCourses
   );
-  console.log("categoriesDetail", categoriesDetail);
+  // console.log("categoriesDetail", categoriesDetail);
   return (
     <div>
       {/* <Carousel /> */}
